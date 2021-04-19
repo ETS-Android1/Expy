@@ -13,13 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Expy"
         tools:ignore="AllowBackup">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.management.AddUpdateActivity"/>
+        <activity android:name=".ui.auth.AuthActivity" />
+        <activity android:name=".ui.onboarding.OnboardingActivity" />
+        <activity android:name=".ui.onboarding.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.main.MainActivity"/>
     </application>
 
 </manifest>

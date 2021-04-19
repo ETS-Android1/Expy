@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Expy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading">Loading…</string>
+    <string name="monitored">Dipantau</string>
+    <string name="expired">Kedaluwarsa</string>
 </resources>
