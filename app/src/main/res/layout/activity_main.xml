@@ -46,11 +46,11 @@
         app:layout_constraintTop_toTopOf="@+id/civ_profile">
 
         <TextView
-            style="@style/ClickableTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tentang"
             android:textSize="@dimen/font_sm"
+            android:textColor="@color/green_primary"
             android:drawablePadding="4dp"
             app:drawableStartCompat="@drawable/ic_info" />
     </LinearLayout>

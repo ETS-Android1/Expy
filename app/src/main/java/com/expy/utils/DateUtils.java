@@ -20,10 +20,12 @@ public class DateUtils {
             int dateStyle = shortMonth ? DateFormat.MEDIUM : DateFormat.LONG;
             DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
             Date date = dateFormat.parse(defaultDate);
-            return DateFormat.getDateInstance(dateStyle, Locale.getDefault()).format(date);
+
+            if (date != null)
+                return DateFormat.getDateInstance(dateStyle, Locale.getDefault()).format(date);
         } catch (ParseException e) {
             e.printStackTrace();
-            return defaultDate;
         }
+        return defaultDate;
     }
 }

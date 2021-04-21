@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class RoundedBottomSheetDialogFragment extends BottomSheetDialogFragment {
+public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class RoundedBottomSheetDialogFragment extends BottomSheetDialogFragment 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme());
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext(), getTheme());
 
         // Change background opacity as you scroll the dialog
         dialog.setOnShowListener(dialogInterface -> dialog.getBehavior()

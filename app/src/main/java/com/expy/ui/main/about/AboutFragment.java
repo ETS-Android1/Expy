@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.expy.R;
-import com.expy.utils.RoundedBottomSheetDialogFragment;
+import com.expy.utils.MyBottomSheetDialogFragment;
 
-public class AboutFragment extends RoundedBottomSheetDialogFragment {
+public class AboutFragment extends MyBottomSheetDialogFragment {
 
     public AboutFragment() {}
 

@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.expy.R;
-import com.expy.ui.main.MainActivity;
+import com.expy.ui.auth.AuthActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, AuthActivity.class);
             startActivity(intent);
             finish();
         }, 1000);

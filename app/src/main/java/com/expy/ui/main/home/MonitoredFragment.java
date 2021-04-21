@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.expy.R;
 import com.expy.databinding.FragmentMonitoredBinding;
 import com.expy.ui.management.AddUpdateActivity;
 
