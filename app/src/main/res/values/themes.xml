@@ -62,6 +62,15 @@
         <item name="android:textSize">@dimen/font_nm</item>
     </style>
 
+    <style name="DotsIndicator">
+        <item name="dotsColor">@color/gray</item>
+        <item name="dotsCornerRadius">8dp</item>
+        <item name="dotsSize">8dp</item>
+        <item name="dotsSpacing">4dp</item>
+        <item name="dotsWidthFactor">2.5</item>
+        <item name="selectedDotColor">@color/black</item>
+    </style>
+
     <style name="EditText">
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/font_nm</item>

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "***REMOVED***-5vocn24al8q58s7vng3d4k33tj1tst5u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xdev.expy",
+            "certificate_hash": "***REMOVED***"
+          }
+        },
+        {
           "client_id": "***REMOVED***-its32tlcq9orr4gkfbk4jb9qjeobd7is.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
