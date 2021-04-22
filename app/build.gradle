@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.expy"
+        applicationId "com.xdev.expy"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1

@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:***REMOVED***:android:163d559b27fef9f15cf087",
+        "mobilesdk_app_id": "1:***REMOVED***:android:ec855ce525c5ac5c5cf087",
         "android_client_info": {
-          "package_name": "com.expy"
+          "package_name": "com.xdev.expy"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "***REMOVED***-its32tlcq9orr4gkfbk4jb9qjeobd7is.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xdev.expy",
+            "certificate_hash": "***REMOVED***"
+          }
+        },
         {
           "client_id": "***REMOVED***-f6u2emfl9q50jt75vd3438ght2cn05ut.apps.googleusercontent.com",
           "client_type": 3
