@@ -5,4 +5,8 @@
     <string name="loading">Loading…</string>
     <string name="monitored">Dipantau</string>
     <string name="expired">Kedaluwarsa</string>
+    <string name="help_pao">Period After Opening atau PAO merupakan label kemasan pada kosmetik yang menunjukkan batas aman pemakaian setelah dibuka.
+        Jika tertulis 6M, batas aman dari pemakaian produk kosmetik tersebut adalah 6 bulan setelah dibuka. Jika produkmu sudah dibuka, kamu bisa mencentang opsi ini dan memasukkan tanggal dibuka serta berapa PAO-nya sesuai dengan yang tertera pada kemasan.</string>
+    <string name="UGM">Universitas Gadjah Mada</string>
+    <string name="mulai_sekarang">Mulai Sekarang</string>
 </resources>
