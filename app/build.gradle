@@ -62,7 +62,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
 
-    // Custom edit text, dots indicator, circle image view, shimmer
+    // Custom edit text, circle image view, dots indicator, shimmer
     implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"
     implementation "com.libizo:customedittext:$customEditTextVersion"
     implementation "com.tbuonomo.andrui:viewpagerdotsindicator:$dotsIndicatorVersion"

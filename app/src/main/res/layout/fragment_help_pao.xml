@@ -23,7 +23,6 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/sv_help_pao"
         style="@style/ScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -36,22 +35,18 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/image_view"
                 style="@style/ImageView"
                 android:src="@drawable/ic_pao"
-                android:layout_width="96dp"
-                android:layout_height="96dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/tv_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/help_pao"
                 android:textAlignment="center"
                 android:textSize="@dimen/font_nm"
-                android:layout_marginTop="42dp"/>
-
-
+                android:layout_marginTop="48dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

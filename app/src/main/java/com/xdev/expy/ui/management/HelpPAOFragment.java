@@ -9,20 +9,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xdev.expy.R;
+import com.xdev.expy.databinding.FragmentHelpPaoBinding;
 import com.xdev.expy.utils.MyBottomSheetDialogFragment;
 
 public class HelpPAOFragment extends MyBottomSheetDialogFragment {
 
+    private FragmentHelpPaoBinding binding;
+
     public HelpPAOFragment() {}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_help_pao, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentHelpPaoBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.toolbar.setNavigationOnClickListener(v -> dismiss());
     }
 }

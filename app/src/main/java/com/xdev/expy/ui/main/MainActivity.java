@@ -13,15 +13,15 @@ import com.xdev.expy.ui.main.profile.ProfileFragment;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
 import static com.xdev.expy.utils.AppUtils.loadImage;
-import static com.xdev.expy.utils.DateUtils.getCurrentDate;
-import static com.xdev.expy.utils.DateUtils.getFormattedDate;
+import static com.xdev.expy.utils.DateHelper.getCurrentDate;
+import static com.xdev.expy.utils.DateHelper.getFormattedDate;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com.xdev.expy.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         MainPagerAdapter pagerAdapter = new MainPagerAdapter(this, getSupportFragmentManager());

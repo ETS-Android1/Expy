@@ -3,15 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="30dp"
-    android:layout_marginEnd="30dp"
-    android:layout_marginBottom="50dp"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="24dp">
 
     <ImageView
-        android:id="@+id/imageIntro"
+        android:id="@+id/img_illustration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -20,21 +17,23 @@
         android:contentDescription="@string/app_name" />
 
     <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Pantau Tanggal Kedaluwarsa"
+        android:textAlignment="center"
+        android:text="@string/loading"
         android:textColor="@color/green_primary"
         android:textSize="@dimen/font_md"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/textDescription"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Catat tanggal kedaluwarsa biar kamu enggak lagi lupa"
+        android:text="@string/loading"
         android:layout_marginTop="8dp"
         android:gravity="center"
+        android:textAlignment="center"
         android:textSize="@dimen/font_nm" />
 </LinearLayout>

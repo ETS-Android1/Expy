@@ -1,7 +1,6 @@
 package com.xdev.expy.ui.onboarding;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,56 +8,56 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.xdev.expy.R;
-import com.xdev.expy.data.Onboarding;
+import com.xdev.expy.databinding.ItemOnboardingBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class OnboardingAdapter  extends RecyclerView.Adapter<OnboardingAdapter.ViewHolder>{
+public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.ViewHolder>{
 
-    private List<Onboarding> intros;
+    private final List<Onboarding> onboardingList = new ArrayList<>();
 
-    public OnboardingAdapter(List<Onboarding> intros) {
-        this.intros = intros;
+    public void submitList(List<Onboarding> onboardingList){
+        this.onboardingList.clear();
+        this.onboardingList.addAll(onboardingList);
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.item_container_onboarding, parent, false
-                )
-        );
+        ItemOnboardingBinding binding = ItemOnboardingBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setIntroData(intros.get(position));
+        Onboarding onboarding = onboardingList.get(position);
+        holder.bind(onboarding);
     }
 
     @Override
     public int getItemCount() {
-        return intros.size();
+        return onboardingList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView textTitle;
-        private TextView textDescription;
-        private ImageView imageIntro;
+        private final TextView tvTitle;
+        private final TextView tvDescription;
+        private final ImageView imgIllustration;
 
-        ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textTitle = itemView.findViewById(R.id.textTitle);
-            textDescription = itemView.findViewById(R.id.textDescription);
-            imageIntro = itemView.findViewById(R.id.imageIntro);
+        ViewHolder(@NonNull ItemOnboardingBinding binding) {
+            super(binding.getRoot());
+            tvTitle = binding.tvTitle;
+            tvDescription = binding.tvDescription;
+            imgIllustration = binding.imgIllustration;
         }
 
-        void setIntroData(Onboarding intro){
-            textTitle.setText(intro.getTitle());
-            textDescription.setText(intro.getDescription());
-            imageIntro.setImageResource(intro.getImage());
+        void bind(Onboarding onboarding){
+            tvTitle.setText(onboarding.getTitle());
+            tvDescription.setText(onboarding.getDescription());
+            imgIllustration.setImageResource(onboarding.getImageRes());
         }
 
     }
