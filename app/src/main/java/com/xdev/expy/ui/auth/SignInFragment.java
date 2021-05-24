@@ -1,9 +1,12 @@
 package com.xdev.expy.ui.auth;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -35,8 +38,8 @@ import static com.xdev.expy.utils.AppUtils.showToast;
 public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
-    private static final int RC_SIGN_IN = 9001;
 
+    private ActivityResultLauncher<Intent> someActivityResultLauncher;
     private AuthCallback callback;
     private AuthViewModel viewModel;
     private FragmentSignInBinding binding;
@@ -46,6 +49,28 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     public static SignInFragment newInstance() {
         return new SignInFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), result -> {
+                    // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+                    if (result.getResultCode() == Activity.RESULT_OK){
+                        Intent data = result.getData();
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                        try {
+                            // Google Sign In was successful, authenticate with Firebase
+                            GoogleSignInAccount account = task.getResult(ApiException.class);
+                            if (account != null) authWithGoogle(account);
+                        } catch (ApiException e){
+                            // Google Sign In failed or user press back button
+                            Log.w(TAG, "Google sign in failed", e);
+                        }
+                    }
+                }
+        );
     }
 
     @Override
@@ -105,16 +130,16 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.btn_login){
+        if (id == binding.btnLogin.getId()){
             if (binding.edtEmail.getText() != null && binding.edtPassword.getText() != null){
                 loginWithEmail(binding.edtEmail.getText().toString(),
                         binding.edtPassword.getText().toString());
             }
-        } else if (id == R.id.btn_google){
+        } else if (id == binding.btnGoogle.getId()){
             loginWithGoogle();
-        } else if (id == R.id.tv_reset_password){
+        } else if (id == binding.tvResetPassword.getId()){
             callback.moveTo(ResetPasswordFragment.newInstance());
-        } else if (id == R.id.tv_register){
+        } else if (id == binding.tvRegister.getId()){
             callback.moveTo(SignUpFragment.newInstance());
         }
     }
@@ -131,25 +156,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private void loginWithGoogle() {
         Intent intentGoogle = googleSignInClient.getSignInIntent();
-        startActivityForResult(intentGoogle, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN){
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                if (account != null) authWithGoogle(account);
-            } catch (ApiException e){
-                // Google Sign In failed or user press back button
-                Log.w(TAG, "Google sign in failed", e);
-            }
-        }
+        someActivityResultLauncher.launch(intentGoogle);
     }
 
     private void authWithGoogle(GoogleSignInAccount account){
