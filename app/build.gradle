@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
     id 'com.google.gms.google-services'
 }
 
@@ -40,10 +42,13 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    implementation "androidx.navigation:navigation-fragment:$navigationVersion"
-    implementation "androidx.navigation:navigation-ui:$navigationVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "androidx.legacy:legacy-support-v4:$legacySupportVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
+    implementation "androidx.core:core-ktx:$kotlinVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$kotlinLifecycleVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     // Testing
     testImplementation "junit:junit:$junitVersion"
@@ -68,4 +73,8 @@ dependencies {
     implementation "com.tbuonomo.andrui:viewpagerdotsindicator:$dotsIndicatorVersion"
     implementation "com.facebook.shimmer:shimmer:$shimmerVersion"
 
+}
+
+repositories {
+    mavenCentral()
 }
