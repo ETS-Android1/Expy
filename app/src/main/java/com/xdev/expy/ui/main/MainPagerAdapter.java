@@ -1,29 +1,24 @@
 package com.xdev.expy.ui.main;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.xdev.expy.R;
 import com.xdev.expy.ui.main.home.ExpiredFragment;
 import com.xdev.expy.ui.main.home.MonitoredFragment;
 
-public class MainPagerAdapter extends FragmentPagerAdapter {
-    private final Context context;
+public class MainPagerAdapter extends FragmentStateAdapter {
 
-    public MainPagerAdapter(Context context, @NonNull FragmentManager fm) {
-        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        this.context = context;
+    public MainPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
     }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         switch (position){
             case 0: return new MonitoredFragment();
             case 1: return new ExpiredFragment();
@@ -32,19 +27,13 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return 2;
     }
 
     @StringRes
-    private final int[] TAB_TITLES = new int[]{
+    public final int[] TAB_TITLES = new int[]{
             R.string.monitored,
             R.string.expired
     };
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position){
-        return context.getResources().getString(TAB_TITLES[position]);
-    }
 }

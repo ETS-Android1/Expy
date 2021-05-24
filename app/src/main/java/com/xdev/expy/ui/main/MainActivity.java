@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.view.View;
 
-import com.xdev.expy.R;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.xdev.expy.databinding.ActivityMainBinding;
 import com.xdev.expy.ui.main.about.AboutFragment;
 import com.xdev.expy.ui.main.profile.ProfileFragment;
@@ -18,15 +18,18 @@ import static com.xdev.expy.utils.DateHelper.getFormattedDate;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        MainPagerAdapter pagerAdapter = new MainPagerAdapter(this, getSupportFragmentManager());
-        binding.tabLayout.setupWithViewPager(binding.viewPager);
+        MainPagerAdapter pagerAdapter = new MainPagerAdapter(this);
         binding.viewPager.setAdapter(pagerAdapter);
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) ->
+                tab.setText(pagerAdapter.TAB_TITLES[position])).attach();
 
         binding.tvDate.setText(getFormattedDate(getCurrentDate(), false));
 
@@ -45,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.btn_about){
+        if (id == binding.btnAbout.getId()){
             AboutFragment aboutFragment = new AboutFragment();
             aboutFragment.show(getSupportFragmentManager(), aboutFragment.getTag());
-        } else if (id == R.id.civ_profile){
+        } else if (id == binding.civProfile.getId()){
             ProfileFragment profileFragment = new ProfileFragment();
             profileFragment.show(getSupportFragmentManager(), profileFragment.getTag());
         }
