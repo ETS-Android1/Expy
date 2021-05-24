@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.xdev.expy.data.source.AuthRepository;
+import com.xdev.expy.data.AuthRepository;
 import com.xdev.expy.utils.Event;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseUser;

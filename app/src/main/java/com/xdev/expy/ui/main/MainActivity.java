@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.xdev.expy.data.source.remote.RemoteDataSource;
 import com.xdev.expy.databinding.ActivityMainBinding;
 import com.xdev.expy.ui.main.about.AboutFragment;
 import com.xdev.expy.ui.main.profile.ProfileFragment;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.btnAbout.setOnClickListener(this);
         binding.civProfile.setOnClickListener(this);
 
-        ViewModelFactory factory = ViewModelFactory.getInstance(getApplication());
+        ViewModelFactory factory = ViewModelFactory.getInstance(getApplication(), RemoteDataSource.getInstance());
         MainViewModel viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
         viewModel.getUser().observe(this, user -> {
             if (user != null) {

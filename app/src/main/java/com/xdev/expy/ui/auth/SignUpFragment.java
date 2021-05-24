@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xdev.expy.data.source.remote.RemoteDataSource;
 import com.xdev.expy.databinding.FragmentSignUpBinding;
 import com.xdev.expy.ui.main.MainActivity;
 import com.xdev.expy.viewmodel.ViewModelFactory;
@@ -50,7 +51,7 @@ public class SignUpFragment extends Fragment {
         if (getActivity() != null){
             binding.toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
-            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication(), RemoteDataSource.getInstance());
             viewModel = new ViewModelProvider(this, factory).get(AuthViewModel.class);
             viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
                 if (user != null) launchMain();

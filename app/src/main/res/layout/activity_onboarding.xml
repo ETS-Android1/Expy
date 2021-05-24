@@ -10,16 +10,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:overScrollMode="never"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="24dp"/>
+            android:layout_alignParentTop="true"/>
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
             android:id="@+id/dots_indicator"

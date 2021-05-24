@@ -1,4 +1,4 @@
-package com.xdev.expy.data.source;
+package com.xdev.expy.data;
 
 import android.app.Application;
 import android.net.Uri;
