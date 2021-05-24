@@ -20,6 +20,10 @@ public class MonitoredFragment extends Fragment {
 
     public MonitoredFragment() {}
 
+    public static MonitoredFragment newInstance() {
+        return new MonitoredFragment();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMonitoredBinding.inflate(inflater, container, false);

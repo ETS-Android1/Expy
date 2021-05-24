@@ -16,9 +16,7 @@ public class AddUpdateActivity extends AppCompatActivity {
         binding = ActivityAddUpdateBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.tvHelpPao.setOnClickListener(view -> {
-            HelpPAOFragment helpPAOFragment = new HelpPAOFragment();
-            helpPAOFragment.show(getSupportFragmentManager(), helpPAOFragment.getTag());
-        });
+        binding.tvHelpPao.setOnClickListener(view ->
+                HelpPAOFragment.newInstance().show(getSupportFragmentManager(), HelpPAOFragment.TAG));
     }
 }

@@ -13,8 +13,8 @@ import com.xdev.expy.ui.main.profile.ProfileFragment;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
 import static com.xdev.expy.utils.AppUtils.loadImage;
-import static com.xdev.expy.utils.DateHelper.getCurrentDate;
-import static com.xdev.expy.utils.DateHelper.getFormattedDate;
+import static com.xdev.expy.utils.DateUtils.getCurrentDate;
+import static com.xdev.expy.utils.DateUtils.getFormattedDate;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -49,11 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         int id = view.getId();
         if (id == binding.btnAbout.getId()){
-            AboutFragment aboutFragment = new AboutFragment();
-            aboutFragment.show(getSupportFragmentManager(), aboutFragment.getTag());
+            AboutFragment.newInstance().show(getSupportFragmentManager(), AboutFragment.TAG);
         } else if (id == binding.civProfile.getId()){
-            ProfileFragment profileFragment = new ProfileFragment();
-            profileFragment.show(getSupportFragmentManager(), profileFragment.getTag());
+            ProfileFragment.newInstance().show(getSupportFragmentManager(), ProfileFragment.TAG);
         }
     }
 }

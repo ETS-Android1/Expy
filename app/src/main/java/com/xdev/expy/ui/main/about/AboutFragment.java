@@ -14,9 +14,15 @@ import com.xdev.expy.utils.MyBottomSheetDialogFragment;
 
 public class AboutFragment extends MyBottomSheetDialogFragment {
 
+    public static final String TAG = AboutFragment.class.getSimpleName();
+
     private FragmentAboutBinding binding;
 
     public AboutFragment() {}
+
+    public static AboutFragment newInstance() {
+        return new AboutFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

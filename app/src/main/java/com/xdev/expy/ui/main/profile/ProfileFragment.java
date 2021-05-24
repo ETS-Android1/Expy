@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xdev.expy.R;
 import com.xdev.expy.databinding.FragmentProfileBinding;
 import com.xdev.expy.ui.main.MainViewModel;
 import com.xdev.expy.ui.onboarding.SplashActivity;
@@ -24,11 +23,17 @@ import static com.xdev.expy.utils.AppUtils.showToast;
 
 public class ProfileFragment extends MyBottomSheetDialogFragment implements View.OnClickListener{
 
+    public static final String TAG = ProfileFragment.class.getSimpleName();
+
     private FirebaseUser firebaseUser;
     private FragmentProfileBinding binding;
     private MainViewModel viewModel;
 
     public ProfileFragment() {}
+
+    public static ProfileFragment newInstance() {
+        return new ProfileFragment();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,14 +80,14 @@ public class ProfileFragment extends MyBottomSheetDialogFragment implements View
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.btn_reset_password){
+        if (id == binding.btnResetPassword.getId()){
             if (firebaseUser != null){
                 viewModel.sendPasswordReset(firebaseUser.getEmail());
             } else {
                 showToast(getContext(),
                         "Tidak bisa mengirim tautan ganti kata sandi ke email, coba lagi");
             }
-        } else if (id == R.id.btn_logout){
+        } else if (id == binding.btnLogout.getId()){
             viewModel.logout();
         }
     }

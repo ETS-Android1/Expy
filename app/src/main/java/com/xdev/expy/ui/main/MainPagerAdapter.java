@@ -20,8 +20,8 @@ public class MainPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0: return new MonitoredFragment();
-            case 1: return new ExpiredFragment();
+            case 0: return MonitoredFragment.newInstance();
+            case 1: return ExpiredFragment.newInstance();
             default: return new Fragment();
         }
     }

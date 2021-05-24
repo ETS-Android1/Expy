@@ -14,9 +14,15 @@ import com.xdev.expy.utils.MyBottomSheetDialogFragment;
 
 public class HelpPAOFragment extends MyBottomSheetDialogFragment {
 
+    public static final String TAG = HelpPAOFragment.class.getSimpleName();
+
     private FragmentHelpPaoBinding binding;
 
     public HelpPAOFragment() {}
+
+    public static HelpPAOFragment newInstance() {
+        return new HelpPAOFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
