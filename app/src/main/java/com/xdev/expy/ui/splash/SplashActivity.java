@@ -1,4 +1,4 @@
-package com.xdev.expy.ui.onboarding;
+package com.xdev.expy.ui.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,15 +7,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.xdev.expy.R;
-import com.xdev.expy.ui.auth.AuthActivity;
+import com.xdev.expy.databinding.ActivitySplashBinding;
+import com.xdev.expy.ui.onboarding.OnboardingActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        ActivitySplashBinding binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             Intent intent = new Intent(this, OnboardingActivity.class);

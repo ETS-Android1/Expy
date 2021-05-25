@@ -45,11 +45,9 @@ public class OnboardingActivity extends AppCompatActivity {
         Onboarding onboarding1 = new Onboarding(R.drawable.illustration_onboarding_1,
                 "Pantau Tanggal Kedaluwarsa",
                 "Catat tanggal kedaluwarsa biar kamu enggak lagi lupa");
-
         Onboarding onboarding2 = new Onboarding(R.drawable.illustration_onboarding_2,
                 "Dapatkan Notifikasi",
                 "Terima notifikasi berkala ketika mendekati tanggal kedaluwarsa");
-
         Onboarding onboarding3 = new Onboarding(R.drawable.illustration_onboarding_3,
                 "Lebih Mudah dengan Widget",
                 "Pasang widget di home screen untuk akses pantau yang lebih cepat");

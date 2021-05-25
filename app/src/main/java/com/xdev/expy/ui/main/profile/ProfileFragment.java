@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.xdev.expy.databinding.FragmentProfileBinding;
 import com.xdev.expy.ui.main.MainViewModel;
-import com.xdev.expy.ui.onboarding.SplashActivity;
+import com.xdev.expy.ui.splash.SplashActivity;
 import com.xdev.expy.utils.MyBottomSheetDialogFragment;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 import com.google.firebase.auth.FirebaseUser;

@@ -73,7 +73,7 @@ public class RemoteDataSource {
                         }
                     }
                     if (!productList.isEmpty()) result.postValue(ApiResponse.success(productList));
-                    else result.postValue(ApiResponse.empty("Empty list", productList));
+                    else result.postValue(ApiResponse.empty(null, productList));
                 }
             }  else {
                 Log.w(TAG, "Error querying document", task.getException());
@@ -94,7 +94,7 @@ public class RemoteDataSource {
                         Log.d(TAG, "queryProduct: " + product.toString());
                         result.postValue(ApiResponse.success(product));
                     } else {
-                        result.postValue(ApiResponse.empty("Null", product));
+                        result.postValue(ApiResponse.empty(null, product));
                     }
                 }
             }  else {

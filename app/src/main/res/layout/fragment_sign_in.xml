@@ -106,7 +106,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_google"
-                    style="@style/Button.Outline"
+                    style="@style/Button.Secondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Masuk dengan Google"
