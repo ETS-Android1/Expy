@@ -43,10 +43,10 @@
         <item name="iconGravity">textStart</item>
     </style>
 
-    <style name="Button.Outline">
-        <item name="android:background">@drawable/bg_button_outline</item>
-        <item name="android:textColor">@color/green_primary</item>
-        <item name="iconTint">@color/green_primary</item>
+    <style name="Button.Danger">
+        <item name="android:background">@drawable/bg_button_danger</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="iconTint">@color/white</item>
     </style>
 
     <style name="Button.Primary">
@@ -55,11 +55,23 @@
         <item name="iconTint">@color/white</item>
     </style>
 
+    <style name="Button.Secondary">
+        <item name="android:background">@drawable/bg_button_secondary</item>
+        <item name="android:textColor">@color/green_primary</item>
+        <item name="iconTint">@color/green_primary</item>
+    </style>
+
     <style name="ClickableTextView">
         <item name="android:textColor">@color/green_primary</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:textSize">@dimen/font_nm</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
     </style>
 
     <style name="DotsIndicator">
@@ -90,6 +102,11 @@
         <item name="elevation">2dp</item>
         <item name="android:backgroundTint">@color/green_primary</item>
         <item name="tint">@color/white</item>
+    </style>
+
+    <style name="HintTextView">
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textSize">@dimen/font_nm</item>
     </style>
 
     <style name="ImageView">
