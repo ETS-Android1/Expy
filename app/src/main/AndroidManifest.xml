@@ -13,10 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Expy"
         tools:ignore="AllowBackup">
-        <activity android:name="com.xdev.expy.ui.management.AddUpdateActivity"/>
         <activity android:name="com.xdev.expy.ui.auth.AuthActivity" />
         <activity android:name="com.xdev.expy.ui.onboarding.OnboardingActivity" />
-        <activity android:name="com.xdev.expy.ui.onboarding.SplashActivity" >
+        <activity android:name="com.xdev.expy.ui.splash.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

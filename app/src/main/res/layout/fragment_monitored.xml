@@ -6,6 +6,27 @@
     android:layout_height="match_parent"
     tools:context="com.xdev.expy.ui.main.home.MonitoredFragment">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp">
+
+        <include layout="@layout/shimmer_layout_product" />
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        style="@style/RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="96dp"/>
+
+    <include
+        android:id="@+id/layout_empty"
+        layout="@layout/layout_empty" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         style="@style/FloatingActionButton"

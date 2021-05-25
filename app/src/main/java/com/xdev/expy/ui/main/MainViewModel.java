@@ -58,6 +58,18 @@ public class MainViewModel extends AndroidViewModel {
         return toastText;
     }
 
+    public void insertProduct(ProductEntity product){
+        mainRepository.insertProduct(product);
+    }
+
+    public void updateProduct(ProductEntity product){
+        mainRepository.updateProduct(product);
+    }
+
+    public void deleteProduct(ProductEntity product){
+        mainRepository.deleteProduct(product);
+    }
+
     public void sendPasswordReset(String email){
         authRepository.sendPasswordReset(email);
     }

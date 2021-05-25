@@ -1,4 +1,4 @@
-package com.xdev.expy.ui.management;
+package com.xdev.expy.ui.main.management;
 
 import android.os.Bundle;
 
