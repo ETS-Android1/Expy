@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.xdev.expy.data.AuthRepository;
 import com.xdev.expy.data.MainRepository;
-import com.xdev.expy.data.source.remote.RemoteDataSource;
 import com.xdev.expy.di.Injection;
 import com.xdev.expy.ui.auth.AuthViewModel;
 import com.xdev.expy.ui.main.MainViewModel;
@@ -27,13 +26,13 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         this.mainRepository = mainRepository;
     }
 
-    public static ViewModelFactory getInstance(Application application, RemoteDataSource remoteDataSource) {
+    public static ViewModelFactory getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (ViewModelFactory.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new ViewModelFactory(application,
                             Injection.provideRepository(application),
-                            Injection.provideRepository(remoteDataSource)
+                            Injection.provideRepository()
                     );
                 }
             }

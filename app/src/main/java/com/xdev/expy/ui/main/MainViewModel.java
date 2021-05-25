@@ -21,8 +21,8 @@ public class MainViewModel extends AndroidViewModel {
     private final AuthRepository authRepository;
     private final MainRepository mainRepository;
 
-    private LiveData<ApiResponse<List<ProductEntity>>> monitoredProduct;
-    private LiveData<ApiResponse<List<ProductEntity>>> expiredProduct;
+    private LiveData<ApiResponse<List<ProductEntity>>> monitoredProductList;
+    private LiveData<ApiResponse<List<ProductEntity>>> expiredProductList;
     private MutableLiveData<FirebaseUser> user;
     private MutableLiveData<Boolean> isLoading;
     private MutableLiveData<Event<String>> toastText;
@@ -33,14 +33,14 @@ public class MainViewModel extends AndroidViewModel {
         this.mainRepository = mainRepository;
     }
 
-    public LiveData<ApiResponse<List<ProductEntity>>> getMonitoredProduct(){
-        if (monitoredProduct == null) monitoredProduct = mainRepository.queryMonitoredProducts();
-        return monitoredProduct;
+    public LiveData<ApiResponse<List<ProductEntity>>> getMonitoredProducts(){
+        if (monitoredProductList == null) monitoredProductList = mainRepository.queryMonitoredProducts();
+        return monitoredProductList;
     }
 
-    public LiveData<ApiResponse<List<ProductEntity>>> getExpiredProduct(){
-        if (expiredProduct == null) expiredProduct = mainRepository.queryExpiredProducts();
-        return expiredProduct;
+    public LiveData<ApiResponse<List<ProductEntity>>> getExpiredProducts(){
+        if (expiredProductList == null) expiredProductList = mainRepository.queryExpiredProducts();
+        return expiredProductList;
     }
 
     public LiveData<FirebaseUser> getUser(){
@@ -53,7 +53,7 @@ public class MainViewModel extends AndroidViewModel {
         return isLoading;
     }
 
-    public MutableLiveData<Event<String>> getToastText() {
+    public LiveData<Event<String>> getToastText() {
         if (toastText == null) toastText = authRepository.getToastText();
         return toastText;
     }

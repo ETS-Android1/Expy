@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xdev.expy.data.source.remote.RemoteDataSource;
 import com.xdev.expy.databinding.FragmentProfileBinding;
 import com.xdev.expy.ui.main.MainViewModel;
 import com.xdev.expy.ui.onboarding.SplashActivity;
@@ -53,7 +52,7 @@ public class ProfileFragment extends MyBottomSheetDialogFragment implements View
         binding.toolbar.setNavigationOnClickListener(v -> dismiss());
 
         if (getActivity() != null){
-            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication(), RemoteDataSource.getInstance());
+            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
             viewModel = new ViewModelProvider(requireActivity(), factory).get(MainViewModel.class);
             viewModel.getUser().observe(this, user -> {
                 firebaseUser = user;

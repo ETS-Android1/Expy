@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xdev.expy.data.source.remote.RemoteDataSource;
 import com.xdev.expy.databinding.FragmentResetPasswordBinding;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
@@ -47,7 +46,7 @@ public class ResetPasswordFragment extends Fragment {
         if (getActivity() != null){
             binding.toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
-            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication(), RemoteDataSource.getInstance());
+            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
             viewModel = new ViewModelProvider(this, factory).get(AuthViewModel.class);
             viewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
                 if (isLoading) binding.btnSend.setVisibility(View.INVISIBLE);

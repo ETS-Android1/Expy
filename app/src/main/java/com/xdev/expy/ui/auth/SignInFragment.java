@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xdev.expy.R;
-import com.xdev.expy.data.source.remote.RemoteDataSource;
 import com.xdev.expy.databinding.FragmentSignInBinding;
 import com.xdev.expy.ui.main.MainActivity;
 import com.xdev.expy.viewmodel.ViewModelFactory;
@@ -85,7 +84,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         if (getActivity() != null){
-            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication(), RemoteDataSource.getInstance());
+            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
             viewModel = new ViewModelProvider(this, factory).get(AuthViewModel.class);
             viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
                 if (user != null) launchMain();

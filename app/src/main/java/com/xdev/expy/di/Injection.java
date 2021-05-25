@@ -12,7 +12,7 @@ public class Injection {
         return AuthRepository.getInstance(application);
     }
 
-    public static MainRepository provideRepository(RemoteDataSource remoteDataSource){
-        return MainRepository.getInstance(remoteDataSource);
+    public static MainRepository provideRepository(){
+        return MainRepository.getInstance(RemoteDataSource.getInstance());
     }
 }

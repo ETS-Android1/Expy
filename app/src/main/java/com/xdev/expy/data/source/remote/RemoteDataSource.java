@@ -36,7 +36,7 @@ public class RemoteDataSource {
     private RemoteDataSource(){
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
-        productsRef = database.collection("classPackages");
+        productsRef = database.collection("products");
     }
 
     public static RemoteDataSource getInstance() {
@@ -61,7 +61,8 @@ public class RemoteDataSource {
             query = query.whereGreaterThan("expiryDate", getCurrentDate());
         }
 
-        query.get().addOnCompleteListener(task -> {
+        query.orderBy("expiryDate", Query.Direction.ASCENDING)
+                .get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 if (task.getResult() != null){
                     for (DocumentSnapshot document : task.getResult()){
@@ -106,6 +107,7 @@ public class RemoteDataSource {
 
     public LiveData<ApiResponse<Boolean>> insertProduct(ProductEntity product){
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
+        product.setId(productsRef.document().getId());
         productsRef.document(product.getId())
                 .set(product)
                 .addOnCompleteListener(task -> {
@@ -182,7 +184,7 @@ public class RemoteDataSource {
         document.put("opened", product.isOpened());
         document.put("openedDate", product.getOpenedDate());
         document.put("pao", product.getPao());
-        document.put("reminder", product.getReminder());
+        document.put("reminders", product.getReminders());
         return document;
     }
 }

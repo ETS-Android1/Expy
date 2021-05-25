@@ -12,7 +12,7 @@ data class ProductEntity (
     @field:JvmField var opened: Boolean = false,
     var openedDate: String = "",
     var pao: Int = 0,
-    var reminder: ReminderEntity = ReminderEntity()
+    var reminders: List<ReminderEntity> = ArrayList()
 ) : Parcelable {
     fun isOpened(): Boolean = opened
     fun setOpened(opened: Boolean){

@@ -121,7 +121,7 @@
 
     <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="endIconTint">@color/green_primary</item>
-        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidth">0.1dp</item>
         <item name="boxStrokeWidthFocused">1dp</item>
         <item name="boxBackgroundColor">@color/gray_light</item>
         <item name="android:layout_marginTop">6dp</item>

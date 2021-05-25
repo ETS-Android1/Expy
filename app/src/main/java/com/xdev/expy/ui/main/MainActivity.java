@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding.btnAbout.setOnClickListener(this);
         binding.civProfile.setOnClickListener(this);
 
-        ViewModelFactory factory = ViewModelFactory.getInstance(getApplication(), RemoteDataSource.getInstance());
+        ViewModelFactory factory = ViewModelFactory.getInstance(getApplication());
         MainViewModel viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
         viewModel.getUser().observe(this, user -> {
             if (user != null) {
