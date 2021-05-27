@@ -25,4 +25,6 @@ public interface MainDataSource {
     LiveData<ApiResponse<Boolean>> deleteProduct(ProductEntity product);
 
     LiveData<ApiResponse<String>> uploadImage(Context context, Uri uriPath, String storagePath, String fileName);
+
+    void addProductsSnapshotListener();
 }

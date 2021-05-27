@@ -7,6 +7,8 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,12 +33,21 @@ public class RemoteDataSource {
 
     private volatile static RemoteDataSource INSTANCE = null;
     private final FirebaseStorage storage;
-    private final CollectionReference productsRef;
+    private CollectionReference productsRef;
+
+    private final MutableLiveData<ApiResponse<List<ProductEntity>>> resultMonitoredProducts = new MutableLiveData<>();
+    private final MutableLiveData<ApiResponse<List<ProductEntity>>> resultExpiredProducts = new MutableLiveData<>();
 
     private RemoteDataSource(){
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
-        productsRef = database.collection("products");
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null){
+            productsRef = database.collection("users")
+                    .document(currentUser.getUid()).collection("products");
+        }
     }
 
     public static RemoteDataSource getInstance() {
@@ -51,41 +62,54 @@ public class RemoteDataSource {
     }
 
     public LiveData<ApiResponse<List<ProductEntity>>> queryProducts(boolean isExpiredProduct) {
-        MutableLiveData<ApiResponse<List<ProductEntity>>> result = new MutableLiveData<>();
+        if (isExpiredProduct) resultExpiredProducts.postValue(ApiResponse.loading(null));
+        else resultMonitoredProducts.postValue(ApiResponse.loading(null));
+
         List<ProductEntity> productList = new ArrayList<>();
 
         Query query = productsRef;
         if (isExpiredProduct) {
-            query = query.whereLessThanOrEqualTo("expiryDate", getCurrentDate());
+            query = query.whereLessThanOrEqualTo("expiryDate", getCurrentDate())
+                    .orderBy("expiryDate", Query.Direction.DESCENDING);
         } else {
-            query = query.whereGreaterThan("expiryDate", getCurrentDate());
+            query = query.whereGreaterThan("expiryDate", getCurrentDate())
+                    .orderBy("expiryDate", Query.Direction.ASCENDING);
         }
 
-        query.orderBy("expiryDate", Query.Direction.ASCENDING)
-                .get().addOnCompleteListener(task -> {
+        query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 if (task.getResult() != null){
                     for (DocumentSnapshot document : task.getResult()){
                         ProductEntity product = document.toObject(ProductEntity.class);
                         if (product != null) {
                             productList.add(product);
-                            Log.d(TAG, "queryProducts: " + productList.toString());
+                            Log.d(TAG, "queryProducts: " + product.toString());
                         }
                     }
-                    if (!productList.isEmpty()) result.postValue(ApiResponse.success(productList));
-                    else result.postValue(ApiResponse.empty(null, productList));
+                    if (!productList.isEmpty()) {
+                        if (isExpiredProduct) resultExpiredProducts.postValue(ApiResponse.success(productList));
+                        else resultMonitoredProducts.postValue(ApiResponse.success(productList));
+                    }
+                    else {
+                        if (isExpiredProduct) resultExpiredProducts.postValue(ApiResponse.empty(null, productList));
+                        else resultMonitoredProducts.postValue(ApiResponse.empty(null, productList));
+                    }
                 }
             }  else {
                 Log.w(TAG, "Error querying document", task.getException());
-                result.postValue(ApiResponse.error("Error querying document", productList));
+                if (isExpiredProduct) resultExpiredProducts.postValue(ApiResponse.error("Error querying document", productList));
+                else resultMonitoredProducts.postValue(ApiResponse.error("Error querying document", productList));
             }
         });
 
-        return result;
+        if (isExpiredProduct) return resultExpiredProducts;
+        else return resultMonitoredProducts;
     }
 
     public LiveData<ApiResponse<ProductEntity>> queryProduct(String id) {
         MutableLiveData<ApiResponse<ProductEntity>> result = new MutableLiveData<>();
+        result.postValue(ApiResponse.loading(null));
+
         productsRef.document(id).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 if (task.getResult() != null){
@@ -94,7 +118,7 @@ public class RemoteDataSource {
                         Log.d(TAG, "queryProduct: " + product.toString());
                         result.postValue(ApiResponse.success(product));
                     } else {
-                        result.postValue(ApiResponse.empty(null, product));
+                        result.postValue(ApiResponse.empty(null, null));
                     }
                 }
             }  else {
@@ -102,11 +126,14 @@ public class RemoteDataSource {
                 result.postValue(ApiResponse.error("Error querying document", new ProductEntity()));
             }
         });
+
         return result;
     }
 
     public LiveData<ApiResponse<Boolean>> insertProduct(ProductEntity product){
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
+        result.postValue(ApiResponse.loading(null));
+
         product.setId(productsRef.document().getId());
         productsRef.document(product.getId())
                 .set(product)
@@ -119,11 +146,14 @@ public class RemoteDataSource {
                         result.postValue(ApiResponse.error("Error adding document", false));
                     }
                 });
+
         return result;
     }
 
     public LiveData<ApiResponse<Boolean>> updateProduct(ProductEntity product){
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
+        result.postValue(ApiResponse.loading(null));
+
         productsRef.document(product.getId())
                 .update(objectToHashMap(product))
                 .addOnCompleteListener(task -> {
@@ -136,11 +166,14 @@ public class RemoteDataSource {
                         result.postValue(ApiResponse.error("Error updating document", false));
                     }
                 });
+
         return result;
     }
 
     public LiveData<ApiResponse<Boolean>> deleteProduct(ProductEntity product){
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
+        result.postValue(ApiResponse.loading(null));
+
         productsRef.document(product.getId())
                 .delete()
                 .addOnCompleteListener(task -> {
@@ -153,11 +186,13 @@ public class RemoteDataSource {
                         result.postValue(ApiResponse.error("Error deleting document", false));
                     }
                 });
+
         return result;
     }
 
     public LiveData<ApiResponse<String>> uploadImage(Context context, Uri uriPath, String storagePath, String fileName){
         MutableLiveData<ApiResponse<String>> result = new MutableLiveData<>();
+        result.postValue(ApiResponse.loading(null));
 
         byte[] image = convertUriToByteArray(context, uriPath);
         image = getCompressedByteArray(image, true);
@@ -173,6 +208,18 @@ public class RemoteDataSource {
         });
 
         return result;
+    }
+
+    public void addProductsSnapshotListener(){
+        productsRef.addSnapshotListener((value, error) -> {
+            if (error != null) {
+                Log.w(TAG, "Listen failed", error);
+            } else if (value != null){
+                Log.d(TAG, "Changes detected");
+                queryProducts(false);
+                queryProducts(true);
+            }
+        });
     }
 
     private Map<String, Object> objectToHashMap(ProductEntity product){

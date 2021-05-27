@@ -65,4 +65,9 @@ public class MainRepository implements MainDataSource {
     public LiveData<ApiResponse<String>> uploadImage(Context context, Uri uriPath, String storagePath, String fileName) {
         return remoteDataSource.uploadImage(context, uriPath, storagePath, fileName);
     }
+
+    @Override
+    public void addProductsSnapshotListener() {
+        remoteDataSource.addProductsSnapshotListener();
+    }
 }

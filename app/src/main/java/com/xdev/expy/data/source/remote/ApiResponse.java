@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import static com.xdev.expy.data.source.remote.StatusResponse.EMPTY;
 import static com.xdev.expy.data.source.remote.StatusResponse.ERROR;
+import static com.xdev.expy.data.source.remote.StatusResponse.LOADING;
 import static com.xdev.expy.data.source.remote.StatusResponse.SUCCESS;
 
 public class ApiResponse<T> {
@@ -22,6 +23,10 @@ public class ApiResponse<T> {
         this.status = status;
         this.body = body;
         this.message = message;
+    }
+
+    public static <T> ApiResponse<T> loading(String msg) {
+        return new ApiResponse<>(LOADING, null, msg);
     }
 
     public static <T> ApiResponse<T> success(@Nullable T body) {
