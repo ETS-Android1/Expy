@@ -2,9 +2,11 @@ package com.xdev.expy.ui.onboarding;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import com.xdev.expy.R;
@@ -15,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OnboardingActivity extends AppCompatActivity {
+
+    private Handler handler;
+    private int delay, page;
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,7 @@ public class OnboardingActivity extends AppCompatActivity {
         binding.dotsIndicator.setViewPager2(binding.viewPager);
 
         populateViewPager(adapter);
+        setAutoScrollViewPager(binding.viewPager, adapter);
 
         // Disable overscroll animation
         View child = binding.viewPager.getChildAt(0);
@@ -57,5 +64,37 @@ public class OnboardingActivity extends AppCompatActivity {
         onboardingList.add(onboarding3);
 
         adapter.submitList(onboardingList);
+    }
+
+    private void setAutoScrollViewPager(ViewPager2 viewPager, OnboardingAdapter adapter) {
+        handler = new Handler();
+        delay = 5000; // Milliseconds
+        page = 0;
+        runnable = new Runnable() {
+            public void run() {
+                if (adapter.getItemCount() == page) {
+                    page = 0;
+                } else {
+                    page++;
+                }
+                viewPager.setCurrentItem(page, true);
+                handler.postDelayed(this, delay);
+            }
+        };
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override public void onPageSelected(int position) { page = position; }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.postDelayed(runnable, delay);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
     }
 }
