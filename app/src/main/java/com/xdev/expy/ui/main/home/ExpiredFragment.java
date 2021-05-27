@@ -48,14 +48,16 @@ public class ExpiredFragment extends Fragment implements ProductAdapter.ProductA
         ProductAdapter adapter = new ProductAdapter(this);
         binding.recyclerView.setAdapter(adapter);
 
-        ShimmerHelper shimmer = new ShimmerHelper(getContext(), binding.shimmer, binding.recyclerView, binding.layoutEmpty.getRoot());
-        shimmer.show();
+        ShimmerHelper shimmer = new ShimmerHelper(binding.shimmer, binding.recyclerView, binding.layoutEmpty.getRoot());
 
         if (getActivity() != null) {
             ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
             MainViewModel viewModel = new ViewModelProvider(requireActivity(), factory).get(MainViewModel.class);
             viewModel.getExpiredProducts().observe(requireActivity(), result -> {
                 switch (result.status) {
+                    case LOADING:
+                        shimmer.show();
+                        break;
                     case SUCCESS:
                         adapter.submitList(result.body);
                         shimmer.hide(false);
@@ -64,12 +66,12 @@ public class ExpiredFragment extends Fragment implements ProductAdapter.ProductA
                         shimmer.hide(true);
                         break;
                     case ERROR:
-                        // TODO: ganti isi pesannya (beri tahu kalau gagal)
-                        showToast(getContext(), result.message);
+                        showToast(getContext(), "Data gagal dimuat, tarik untuk memuat ulang");
                         shimmer.hide(true);
                         break;
                 }
             });
+            viewModel.addProductsSnapshotListener();
         }
     }
 

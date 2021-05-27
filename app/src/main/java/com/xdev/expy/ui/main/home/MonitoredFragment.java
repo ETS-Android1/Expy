@@ -48,14 +48,16 @@ public class MonitoredFragment extends Fragment implements ProductAdapter.Produc
         ProductAdapter adapter = new ProductAdapter(this);
         binding.recyclerView.setAdapter(adapter);
 
-        ShimmerHelper shimmer = new ShimmerHelper(getContext(), binding.shimmer, binding.recyclerView, binding.layoutEmpty.getRoot());
-        shimmer.show();
+        ShimmerHelper shimmer = new ShimmerHelper(binding.shimmer, binding.recyclerView, binding.layoutEmpty.getRoot());
 
         if (getActivity() != null) {
             ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
             MainViewModel viewModel = new ViewModelProvider(requireActivity(), factory).get(MainViewModel.class);
             viewModel.getMonitoredProducts().observe(requireActivity(), result -> {
                 switch (result.status) {
+                    case LOADING:
+                        shimmer.show();
+                        break;
                     case SUCCESS:
                         adapter.submitList(result.body);
                         shimmer.hide(false);
@@ -70,6 +72,7 @@ public class MonitoredFragment extends Fragment implements ProductAdapter.Produc
                         break;
                 }
             });
+            viewModel.addProductsSnapshotListener();
         }
 
         binding.fabAdd.setOnClickListener(v -> mainCallback.addUpdateProduct(new ProductEntity()));

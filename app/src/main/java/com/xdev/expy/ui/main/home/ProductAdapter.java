@@ -63,6 +63,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         public void bind(ProductEntity product) {
             String expiryDate = product.getExpiryDate();
             int countdown = differenceOfDates(expiryDate, getCurrentDate());
+            if (countdown < 0) countdown = 0;
 
             binding.tvName.setText(product.getName());
             binding.tvExpiryDate.setText(getFormattedDate(expiryDate, true));

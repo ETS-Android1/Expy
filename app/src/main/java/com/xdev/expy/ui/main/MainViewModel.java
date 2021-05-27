@@ -70,6 +70,10 @@ public class MainViewModel extends AndroidViewModel {
         mainRepository.deleteProduct(product);
     }
 
+    public void addProductsSnapshotListener(){
+        mainRepository.addProductsSnapshotListener();
+    }
+
     public void sendPasswordReset(String email){
         authRepository.sendPasswordReset(email);
     }

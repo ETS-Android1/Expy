@@ -61,4 +61,17 @@ public class DateUtils {
         }
         return -1;
     }
+
+    public static int[] getArrayDate(String date){
+        try {
+            String[] stringArrayDate = date.split("/");
+            int[] integerArrayDate = new int[3];
+            for (int i = 0; i < 3; i++) integerArrayDate[i] = Integer.parseInt(stringArrayDate[i]);
+            // Karena bulan di mulai dari 0, jadi dikurangi 1
+            return new int[] {integerArrayDate[0], integerArrayDate[1]-1, integerArrayDate[2]};
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return new int[] {1, 0, 1970};
+    }
 }

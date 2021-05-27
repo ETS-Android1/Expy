@@ -72,19 +72,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void backToHome(boolean isCancelEditing) {
+        if (isCancelEditing) showCancelEditingConfirmDialog();
+        else super.onBackPressed();
+    }
+
+    @Override
     public void onBackPressed() {
         Fragment addUpdateFragment = getSupportFragmentManager().findFragmentByTag(AddUpdateFragment.TAG);
-        if (addUpdateFragment != null && addUpdateFragment.isVisible()) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Batalkan perubahan")
-                    .setMessage("Kamu belum menyimpan perubahan. Apakah kamu yakin ingin membatalkannya?")
-                    .setNeutralButton("Batal", null)
-                    .setPositiveButton("Ya", (dialogInterface, i) ->
-                            super.onBackPressed())
-                    .create().show();
-        } else {
-            super.onBackPressed();
-        }
+        if (addUpdateFragment != null && addUpdateFragment.isVisible()) showCancelEditingConfirmDialog();
+        else super.onBackPressed();
+    }
+
+    private void showCancelEditingConfirmDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Batalkan perubahan")
+                .setMessage("Kamu belum menyimpan perubahan. Apakah kamu yakin ingin membatalkannya?")
+                .setNeutralButton("Batal", null)
+                .setPositiveButton("Ya", (dialogInterface, i) ->
+                        super.onBackPressed())
+                .create().show();
     }
 
     public void setContainerBackground(boolean isAddUpdateFragmentVisible){
