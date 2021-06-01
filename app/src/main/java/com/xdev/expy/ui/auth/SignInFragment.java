@@ -12,17 +12,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.xdev.expy.R;
 import com.xdev.expy.databinding.FragmentSignInBinding;
-import com.xdev.expy.ui.main.MainActivity;
+import com.xdev.expy.textwatcher.EmailTextWatcher;
+import com.xdev.expy.textwatcher.PasswordTextWatcher;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -83,42 +81,33 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getActivity() != null){
-            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
-            viewModel = new ViewModelProvider(this, factory).get(AuthViewModel.class);
-            viewModel.getUser().observe(getViewLifecycleOwner(), user -> {
-                if (user != null) launchMain();
-            });
-            viewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
-                if (isLoading) {
-                    binding.btnLogin.setVisibility(View.INVISIBLE);
-                    binding.btnGoogle.setVisibility(View.INVISIBLE);
-                } else {
-                    binding.btnLogin.setVisibility(View.VISIBLE);
-                    binding.btnGoogle.setVisibility(View.VISIBLE);
-                }
-            });
-            viewModel.getToastText().observe(getViewLifecycleOwner(), toastText -> {
-                String text = toastText.getContentIfNotHandled();
-                if (text != null) showToast(getContext(), text);
-            });
-
-            if (getContext() != null){
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(getString(R.string.default_web_client_id))
-                        .requestEmail()
-                        .build();
-                googleSignInClient = GoogleSignIn.getClient(getContext(), gso);
+        ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity().getApplication());
+        viewModel = new ViewModelProvider(requireActivity(), factory).get(AuthViewModel.class);
+        viewModel.isLoading().observe(requireActivity(), isLoading -> {
+            if (isLoading) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.layoutButton.setVisibility(View.INVISIBLE);
             }
+            else {
+                binding.progressBar.setVisibility(View.INVISIBLE);
+                binding.layoutButton.setVisibility(View.VISIBLE);
+            }
+        });
 
-            // Initialize view
-            binding.btnLogin.setOnClickListener(this);
-            binding.btnGoogle.setOnClickListener(this);
-            binding.tvResetPassword.setOnClickListener(this);
-            binding.tvRegister.setOnClickListener(this);
-
-            setTextChangedListener();
+        if (getContext() != null){
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+            googleSignInClient = GoogleSignIn.getClient(getContext(), gso);
         }
+
+        binding.btnLogin.setOnClickListener(this);
+        binding.btnGoogle.setOnClickListener(this);
+        binding.tvResetPassword.setOnClickListener(this);
+        binding.tvRegister.setOnClickListener(this);
+        binding.edtEmail.addTextChangedListener(new EmailTextWatcher(binding.tilEmail));
+        binding.edtPassword.addTextChangedListener(new PasswordTextWatcher(binding.tilPassword));
     }
 
     @Override
@@ -169,46 +158,5 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         return !(email.isEmpty() || password.isEmpty()) &&
                 binding.tilEmail.getError() == null &&
                 binding.tilPassword.getError() == null;
-    }
-
-    private void launchMain(){
-        if (getActivity() != null) {
-            Intent intent = new Intent(getContext(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-        }
-    }
-
-    private void setTextChangedListener() {
-        binding.edtEmail.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            @Override public void afterTextChanged(Editable editable) {}
-            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                validateEmail();
-            }
-        });
-        binding.edtPassword.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            @Override public void afterTextChanged(Editable editable) {}
-            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                validatePassword();
-            }
-        });
-    }
-
-    private void validateEmail() {
-        if (binding.edtEmail.getText() == null) return;
-        String email = binding.edtEmail.getText().toString();
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            binding.tilEmail.setError("Masukkan email yang valid");
-        } else binding.tilEmail.setErrorEnabled(false);
-    }
-
-    private void validatePassword() {
-        if (binding.edtPassword.getText() == null) return;
-        String password = binding.edtPassword.getText().toString();
-        if (password.isEmpty()) {
-            binding.tilPassword.setError("Masukkan kata sandi");
-        } else binding.tilPassword.setErrorEnabled(false);
     }
 }

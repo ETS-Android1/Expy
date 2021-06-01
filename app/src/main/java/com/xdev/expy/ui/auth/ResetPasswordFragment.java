@@ -7,15 +7,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.xdev.expy.databinding.FragmentResetPasswordBinding;
+import com.xdev.expy.textwatcher.EmailTextWatcher;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
 import static com.xdev.expy.utils.AppUtils.showToast;
@@ -43,34 +41,25 @@ public class ResetPasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getActivity() != null){
-            binding.toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
+        binding.toolbar.setNavigationOnClickListener(v -> requireActivity().onBackPressed());
 
-            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
-            viewModel = new ViewModelProvider(this, factory).get(AuthViewModel.class);
-            viewModel.isLoading().observe(getViewLifecycleOwner(), isLoading -> {
-                if (isLoading) binding.btnSend.setVisibility(View.INVISIBLE);
-                else binding.btnSend.setVisibility(View.VISIBLE);
-            });
-            viewModel.getToastText().observe(getViewLifecycleOwner(), toastText -> {
-                String text = toastText.getContentIfNotHandled();
-                if (text != null) showToast(getContext(), text);
-            });
+        ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity().getApplication());
+        viewModel = new ViewModelProvider(requireActivity(), factory).get(AuthViewModel.class);
+        viewModel.isLoading().observe(requireActivity(), isLoading -> {
+            if (isLoading) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.btnSend.setVisibility(View.INVISIBLE);
+            } else {
+                binding.progressBar.setVisibility(View.INVISIBLE);
+                binding.btnSend.setVisibility(View.VISIBLE);
+            }
+        });
 
-            // Initialize view
-            binding.btnSend.setOnClickListener(v -> {
-                if (binding.edtEmail.getText() != null)
-                    sendResetPassword(binding.edtEmail.getText().toString());
-            });
-
-            binding.edtEmail.addTextChangedListener(new TextWatcher() {
-                @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-                @Override public void afterTextChanged(Editable editable) {}
-                @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    validateEmail();
-                }
-            });
-        }
+        binding.btnSend.setOnClickListener(v -> {
+            if (binding.edtEmail.getText() != null)
+                sendResetPassword(binding.edtEmail.getText().toString());
+        });
+        binding.edtEmail.addTextChangedListener(new EmailTextWatcher(binding.tilEmail));
     }
 
     private void sendResetPassword(String email){
@@ -84,13 +73,5 @@ public class ResetPasswordFragment extends Fragment {
 
     private boolean isValidForm(String email){
         return !(email.isEmpty()) && binding.tilEmail.getError() == null;
-    }
-
-    private void validateEmail() {
-        if (binding.edtEmail.getText() == null) return;
-        String email = binding.edtEmail.getText().toString();
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            binding.tilEmail.setError("Masukkan email yang valid");
-        } else binding.tilEmail.setErrorEnabled(false);
     }
 }

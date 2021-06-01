@@ -1,0 +1,29 @@
+package com.xdev.expy.textwatcher;
+
+import android.text.Editable;
+import android.text.TextWatcher;
+
+import com.google.android.material.textfield.TextInputLayout;
+
+public class PersonNameTextWatcher implements TextWatcher {
+
+    private final TextInputLayout inputLayout;
+
+    public PersonNameTextWatcher(TextInputLayout inputLayout) {
+        this.inputLayout = inputLayout;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        String value = editable.toString();
+        if (value.isEmpty()){
+            inputLayout.setError("Masukkan nama lengkap");
+        } else inputLayout.setErrorEnabled(false);
+    }
+}
