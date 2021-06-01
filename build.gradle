@@ -9,6 +9,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -43,11 +44,16 @@ ext {
     navigationVersion = '2.3.5'
     legacySupportVersion = '1.0.0'
     lifecycleExtensionsVersion = '2.2.0'
+    coreKTXVersion = '1.5.0'
     kotlinLifecycleVersion = '2.3.1'
 
     junitVersion = '4.13.2'
     junitExtversion = '1.1.2'
     espressoVersion = '3.3.0'
+
+    roomVersion = '2.2.3'
+    roomRuntimeVersion = '2.3.0'
+    pagingVersion = '2.1.2'
 
     firebaseVersion = '28.0.1'
     playServicesAuthVersion = '19.0.0'

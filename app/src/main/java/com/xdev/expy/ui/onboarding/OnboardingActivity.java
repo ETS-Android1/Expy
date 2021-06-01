@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.xdev.expy.R;
 import com.xdev.expy.databinding.ActivityOnboardingBinding;
-import com.xdev.expy.ui.auth.AuthActivity;
+import com.xdev.expy.ui.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +39,14 @@ public class OnboardingActivity extends AppCompatActivity {
         View child = binding.viewPager.getChildAt(0);
         if (child instanceof RecyclerView) child.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-        binding.btnStart.setOnClickListener(view -> {
-            Intent intent = new Intent(OnboardingActivity.this, AuthActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        binding.btnStart.setOnClickListener(view -> launchMain());
+    }
+
+    private void launchMain() {
+        OnboardingPreference.getInstance(this).setIsFirstTimeLaunch(false);
+        Intent intent = new Intent(OnboardingActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void populateViewPager(OnboardingAdapter adapter) {
