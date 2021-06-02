@@ -64,11 +64,7 @@ public class RemoteDataSource {
                             Log.d(TAG, "getProducts: " + product.toString());
                         }
                     }
-                    if (!productList.isEmpty()) {
-                        result.postValue(ApiResponse.success(productList));
-                    } else {
-                        result.postValue(ApiResponse.empty(null, productList));
-                    }
+                    result.postValue(ApiResponse.success(productList));
                 }
             }  else {
                 Log.w(TAG, "Error querying document", task.getException());

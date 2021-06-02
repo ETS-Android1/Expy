@@ -8,7 +8,8 @@
 
     <include
         android:id="@+id/layout_empty"
-        layout="@layout/layout_empty" />
+        layout="@layout/layout_empty"
+        android:visibility="invisible" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer"
