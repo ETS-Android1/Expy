@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialKeyguardLayout="@layout/monitoring_widget"
-    android:initialLayout="@layout/monitoring_widget"
+    android:initialKeyguardLayout="@layout/widget_monitoring"
+    android:initialLayout="@layout/widget_monitoring"
     android:minWidth="250dp"
-    android:minHeight="40dp"
+    android:minHeight="110dp"
     android:previewImage="@drawable/pv_monitoring_widget"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="86400000"
+    android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"/>

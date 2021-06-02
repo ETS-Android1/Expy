@@ -14,13 +14,13 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.xdev.expy.R;
-import com.xdev.expy.ui.splash.SplashActivity;
+import com.xdev.expy.ui.main.MainActivity;
 
 public class ReminderHelper {
 
     static void showNotification(Context context, String channelId, String channelName, int notificationId, String title, String message) {
-        Intent intent = new Intent(context, SplashActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 notificationId, intent, 0);
 
