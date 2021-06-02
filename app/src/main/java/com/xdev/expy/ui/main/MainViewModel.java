@@ -6,26 +6,33 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
+import androidx.paging.PagedList;
 
-import com.xdev.expy.data.source.remote.ApiResponse;
-import com.xdev.expy.data.source.remote.entity.ProductEntity;
+import com.google.firebase.firestore.CollectionReference;
+import com.xdev.expy.data.source.local.entity.ProductWithReminders;
+import com.xdev.expy.data.source.local.entity.ProductEntity;
 import com.xdev.expy.data.AuthRepository;
 import com.xdev.expy.data.MainRepository;
 import com.xdev.expy.utils.Event;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.List;
+import com.xdev.expy.vo.Resource;
 
 public class MainViewModel extends AndroidViewModel {
 
     private final AuthRepository authRepository;
     private final MainRepository mainRepository;
 
-    private LiveData<ApiResponse<List<ProductEntity>>> monitoredProductList;
-    private LiveData<ApiResponse<List<ProductEntity>>> expiredProductList;
+    private LiveData<Resource<PagedList<ProductWithReminders>>> monitoredProductList;
+    private LiveData<Resource<PagedList<ProductWithReminders>>> expiredProductList;
     private MutableLiveData<FirebaseUser> user;
     private MutableLiveData<Boolean> isLoading;
     private MutableLiveData<Event<String>> toastText;
+
+    private final MutableLiveData<Boolean> fetchNow = new MutableLiveData<>();
+    public void fetch(boolean fetchNow) {
+        this.fetchNow.setValue(fetchNow);
+    }
 
     public MainViewModel(@NonNull Application application, AuthRepository authRepository, MainRepository mainRepository){
         super(application);
@@ -33,13 +40,15 @@ public class MainViewModel extends AndroidViewModel {
         this.mainRepository = mainRepository;
     }
 
-    public LiveData<ApiResponse<List<ProductEntity>>> getMonitoredProducts(){
-        if (monitoredProductList == null) monitoredProductList = mainRepository.queryMonitoredProducts();
+    public LiveData<Resource<PagedList<ProductWithReminders>>> getMonitoredProducts(){
+        if (monitoredProductList == null) monitoredProductList = Transformations.switchMap(fetchNow,
+                input -> mainRepository.getProducts(false, input));
         return monitoredProductList;
     }
 
-    public LiveData<ApiResponse<List<ProductEntity>>> getExpiredProducts(){
-        if (expiredProductList == null) expiredProductList = mainRepository.queryExpiredProducts();
+    public LiveData<Resource<PagedList<ProductWithReminders>>> getExpiredProducts(){
+        if (expiredProductList == null) expiredProductList = Transformations.switchMap(fetchNow,
+                input -> mainRepository.getProducts(true, input));
         return expiredProductList;
     }
 
@@ -70,8 +79,12 @@ public class MainViewModel extends AndroidViewModel {
         mainRepository.deleteProduct(product);
     }
 
-    public void addProductsSnapshotListener(){
-        mainRepository.addProductsSnapshotListener();
+    public CollectionReference getProductsReference(){
+        return mainRepository.getProductsReference();
+    }
+
+    public void setProductsReference(String userId){
+        mainRepository.setProductsReference(userId);
     }
 
     public void sendPasswordReset(String email){

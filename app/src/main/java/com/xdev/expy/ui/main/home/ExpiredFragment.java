@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xdev.expy.data.source.remote.entity.ProductEntity;
+import com.xdev.expy.data.source.local.entity.ProductEntity;
 import com.xdev.expy.databinding.FragmentExpiredBinding;
 import com.xdev.expy.ui.main.MainActivity;
 import com.xdev.expy.ui.main.MainCallback;
@@ -48,31 +48,30 @@ public class ExpiredFragment extends Fragment implements ProductAdapter.ProductA
         ProductAdapter adapter = new ProductAdapter(this);
         binding.recyclerView.setAdapter(adapter);
 
-        ShimmerHelper shimmer = new ShimmerHelper(binding.shimmer, binding.recyclerView, binding.layoutEmpty.getRoot());
+        ShimmerHelper shimmer = new ShimmerHelper(binding.shimmer, binding.recyclerView,
+                binding.layoutEmpty.getRoot(), binding.swipeRefresh);
 
-        if (getActivity() != null) {
-            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
-            MainViewModel viewModel = new ViewModelProvider(requireActivity(), factory).get(MainViewModel.class);
-            viewModel.getExpiredProducts().observe(requireActivity(), result -> {
-                switch (result.status) {
-                    case LOADING:
-                        shimmer.show();
-                        break;
-                    case SUCCESS:
-                        adapter.submitList(result.body);
-                        shimmer.hide(false);
-                        break;
-                    case EMPTY:
-                        shimmer.hide(true);
-                        break;
-                    case ERROR:
-                        showToast(getContext(), "Data gagal dimuat, tarik untuk memuat ulang");
-                        shimmer.hide(true);
-                        break;
-                }
-            });
-            viewModel.addProductsSnapshotListener();
-        }
+        ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity().getApplication());
+        MainViewModel viewModel = new ViewModelProvider(requireActivity(), factory).get(MainViewModel.class);
+        viewModel.getExpiredProducts().observe(requireActivity(), result -> {
+            switch (result.status) {
+                case LOADING:
+                    shimmer.show();
+                    break;
+                case SUCCESS:
+                    if (result.data != null) {
+                        adapter.submitList(result.data);
+                        shimmer.hide(result.data.isEmpty());
+                    }
+                    break;
+                case ERROR:
+                    showToast(getContext(), "Data gagal dimuat, tarik untuk memuat ulang");
+                    shimmer.hide(true);
+                    break;
+            }
+        });
+
+        binding.swipeRefresh.setOnRefreshListener(() -> viewModel.fetch(true));
     }
 
     @Override

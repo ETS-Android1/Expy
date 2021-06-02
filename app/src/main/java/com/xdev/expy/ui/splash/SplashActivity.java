@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.xdev.expy.databinding.ActivitySplashBinding;
+import com.xdev.expy.ui.main.MainActivity;
 import com.xdev.expy.ui.onboarding.OnboardingActivity;
+import com.xdev.expy.ui.onboarding.OnboardingPreference;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,9 +21,21 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            Intent intent = new Intent(this, OnboardingActivity.class);
-            startActivity(intent);
-            finish();
+            boolean isFirstTimeLaunch = OnboardingPreference.getInstance(this).isFirstTimeLaunch();
+            if (isFirstTimeLaunch) launchOnboarding();
+            else launchMain();
         }, 1000);
+    }
+
+    private void launchOnboarding() {
+        Intent intent = new Intent(this, OnboardingActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void launchMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

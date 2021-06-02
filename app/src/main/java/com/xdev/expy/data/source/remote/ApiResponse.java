@@ -40,5 +40,4 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> error(String msg, @Nullable T body) {
         return new ApiResponse<>(ERROR, body, msg);
     }
-
 }

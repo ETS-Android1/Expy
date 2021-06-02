@@ -4,6 +4,7 @@
     package="com.xdev.expy">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,16 +14,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Expy"
         tools:ignore="AllowBackup">
-        <activity android:name="com.xdev.expy.ui.auth.AuthActivity" />
-        <activity android:name="com.xdev.expy.ui.onboarding.OnboardingActivity" />
-        <activity android:name="com.xdev.expy.ui.splash.SplashActivity" >
+        <receiver
+            android:name=".reminder.ReminderReceiver"
+            android:enabled="true"
+            android:exported="false"/>
+        <receiver android:name=".ui.widget.MonitoringWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/monitoring_widget_info" />
+        </receiver>
+
+        <activity android:name=".ui.auth.AuthActivity" />
+        <activity android:name=".ui.onboarding.OnboardingActivity" />
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.xdev.expy.ui.main.MainActivity"/>
+        <activity android:name=".ui.main.MainActivity" />
     </application>
 
 </manifest>

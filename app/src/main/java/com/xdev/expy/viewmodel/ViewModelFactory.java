@@ -32,7 +32,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
                 if (INSTANCE == null) {
                     INSTANCE = new ViewModelFactory(application,
                             Injection.provideRepository(application),
-                            Injection.provideRepository()
+                            Injection.provideRepository(application.getApplicationContext())
                     );
                 }
             }

@@ -1,37 +1,46 @@
 package com.xdev.expy.ui.main.home;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xdev.expy.R;
-import com.xdev.expy.data.source.remote.entity.ProductEntity;
+import com.xdev.expy.data.source.local.entity.ProductEntity;
+import com.xdev.expy.data.source.local.entity.ProductWithReminders;
 import com.xdev.expy.databinding.ItemProductBinding;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.xdev.expy.utils.DateUtils.differenceOfDates;
 import static com.xdev.expy.utils.DateUtils.getCurrentDate;
 import static com.xdev.expy.utils.DateUtils.getFormattedDate;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class ProductAdapter extends PagedListAdapter<ProductWithReminders, ProductAdapter.ViewHolder> {
 
-    private final List<ProductEntity> productList = new ArrayList<>();
     private final ProductAdapterClickListener listener;
 
     public ProductAdapter(ProductAdapterClickListener listener) {
+        super(DIFF_CALLBACK);
         this.listener = listener;
     }
 
-    public void submitList(List<ProductEntity> productList) {
-        this.productList.clear();
-        this.productList.addAll(productList);
-        notifyDataSetChanged();
-    }
+    private static final DiffUtil.ItemCallback<ProductWithReminders> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<ProductWithReminders>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull ProductWithReminders oldItem, @NonNull ProductWithReminders newItem) {
+                    return oldItem.getProduct().getId().equals(newItem.getProduct().getId());
+                }
+
+                @SuppressLint("DiffUtilEquals")
+                @Override
+                public boolean areContentsTheSame(@NonNull ProductWithReminders oldItem, @NonNull ProductWithReminders newItem) {
+                    return oldItem.equals(newItem);
+                }
+            };
 
     @NonNull
     @Override
@@ -42,13 +51,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
-        ProductEntity product = productList.get(position);
-        holder.bind(product);
-    }
-
-    @Override
-    public int getItemCount() {
-        return productList.size();
+        ProductWithReminders product = getItem(position);
+        if (product != null) holder.bind(product);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,24 +64,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             this.binding = binding;
         }
 
-        public void bind(ProductEntity product) {
-            String expiryDate = product.getExpiryDate();
-            int countdown = differenceOfDates(expiryDate, getCurrentDate());
-            if (countdown < 0) countdown = 0;
+        public void bind(ProductWithReminders product) {
+            String expiryDate = product.getProduct().getExpiryDate();
+            long dte = differenceOfDates(expiryDate, getCurrentDate());
+            if (dte < 0) dte = 0;
 
-            binding.tvName.setText(product.getName());
+            binding.tvName.setText(product.getProduct().getName());
             binding.tvExpiryDate.setText(getFormattedDate(expiryDate, true));
-            binding.tvCountdown.setText(countdown + " hari");
+            binding.tvCountdown.setText(dte + " hari");
 
             int background;
             int color;
-            if (countdown <= 3) {
+            if (dte <= 3) {
                 background = R.drawable.bg_countdown_red;
                 color = R.color.red;
-            } else if (countdown <= 7) {
+            } else if (dte <= 7) {
                 background = R.drawable.bg_countdown_orange;
                 color = R.color.orange;
-            } else if (countdown <= 30) {
+            } else if (dte <= 30) {
                 background = R.drawable.bg_countdown_yellow;
                 color = R.color.yellow;
             } else {
@@ -87,7 +91,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             binding.layoutCountdown.setBackgroundResource(background);
             binding.imgIcon.setColorFilter(ContextCompat.getColor(itemView.getContext(), color));
 
-            itemView.setOnClickListener(view -> listener.onProductClicked(product));
+            itemView.setOnClickListener(view -> {
+                ProductEntity productIntent = product.getProduct();
+                productIntent.setReminders(product.getReminders());
+                listener.onProductClicked(productIntent);
+            });
         }
     }
 

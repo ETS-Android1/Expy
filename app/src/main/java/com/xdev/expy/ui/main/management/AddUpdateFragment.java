@@ -10,28 +10,40 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import com.xdev.expy.data.source.remote.entity.ProductEntity;
-import com.xdev.expy.data.source.remote.entity.ReminderEntity;
+import com.google.firebase.Timestamp;
+import com.xdev.expy.data.source.local.entity.ProductEntity;
+import com.xdev.expy.data.source.local.entity.ReminderEntity;
 import com.xdev.expy.databinding.FragmentAddUpdateBinding;
+import com.xdev.expy.reminder.ReminderReceiver;
+import com.xdev.expy.textwatcher.ExpiryDateTextWatcher;
+import com.xdev.expy.textwatcher.OpenedDateTextWatcher;
+import com.xdev.expy.textwatcher.PaoTextWatcher;
+import com.xdev.expy.textwatcher.ProductNameTextWatcher;
 import com.xdev.expy.ui.main.MainActivity;
 import com.xdev.expy.ui.main.MainCallback;
 import com.xdev.expy.ui.main.MainViewModel;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.xdev.expy.utils.AppUtils.showToast;
 import static com.xdev.expy.utils.DateUtils.DATE_FORMAT;
 import static com.xdev.expy.utils.DateUtils.addDay;
-import static com.xdev.expy.utils.DateUtils.getArrayDate;
+import static com.xdev.expy.utils.DateUtils.differenceOfDates;
+import static com.xdev.expy.utils.DateUtils.getCurrentDate;
 import static com.xdev.expy.utils.DateUtils.getFormattedDate;
 
 public class AddUpdateFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -46,6 +58,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     private MainCallback mainCallback;
     private MainViewModel viewModel;
     private ProductEntity product;
+    private ReminderReceiver reminderReceiver;
 
     private boolean isUpdate = false;
     private String expiryDate = "";
@@ -82,6 +95,8 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
 
         binding.toolbar.setNavigationOnClickListener(v -> mainCallback.backToHome(true));
 
+        reminderReceiver = new ReminderReceiver();
+
         ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity().getApplication());
         viewModel = new ViewModelProvider(requireActivity(), factory).get(MainViewModel.class);
 
@@ -108,6 +123,12 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
             binding.toolbarTitle.setText("Tambah Produk");
             binding.btnDelete.setVisibility(View.GONE);
         }
+
+        binding.edtName.addTextChangedListener(new ProductNameTextWatcher(binding.tilName));
+        binding.edtExpiryDate.addTextChangedListener(new ExpiryDateTextWatcher(binding.tilExpiryDate, binding.switchOpened));
+        binding.edtOpenedDate.addTextChangedListener(new OpenedDateTextWatcher(binding.tilOpenedDate, binding.switchOpened));
+        binding.edtPao.addTextChangedListener(new PaoTextWatcher(binding.tilPao, binding.switchOpened));
+
         setExpiryDateFieldVisibility(product.isOpened());
     }
 
@@ -121,9 +142,9 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         } else if (id == binding.edtOpenedDate.getId()) {
             showDatePicker(OPENED_DATE_PICKER, getContext(), openedDate);
         } else if (id == binding.btnSave.getId()) {
-            saveProduct(product, isUpdate);
+            saveProduct(getContext(), product, isUpdate);
         } else if (id == binding.btnDelete.getId()) {
-            deleteProduct(product);
+            deleteProduct(getContext(), product);
         }
     }
 
@@ -136,84 +157,87 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     }
 
     public void showDatePicker(String tag, Context context, String initialDate) {
-        int initialYear;
-        int initialMonth;
-        int initialDay;
-
-        if (initialDate == null || initialDate.isEmpty()) {
-            final Calendar calendar = Calendar.getInstance();
-            initialYear = calendar.get(Calendar.YEAR);
-            initialMonth = calendar.get(Calendar.MONTH);
-            initialDay = calendar.get(Calendar.DATE);
-        } else {
-            int[] arrayDate = getArrayDate(initialDate);
-            initialYear = arrayDate[0];
-            initialMonth = arrayDate[1];
-            initialDay = arrayDate[2];
+        Calendar calendar = Calendar.getInstance();
+        if (initialDate != null && !initialDate.isEmpty()) {
+            calendar.setTime(stringToDate(DATE_FORMAT, initialDate));
         }
+
+        int initialYear = calendar.get(Calendar.YEAR);
+        int initialMonth = calendar.get(Calendar.MONTH);
+        int initialDay = calendar.get(Calendar.DATE);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, (view, year, monthOfYear, dayOfMonth) -> {
             if(view.isShown()){
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(year, monthOfYear, dayOfMonth);
+                Calendar selectedDate = Calendar.getInstance();
+                selectedDate.set(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
                 if (tag.equals(EXPIRY_DATE_PICKER)) {
-                    expiryDate = simpleDateFormat.format(calendar.getTime());
+                    expiryDate = simpleDateFormat.format(selectedDate.getTime());
                     binding.edtExpiryDate.setText(getFormattedDate(expiryDate, false));
                 } else if (tag.equals(OPENED_DATE_PICKER)) {
-                    openedDate = simpleDateFormat.format(calendar.getTime());
+                    openedDate = simpleDateFormat.format(selectedDate.getTime());
                     binding.edtOpenedDate.setText(getFormattedDate(openedDate, false));
                 }
             }
         }, initialYear, initialMonth , initialDay);
+        datePickerDialog.getDatePicker().setMinDate(stringToDate(DATE_FORMAT, "2000/01/01").getTime());
+        datePickerDialog.getDatePicker().setMaxDate(stringToDate(DATE_FORMAT, "9999/12/31").getTime());
         datePickerDialog.show();
     }
 
-    private void saveProduct(ProductEntity product, boolean isUpdate) {
+    private void saveProduct(Context context, ProductEntity product, boolean isUpdate) {
         if (binding.edtName.getText() == null || binding.edtPao.getText() == null) return;
 
         String name = binding.edtName.getText().toString();
         String expiryDate = this.expiryDate;
         String openedDate = this.openedDate;
-        String pao;
+        String pao = binding.edtPao.getText().toString();
         boolean opened = binding.switchOpened.isChecked();
         boolean reminder = binding.switchReminder.isChecked();
 
-        if (name.isEmpty()) return;
-        if (opened) {
-            pao = binding.edtPao.getText().toString();
-            expiryDate = addDay(openedDate, Integer.parseInt(pao)*30);
-            if (openedDate.isEmpty() || pao.isEmpty()) {
-                return;
-            }
-        } else {
-            pao = "0";
-            if (expiryDate.isEmpty()) {
-                return;
-            }
+        if (!isValidForm(name, expiryDate, openedDate, pao, opened)) {
+            showToast(getContext(), "Pastikan semua data lengkap");
+            return;
         }
 
-        List<ReminderEntity> reminderList = new ArrayList<>();
-        if (reminder) reminderList = setReminder(product);
+        if (opened) expiryDate = addDay(openedDate, Integer.parseInt(pao)*30);
+        else pao = "0";
 
         product.setName(name);
         product.setExpiryDate(expiryDate);
         product.setOpenedDate(openedDate);
         product.setPao(Integer.parseInt(pao));
         product.setOpened(opened);
+
+        List<ReminderEntity> reminderList = new ArrayList<>();
+        if (reminder) reminderList = setReminder(context, product);
         product.setReminders(reminderList);
 
         if (isUpdate) viewModel.updateProduct(product);
-        else viewModel.insertProduct(product);
+        else {
+            String id = viewModel.getProductsReference().document().getId();
+            product.setId(id);
+            viewModel.insertProduct(product);
+        }
         mainCallback.backToHome(false);
     }
 
-    private void deleteProduct(ProductEntity product) {
-        new AlertDialog.Builder(getContext())
+    private boolean isValidForm(String name, String expiryDate, String openedDate, String pao, boolean isOpened){
+        return !((name.isEmpty()) || ((isOpened && (openedDate.isEmpty() || pao.isEmpty())) || (!isOpened && (expiryDate.isEmpty())))) &&
+                binding.tilName.getError() == null &&
+                binding.tilExpiryDate.getError() == null &&
+                binding.tilOpenedDate.getError() == null &&
+                binding.tilPao.getError() == null;
+    }
+
+    private void deleteProduct(Context context, ProductEntity product) {
+        new AlertDialog.Builder(context)
                 .setTitle("Hapus produk")
                 .setMessage("Apakah kamu yakin ingin menghapus catatan " + product.getName() + "?")
                 .setNeutralButton("Batal", null)
                 .setPositiveButton("Ya", (dialogInterface, i) -> {
+                        for (ReminderEntity reminder : product.getReminders())
+                            reminderReceiver.cancelReminder(context, reminder.getId());
                         viewModel.deleteProduct(product);
                         mainCallback.backToHome(false);
                 }).create().show();
@@ -225,9 +249,62 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         binding.tilPao.setEnabled(isOpened);
     }
 
-    private List<ReminderEntity> setReminder(ProductEntity product) {
-        return new ArrayList<>();
-        // TODO: hidupkan notifikasi
+    private List<ReminderEntity> setReminder(Context context, ProductEntity product) {
+        List<ReminderEntity> reminderList = new ArrayList<>();
+        String expiryDate = product.getExpiryDate();
+
+
+        int dte = (int) differenceOfDates(expiryDate, getCurrentDate());
+        Log.d(TAG, "Days to expiration = " + dte);
+
+        List<Integer> notificationDayList = new ArrayList<>();
+        if (dte >= 0) notificationDayList.add(0);
+        if (dte >= 1) notificationDayList.add(1);
+        if (dte >= 2) notificationDayList.add(2);
+        if (dte >= 3) notificationDayList.add(3);
+        if (dte >= 7) notificationDayList.add(7);
+        if (dte >= 14) notificationDayList.add(14);
+        if (dte >= 30) notificationDayList.add(30);
+        if (dte >= 60) notificationDayList.add(60);
+        if (dte >= 90) notificationDayList.add(90);
+        if (dte >= 180) notificationDayList.add(180);
+        Log.d(TAG, "Notification days = " + notificationDayList.toString());
+
+        for (int notificationDay : notificationDayList){
+            ReminderEntity reminder = new ReminderEntity();
+            Date date = stringToDate("yyyy/MM/dd HH:mm:ss", addDay(expiryDate, -notificationDay) + " 12:00:00");
+            reminder.setId((Math.abs(product.getId().hashCode()) + notificationDay) % Integer.MAX_VALUE);
+            reminder.setTimestamp(new Timestamp(date));
+            reminderList.add(reminder);
+            Log.d(TAG, reminder.toString());
+
+            String day;
+            if (notificationDay == 0) day = "Hari ini";
+            else if (notificationDay == 1) day = "Besok";
+            else if (notificationDay == 2) day = "Lusa";
+            else if (notificationDay == 3) day = notificationDay + " hari lagi";
+            else if (notificationDay == 7 || notificationDay == 14) day = notificationDay/7 + " minggu lagi";
+            else day = notificationDay/30 + " bulan lagi";
+
+            String title;
+            if (notificationDay == 0) title = day + " telah kedaluwarsa";
+            else title = day + " akan kedaluwarsa";
+
+            String message = product.getName() + " kedaluwarsa pada " + getFormattedDate(product.getExpiryDate(), false);
+            reminderReceiver.setReminder(context, reminder.getId(), title, message, date);
+        }
+
+        return reminderList;
+    }
+
+    private Date stringToDate(String dateFormat, String date) {
+        try {
+            DateFormat df = new SimpleDateFormat(dateFormat, Locale.getDefault());
+            return df.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
     }
 
     @Override

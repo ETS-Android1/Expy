@@ -6,26 +6,36 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.xdev.expy.R;
-import com.xdev.expy.data.source.remote.entity.ProductEntity;
+import com.xdev.expy.data.source.local.entity.ProductEntity;
 import com.xdev.expy.databinding.ActivityMainBinding;
+import com.xdev.expy.ui.auth.AuthActivity;
 import com.xdev.expy.ui.main.about.AboutFragment;
 import com.xdev.expy.ui.main.management.AddUpdateFragment;
 import com.xdev.expy.ui.main.profile.ProfileFragment;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
 import static com.xdev.expy.utils.AppUtils.loadImage;
+import static com.xdev.expy.utils.AppUtils.showToast;
 import static com.xdev.expy.utils.DateUtils.getCurrentDate;
 import static com.xdev.expy.utils.DateUtils.getFormattedDate;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, MainCallback {
 
+    private final String TAG = getClass().getSimpleName();
+
     private ActivityMainBinding binding;
+    private FirebaseUser currentUser;
+    private ListenerRegistration registration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +56,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ViewModelFactory factory = ViewModelFactory.getInstance(getApplication());
         MainViewModel viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
         viewModel.getUser().observe(this, user -> {
-            if (user != null) {
+            this.currentUser = user;
+            if (user == null) {
+                launchAuth();
+            } else {
                 loadImage(this, binding.civProfile, user.getPhotoUrl());
+                viewModel.setProductsReference(user.getUid());
+                registration = viewModel.getProductsReference().addSnapshotListener((value, error) -> {
+                    if (error != null) Log.w(TAG, "Listen failed", error);
+                    else if (value != null){
+                        viewModel.fetch(true);
+                        Log.d(TAG, "Changes detected");
+                    }
+                });
             }
         });
+        viewModel.getToastText().observe(this, toastText -> {
+            String text = toastText.getContentIfNotHandled();
+            if (text != null) showToast(this, text);
+        });
+    }
+
+    private void launchAuth() {
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
         if (id == binding.btnAbout.getId()){
-            AboutFragment.newInstance().show(getSupportFragmentManager(), AboutFragment.TAG);
+            showAbout();
         } else if (id == binding.civProfile.getId()){
-            ProfileFragment.newInstance().show(getSupportFragmentManager(), ProfileFragment.TAG);
+            showProfile();
         }
+    }
+
+    private void showAbout() {
+        AboutFragment.newInstance().show(getSupportFragmentManager(), AboutFragment.TAG);
+    }
+
+    private void showProfile() {
+        String userProfile = "";
+        if (currentUser.getPhotoUrl() != null) userProfile = currentUser.getPhotoUrl().toString();
+        ProfileFragment.newInstance(currentUser.getDisplayName(),
+                currentUser.getEmail(),
+                userProfile
+        ).show(getSupportFragmentManager(), ProfileFragment.TAG);
     }
 
     @Override
@@ -80,7 +124,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         Fragment addUpdateFragment = getSupportFragmentManager().findFragmentByTag(AddUpdateFragment.TAG);
-        if (addUpdateFragment != null && addUpdateFragment.isVisible()) showCancelEditingConfirmDialog();
+        boolean isAddUpdateFragmentVisible = addUpdateFragment != null && addUpdateFragment.isVisible();
+        if (isAddUpdateFragmentVisible) showCancelEditingConfirmDialog();
         else super.onBackPressed();
     }
 
@@ -99,6 +144,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binding.container.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
         } else {
             binding.container.setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (registration != null) {
+            registration.remove();
         }
     }
 }

@@ -123,7 +123,6 @@
 
     <style name="RecyclerView">
         <item name="android:clipToPadding">false</item>
-        <item name="android:overScrollMode">never</item>
     </style>
 
     <style name="ScrollView">
@@ -156,5 +155,10 @@
         <item name="android:textAlignment">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ThemeOverlay.Expy.AppWidgetContainer" parent="">
+        <item name="appWidgetBackgroundColor">@color/light_blue_600</item>
+        <item name="appWidgetTextColor">@color/light_blue_50</item>
     </style>
 </resources>

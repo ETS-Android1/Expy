@@ -47,31 +47,18 @@ public class DateUtils {
         return "-1";
     }
 
-    public static int differenceOfDates(String newerDate, String olderDate){
+    public static long differenceOfDates(String newerDate, String olderDate){
         try{
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
             Date finalDate = dateFormat.parse(newerDate);
             Date currentDate = dateFormat.parse(olderDate);
             if (finalDate != null && currentDate != null) {
-                double difference = (double) ((finalDate.getTime()-currentDate.getTime())/100000);
-                return (int) ((difference / (24*60*60*1000))*100000);
+                double difference = finalDate.getTime()-currentDate.getTime();
+                return (long) (difference / (24*60*60*1000));
             }
         }catch (ParseException e){
             e.printStackTrace();
         }
         return -1;
-    }
-
-    public static int[] getArrayDate(String date){
-        try {
-            String[] stringArrayDate = date.split("/");
-            int[] integerArrayDate = new int[3];
-            for (int i = 0; i < 3; i++) integerArrayDate[i] = Integer.parseInt(stringArrayDate[i]);
-            // Karena bulan di mulai dari 0, jadi dikurangi 1
-            return new int[] {integerArrayDate[0], integerArrayDate[1]-1, integerArrayDate[2]};
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return new int[] {1, 0, 1970};
     }
 }
