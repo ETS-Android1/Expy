@@ -21,7 +21,7 @@
     <string name="title_profile">Profile</string>
     <string name="reset_password">Reset Password</string>
     <string name="logout">Logout</string>
-    <string name="forgot_password">Forget Password</string>
+    <string name="forgot_password">Forgot Password</string>
     <string name="email">Email</string>
     <string name="send_link">Send Link</string>
     <string name="welcome">Welcome</string>
@@ -30,7 +30,7 @@
     <string name="desc_welcome">Login to continue</string>
     <string name="or">or</string>
     <string name="google_sign_in">Sign in with Google</string>
-    <string name="forgot_password_">Forget Password?</string>
+    <string name="forgot_password_">Forgot Password?</string>
     <string name="register">Register</string>
     <string name="title_sign_up">Sign Up</string>
     <string name="full_name">Full Name</string>
@@ -47,4 +47,27 @@
     <string name="hint_full_name">Enter Full Name</string>
     <string name="hint_password">Enter Password</string>
     <string name="invalid_password_confirmation">Password incorrect</string>
+    <string name="help_pao">Period After Opening or PAO is a packaging label on cosmetics that shows the safe limit for use after opening. If it says 6M, the safe limit for using the cosmetic product is 6 months after opening.  If your product has been opened, you can check this option and enter the date it was opened and the PAO as stated on the package.</string>
+    <string name="has_pao">Has it been opened and has PAO?</string>
+    <string name="turn_on_reminders_hint">Reminders will appear periodically before your product expires.</string>
+    <string name="hint_reset_password">A link to change your password will be sent to your email.</string>
+    <string name="hint_register">Don\'t have an account yet?</string>
+    <string name="password_confirmation">Password confirmation</string>
+    <string name="title_empty">No records yet</string>
+    <string name="desc_empty">Let\'s add products for you to monitor</string>
+    <string name="title_onboarding_1">Monitor Expiration Date</string>
+    <string name="desc_onboarding_1">Write down the expiration date so you don\'t forget it anymore</string>
+    <string name="desc_onboarding_2">Receive periodic notifications when the expiration date is approaching</string>
+    <string name="desc_onboarding_3">Install the widget on the home screen for faster monitoring access</string>
+    <string name="dialog_title_cancel_editing">Undo changes</string>
+    <string name="dialog_message_cancel_editing">You haven\'t saved your changes. Are you sure you want to cancel it?</string>
+    <string name="dialog_message_delete_product">Are you sure you want to delete the %1$s record?</string>
+    <string name="day_after_tomorrow">Day after tomorrow</string>
+    <string name="toast_error_get_product">Data failed to load, pull down to reload</string>
+    <string name="toast_empty_fields">Make sure all data is complete</string>
+    <string name="no_empty_field">This column cannot be empty</string>
+    <string name="hint_create_password">Enter at least 6 characters with a combination of 1 uppercase letter, lowercase letter, number and symbol</string>
+    <string name="hint_email">Enter a valid email</string>
+    <string name="hint_date_picker">Click to select date</string>
+    <string name="max_limit_number_of_digits">The number of digits exceeds the maximum limit</string>
 </resources>
