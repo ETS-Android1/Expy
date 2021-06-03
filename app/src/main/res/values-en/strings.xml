@@ -62,7 +62,7 @@
     <string name="dialog_title_cancel_editing">Undo changes</string>
     <string name="dialog_message_cancel_editing">You haven\'t saved your changes. Are you sure you want to cancel it?</string>
     <string name="dialog_message_delete_product">Are you sure you want to delete the %1$s record?</string>
-    <string name="day_after_tomorrow">Day after tomorrow</string>
+    <string name="day_after_tomorrow">2 days to go</string>
     <string name="toast_error_get_product">Data failed to load, pull down to reload</string>
     <string name="toast_empty_fields">Make sure all data is complete</string>
     <string name="no_empty_field">This column cannot be empty</string>
