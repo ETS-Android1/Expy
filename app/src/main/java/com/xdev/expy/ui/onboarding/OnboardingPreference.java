@@ -13,7 +13,7 @@ public class OnboardingPreference {
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
 
-    private static final String PREFERENCE_NAME = "oboarding_preference";
+    private static final String PREFERENCE_NAME = "onboarding_preference";
     private static final String IS_FIRST_TIME_LAUNCH = "is_first_time_launch";
 
     @SuppressLint("CommitPrefEdits")

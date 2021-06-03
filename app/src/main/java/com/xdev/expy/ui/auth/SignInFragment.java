@@ -96,7 +96,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
         if (getContext() != null){
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestIdToken(getResources().getString(R.string.default_web_client_id))
                     .requestEmail()
                     .build();
             googleSignInClient = GoogleSignIn.getClient(getContext(), gso);
@@ -106,8 +106,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         binding.btnGoogle.setOnClickListener(this);
         binding.tvResetPassword.setOnClickListener(this);
         binding.tvRegister.setOnClickListener(this);
-        binding.edtEmail.addTextChangedListener(new EmailTextWatcher(binding.tilEmail));
-        binding.edtPassword.addTextChangedListener(new PasswordTextWatcher(binding.tilPassword));
+        binding.edtEmail.addTextChangedListener(new EmailTextWatcher(getContext(), binding.tilEmail));
+        binding.edtPassword.addTextChangedListener(new PasswordTextWatcher(getContext(), binding.tilPassword));
     }
 
     @Override
@@ -135,7 +135,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private void loginWithEmail(String email, String password){
         if (!isValidForm(email, password)){
-            showToast(getContext(), "Pastikan semua data lengkap");
+            showToast(getContext(), getResources().getString(R.string.toast_empty_fields));
             return;
         }
 

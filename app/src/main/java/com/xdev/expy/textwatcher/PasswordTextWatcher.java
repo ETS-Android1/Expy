@@ -1,15 +1,19 @@
 package com.xdev.expy.textwatcher;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.xdev.expy.R;
 
 public class PasswordTextWatcher implements TextWatcher {
 
+    private final Context context;
     private final TextInputLayout inputLayout;
 
-    public PasswordTextWatcher(TextInputLayout inputLayout) {
+    public PasswordTextWatcher(Context context, TextInputLayout inputLayout) {
+        this.context = context;
         this.inputLayout = inputLayout;
     }
 
@@ -23,7 +27,7 @@ public class PasswordTextWatcher implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         String value = editable.toString();
         if (value.isEmpty()){
-            inputLayout.setError("Masukkan kata sandi");
+            inputLayout.setError(context.getResources().getString(R.string.hint_password));
         } else inputLayout.setErrorEnabled(false);
     }
 }

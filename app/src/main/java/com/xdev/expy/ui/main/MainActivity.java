@@ -131,10 +131,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showCancelEditingConfirmDialog() {
         new AlertDialog.Builder(this)
-                .setTitle("Batalkan perubahan")
-                .setMessage("Kamu belum menyimpan perubahan. Apakah kamu yakin ingin membatalkannya?")
-                .setNeutralButton("Batal", null)
-                .setPositiveButton("Ya", (dialogInterface, i) ->
+                .setTitle(R.string.dialog_title_cancel_editing)
+                .setMessage(R.string.dialog_message_cancel_editing)
+                .setNeutralButton(R.string.cancel, null)
+                .setPositiveButton(R.string.yes, (dialogInterface, i) ->
                         super.onBackPressed())
                 .create().show();
     }

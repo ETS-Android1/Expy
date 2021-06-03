@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selamat datang"
+        android:text="@string/welcome"
         android:textSize="@dimen/font_md"
         android:textStyle="bold"
         android:textColor="@color/green_primary"
@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Masuk untuk melanjutkan"
+        android:text="@string/desc_welcome"
         android:textSize="@dimen/font_nm"
         android:layout_marginBottom="16dp"
         android:layout_marginHorizontal="16dp"/>
@@ -42,7 +42,7 @@
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email">
+                android:hint="@string/email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_email"
@@ -57,7 +57,7 @@
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Kata sandi"
+                android:hint="@string/password"
                 app:endIconMode="password_toggle">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -91,12 +91,12 @@
                         style="@style/Button.Primary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Masuk"/>
+                        android:text="@string/login"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="atau"
+                        android:text="@string/or"
                         android:textSize="@dimen/font_sm"
                         android:textColor="@color/gray_dark"
                         android:layout_gravity="center_horizontal"
@@ -107,7 +107,7 @@
                         style="@style/Button.Secondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Masuk dengan Google"
+                        android:text="@string/google_sign_in"
                         app:icon="@drawable/ic_google"/>
                 </LinearLayout>
             </FrameLayout>
@@ -117,7 +117,7 @@
                 style="@style/ClickableTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lupa kata sandi?"
+                android:text="@string/forgot_password_"
                 android:textSize="@dimen/font_nm"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"/>
@@ -132,7 +132,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Belum punya akun?"
+                    android:text="@string/hint_register"
                     android:textSize="@dimen/font_nm"/>
 
                 <TextView
@@ -140,7 +140,7 @@
                     style="@style/ClickableTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Daftar"
+                    android:text="@string/register"
                     android:textSize="@dimen/font_nm"
                     android:textStyle="bold"
                     android:layout_marginStart="4dp"/>

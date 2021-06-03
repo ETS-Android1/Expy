@@ -1,17 +1,21 @@
 package com.xdev.expy.textwatcher;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.xdev.expy.R;
 
 public class PasswordConfirmationTextWatcher implements TextWatcher {
 
+    private final Context context;
     private final TextInputLayout inputLayout;
     private final EditText edtPassword;
 
-    public PasswordConfirmationTextWatcher(TextInputLayout inputLayout, EditText edtPassword) {
+    public PasswordConfirmationTextWatcher(Context context, TextInputLayout inputLayout, EditText edtPassword) {
+        this.context = context;
         this.inputLayout = inputLayout;
         this.edtPassword = edtPassword;
     }
@@ -24,10 +28,10 @@ public class PasswordConfirmationTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-        String passwordConfirm = editable.toString();
+        String passwordConfirmation = editable.toString();
         String password = edtPassword.getText().toString();
-        if (!passwordConfirm.equals(password)){
-            inputLayout.setError("Kata sandi tidak sama");
+        if (!passwordConfirmation.equals(password)){
+            inputLayout.setError(context.getResources().getString(R.string.invalid_password_confirmation));
         } else inputLayout.setErrorEnabled(false);
     }
 }

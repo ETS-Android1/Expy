@@ -71,7 +71,7 @@ public class MonitoringRemoteViewsFactory implements RemoteViewsService.RemoteVi
 
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_monitoring_item);
         rv.setTextViewText(R.id.tv_name, product.getName());
-        rv.setTextViewText(R.id.tv_countdown, dte + " hari");
+        rv.setTextViewText(R.id.tv_countdown, context.getResources().getString(R.string.countdown, dte));
         rv.setInt(R.id.layout_countdown, "setBackgroundResource", background);
 
         Intent fillInIntent = new Intent();

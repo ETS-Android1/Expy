@@ -19,7 +19,7 @@
             style="@style/ToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tentang Aplikasi"/>
+            android:text="@string/title_about"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -38,7 +38,8 @@
                 android:src="@drawable/ic_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="48dp"/>
+                android:layout_marginBottom="48dp"
+                android:contentDescription="@string/app_name" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,7 +62,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Arief Zuhri"
+                        android:text="@string/arief"
                         android:textSize="@dimen/font_nm"
                         android:textStyle="bold" />
 
@@ -95,7 +96,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Gabriela Anggerita Jasmin"
+                        android:text="@string/angger"
                         android:textSize="@dimen/font_nm"
                         android:textStyle="bold" />
 

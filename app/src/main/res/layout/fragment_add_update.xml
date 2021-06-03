@@ -19,7 +19,7 @@
             style="@style/ToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tambah Produk"/>
+            android:text="@string/title_add_product"/>
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
@@ -38,7 +38,7 @@
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nama produk">
+                android:hint="@string/product_name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_name"
@@ -52,7 +52,7 @@
                 android:id="@+id/switch_opened"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Apakah sudah dibuka dan memiliki PAO?"
+                android:text="@string/has_pao"
                 android:checked="false"/>
 
             <TextView
@@ -60,7 +60,7 @@
                 style="@style/ClickableTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bantuan"
+                android:text="@string/help"
                 android:drawablePadding="4dp"
                 app:drawableStartCompat="@drawable/ic_help"
                 android:layout_marginBottom="8dp"/>
@@ -70,7 +70,7 @@
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tanggal kedaluwarsa/best before">
+                android:hint="@string/expiry_date_bb">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_expiry_date"
@@ -85,7 +85,7 @@
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tanggal dibuka">
+                android:hint="@string/opened_date">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_opened_date"
@@ -100,7 +100,7 @@
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="PAO (bulan)">
+                android:hint="@string/pao_month">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_pao"
@@ -114,21 +114,21 @@
                 android:id="@+id/switch_reminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hidupkan pengingat"
+                android:text="@string/turn_on_reminders"
                 android:checked="true"/>
 
             <TextView
                 style="@style/HintTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pengingat akan muncul secara berkala sebelum produkmu kedaluwarsa." />
+                android:text="@string/turn_on_reminders_hint" />
 
             <Button
                 android:id="@+id/btn_save"
                 style="@style/Button.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Simpan"
+                android:text="@string/save"
                 android:layout_marginTop="32dp"/>
 
             <Button
@@ -136,7 +136,7 @@
                 style="@style/Button.Danger"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hapus"/>
+                android:text="@string/delete"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

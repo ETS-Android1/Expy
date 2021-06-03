@@ -1,16 +1,20 @@
 package com.xdev.expy.textwatcher;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.xdev.expy.R;
 
 public class EmailTextWatcher implements TextWatcher {
 
+    private final Context context;
     private final TextInputLayout inputLayout;
 
-    public EmailTextWatcher(TextInputLayout inputLayout) {
+    public EmailTextWatcher(Context context, TextInputLayout inputLayout) {
+        this.context = context;
         this.inputLayout = inputLayout;
     }
 
@@ -24,7 +28,7 @@ public class EmailTextWatcher implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         String value = editable.toString();
         if (value.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(value).matches()){
-            inputLayout.setError("Masukkan email yang valid");
+            inputLayout.setError(context.getResources().getString(R.string.hint_email));
         } else inputLayout.setErrorEnabled(false);
     }
 }

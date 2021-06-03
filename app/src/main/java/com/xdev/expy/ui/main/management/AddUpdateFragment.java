@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.google.firebase.Timestamp;
+import com.xdev.expy.R;
 import com.xdev.expy.data.source.local.entity.ProductEntity;
 import com.xdev.expy.data.source.local.entity.ReminderEntity;
 import com.xdev.expy.databinding.FragmentAddUpdateBinding;
@@ -49,6 +50,7 @@ import static com.xdev.expy.utils.DateUtils.getFormattedDate;
 public class AddUpdateFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     public static final String TAG = AddUpdateFragment.class.getSimpleName();
+    private static final String NOTIFICATION_DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
     private static final String EXPIRY_DATE_PICKER = "expiry_date_picker";
     private static final String OPENED_DATE_PICKER = "opened_date_picker";
 
@@ -109,7 +111,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
 
         isUpdate = !product.getId().isEmpty() ;
         if (isUpdate){
-            binding.toolbarTitle.setText("Edit Produk");
+            binding.toolbarTitle.setText(R.string.title_update_product);
             binding.btnDelete.setVisibility(View.VISIBLE);
             expiryDate = product.getExpiryDate();
             openedDate = product.getOpenedDate();
@@ -120,14 +122,14 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
             binding.switchOpened.setChecked(product.isOpened());
             binding.switchReminder.setChecked(!product.getReminders().isEmpty());
         } else {
-            binding.toolbarTitle.setText("Tambah Produk");
+            binding.toolbarTitle.setText(R.string.title_add_product);
             binding.btnDelete.setVisibility(View.GONE);
         }
 
-        binding.edtName.addTextChangedListener(new ProductNameTextWatcher(binding.tilName));
-        binding.edtExpiryDate.addTextChangedListener(new ExpiryDateTextWatcher(binding.tilExpiryDate, binding.switchOpened));
-        binding.edtOpenedDate.addTextChangedListener(new OpenedDateTextWatcher(binding.tilOpenedDate, binding.switchOpened));
-        binding.edtPao.addTextChangedListener(new PaoTextWatcher(binding.tilPao, binding.switchOpened));
+        binding.edtName.addTextChangedListener(new ProductNameTextWatcher(getContext(), binding.tilName));
+        binding.edtExpiryDate.addTextChangedListener(new ExpiryDateTextWatcher(getContext(), binding.tilExpiryDate, binding.switchOpened));
+        binding.edtOpenedDate.addTextChangedListener(new OpenedDateTextWatcher(getContext(), binding.tilOpenedDate, binding.switchOpened));
+        binding.edtPao.addTextChangedListener(new PaoTextWatcher(getContext(), binding.tilPao, binding.switchOpened));
 
         setExpiryDateFieldVisibility(product.isOpened());
     }
@@ -196,7 +198,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         boolean reminder = binding.switchReminder.isChecked();
 
         if (!isValidForm(name, expiryDate, openedDate, pao, opened)) {
-            showToast(getContext(), "Pastikan semua data lengkap");
+            showToast(getContext(), getResources().getString(R.string.toast_empty_fields));
             return;
         }
 
@@ -232,10 +234,10 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
 
     private void deleteProduct(Context context, ProductEntity product) {
         new AlertDialog.Builder(context)
-                .setTitle("Hapus produk")
-                .setMessage("Apakah kamu yakin ingin menghapus catatan " + product.getName() + "?")
-                .setNeutralButton("Batal", null)
-                .setPositiveButton("Ya", (dialogInterface, i) -> {
+                .setTitle(R.string.dialog_title_delete_product)
+                .setMessage(getResources().getString(R.string.dialog_message_delete_product, product.getName()))
+                .setNeutralButton(R.string.cancel, null)
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
                         for (ReminderEntity reminder : product.getReminders())
                             reminderReceiver.cancelReminder(context, reminder.getId());
                         viewModel.deleteProduct(product);
@@ -252,7 +254,6 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     private List<ReminderEntity> setReminder(Context context, ProductEntity product) {
         List<ReminderEntity> reminderList = new ArrayList<>();
         String expiryDate = product.getExpiryDate();
-
 
         int dte = (int) differenceOfDates(expiryDate, getCurrentDate());
         Log.d(TAG, "Days to expiration = " + dte);
@@ -272,25 +273,35 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
 
         for (int notificationDay : notificationDayList){
             ReminderEntity reminder = new ReminderEntity();
-            Date date = stringToDate("yyyy/MM/dd HH:mm:ss", addDay(expiryDate, -notificationDay) + " 12:00:00");
+            Date date = stringToDate(NOTIFICATION_DATE_FORMAT, addDay(expiryDate, -notificationDay) + " 12:00:00");
             reminder.setId((Math.abs(product.getId().hashCode()) + notificationDay) % Integer.MAX_VALUE);
             reminder.setTimestamp(new Timestamp(date));
             reminderList.add(reminder);
             Log.d(TAG, reminder.toString());
 
             String day;
-            if (notificationDay == 0) day = "Hari ini";
-            else if (notificationDay == 1) day = "Besok";
-            else if (notificationDay == 2) day = "Lusa";
-            else if (notificationDay == 3) day = notificationDay + " hari lagi";
-            else if (notificationDay == 7 || notificationDay == 14) day = notificationDay/7 + " minggu lagi";
-            else day = notificationDay/30 + " bulan lagi";
+            if (notificationDay == 0) day = getResources().getString(R.string.today);
+            else if (notificationDay == 1) day = getResources().getString(R.string.tomorrow);
+            else if (notificationDay == 2) day = getResources().getString(R.string.day_after_tomorrow);
+            else if (notificationDay == 3) day = getResources().getString(R.string.n_more_days, notificationDay);
+            else if (notificationDay == 7 || notificationDay == 14){
+                day = getResources().getString(R.string.n_more_weeks,
+                        notificationDay / 7,
+                        getResources().getQuantityString(R.plurals.n_more_weeks, notificationDay / 7));
+            }
+            else {
+                day = getResources().getString(R.string.n_more_months,
+                        notificationDay / 30,
+                        getResources().getQuantityString(R.plurals.n_more_months, notificationDay / 30));
+            }
 
-            String title;
-            if (notificationDay == 0) title = day + " telah kedaluwarsa";
-            else title = day + " akan kedaluwarsa";
+            String title = getResources().getString(R.string.notification_title_countdown,
+                    day,
+                    product.getName(),
+                    getResources().getQuantityString(R.plurals.notification_title_countdown, notificationDay));
 
-            String message = product.getName() + " kedaluwarsa pada " + getFormattedDate(product.getExpiryDate(), false);
+            String message = getResources().getString(R.string.notification_message_countdown,
+                    getFormattedDate(product.getExpiryDate(), false));
             reminderReceiver.setReminder(context, reminder.getId(), title, message, date);
         }
 

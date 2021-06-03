@@ -57,7 +57,8 @@ public class ReminderReceiver extends BroadcastReceiver {
     public void cancelReminder(Context context, int notificationId){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ReminderReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         pendingIntent.cancel();
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);

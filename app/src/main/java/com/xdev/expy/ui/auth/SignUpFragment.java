@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xdev.expy.R;
 import com.xdev.expy.databinding.FragmentSignUpBinding;
 import com.xdev.expy.textwatcher.CreatePasswordTextWatcher;
 import com.xdev.expy.textwatcher.EmailTextWatcher;
@@ -63,23 +64,23 @@ public class SignUpFragment extends Fragment {
             if (binding.edtName.getText() != null &&
                     binding.edtEmail.getText() != null &&
                     binding.edtPassword.getText() != null &&
-                    binding.edtPasswordConfirm.getText() != null){
+                    binding.edtPasswordConfirmation.getText() != null){
                 registerWithEmail(binding.edtName.getText().toString(),
                         binding.edtEmail.getText().toString(),
                         binding.edtPassword.getText().toString(),
-                        binding.edtPasswordConfirm.getText().toString());
+                        binding.edtPasswordConfirmation.getText().toString());
             }
         });
 
-        binding.edtName.addTextChangedListener(new PersonNameTextWatcher(binding.tilName));
-        binding.edtEmail.addTextChangedListener(new EmailTextWatcher(binding.tilEmail));
-        binding.edtPassword.addTextChangedListener(new CreatePasswordTextWatcher(binding.tilPassword, binding.tilPasswordConfirm, binding.edtPasswordConfirm));
-        binding.edtPasswordConfirm.addTextChangedListener(new PasswordConfirmationTextWatcher(binding.tilPasswordConfirm, binding.edtPassword));
+        binding.edtName.addTextChangedListener(new PersonNameTextWatcher(getContext(), binding.tilName));
+        binding.edtEmail.addTextChangedListener(new EmailTextWatcher(getContext(), binding.tilEmail));
+        binding.edtPassword.addTextChangedListener(new CreatePasswordTextWatcher(getContext(), binding.tilPassword, binding.tilPasswordConfirmation, binding.edtPasswordConfirmation));
+        binding.edtPasswordConfirmation.addTextChangedListener(new PasswordConfirmationTextWatcher(getContext(), binding.tilPasswordConfirmation, binding.edtPassword));
     }
 
-    private void registerWithEmail(final String name, String email, String password, String passwordConfirm){
-        if (!isValidForm(name, email, password, passwordConfirm)) {
-            showToast(getContext(), "Pastikan semua data lengkap");
+    private void registerWithEmail(final String name, String email, String password, String passwordConfirmation){
+        if (!isValidForm(name, email, password, passwordConfirmation)) {
+            showToast(getContext(), getResources().getString(R.string.toast_empty_fields));
             return;
         }
 
@@ -88,12 +89,12 @@ public class SignUpFragment extends Fragment {
         viewModel.registerWithEmail(name, email, password);
     }
 
-    private boolean isValidForm(String name, String email, String password, String passwordConfirm){
+    private boolean isValidForm(String name, String email, String password, String passwordConfirmation){
         return !(name.isEmpty() || email.isEmpty() ||
-                password.isEmpty() || passwordConfirm.isEmpty()) &&
+                password.isEmpty() || passwordConfirmation.isEmpty()) &&
                 binding.tilEmail.getError() == null &&
                 binding.tilName.getError() == null &&
                 binding.tilPassword.getError() == null &&
-                binding.tilPasswordConfirm.getError() == null;
+                binding.tilPasswordConfirmation.getError() == null;
     }
 }

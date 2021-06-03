@@ -10,12 +10,13 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/illustration_empty_product"/>
+        android:src="@drawable/illustration_empty_product"
+        android:contentDescription="@string/title_empty"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Belum ada catatan"
+        android:text="@string/title_empty"
         android:textSize="@dimen/font_sm"
         android:textAlignment="center"
         android:textStyle="bold"/>
@@ -24,7 +25,7 @@
         style="@style/HintTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ayo tambah produk untuk kamu pantau"
+        android:text="@string/desc_empty"
         android:textSize="@dimen/font_sm"
         android:textAlignment="center"/>
 

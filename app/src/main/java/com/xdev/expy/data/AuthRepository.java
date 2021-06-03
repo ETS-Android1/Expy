@@ -162,7 +162,7 @@ public class AuthRepository {
 
     public void logout(){
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(application.getString(R.string.default_web_client_id))
+                .requestIdToken(application.getResources().getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         GoogleSignIn.getClient(application, gso).signOut();

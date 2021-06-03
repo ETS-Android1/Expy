@@ -19,7 +19,7 @@
             style="@style/ToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profil"/>
+            android:text="@string/title_profile"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -76,7 +76,7 @@
                     style="@style/Button.Secondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ganti Kata Sandi" />
+                    android:text="@string/reset_password" />
             </FrameLayout>
 
             <Button
@@ -84,7 +84,7 @@
                 style="@style/Button.Secondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Keluar" />
+                android:text="@string/logout" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

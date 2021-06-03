@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xdev.expy.R;
 import com.xdev.expy.databinding.FragmentResetPasswordBinding;
 import com.xdev.expy.textwatcher.EmailTextWatcher;
 import com.xdev.expy.viewmodel.ViewModelFactory;
@@ -59,12 +60,12 @@ public class ResetPasswordFragment extends Fragment {
             if (binding.edtEmail.getText() != null)
                 sendResetPassword(binding.edtEmail.getText().toString());
         });
-        binding.edtEmail.addTextChangedListener(new EmailTextWatcher(binding.tilEmail));
+        binding.edtEmail.addTextChangedListener(new EmailTextWatcher(getContext(), binding.tilEmail));
     }
 
     private void sendResetPassword(String email){
         if (!isValidForm(email)) {
-            showToast(getContext(), "Pastikan semua data lengkap");
+            showToast(getContext(), getResources().getString(R.string.toast_empty_fields));
             return;
         }
         Log.d(TAG, "sendResetPassword: " + email);

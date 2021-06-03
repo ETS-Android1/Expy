@@ -19,7 +19,7 @@
             style="@style/ToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Apa itu PAO?"/>
+            android:text="@string/title_help_pao"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -38,12 +38,13 @@
                 style="@style/ImageView"
                 android:src="@drawable/ic_pao"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/pao_example" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6M = 6 bulan"
+                android:text="@string/pao_example"
                 android:textAlignment="center"
                 android:textSize="@dimen/font_nm"
                 android:textColor="@color/green_primary"
@@ -55,7 +56,7 @@
                 android:text="@string/help_pao"
                 android:textAlignment="center"
                 android:textSize="@dimen/font_nm"
-                android:layout_marginTop="48dp"/>
+                android:layout_marginTop="36dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

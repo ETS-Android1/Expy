@@ -1,15 +1,19 @@
 package com.xdev.expy.textwatcher;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.xdev.expy.R;
 
 public class PersonNameTextWatcher implements TextWatcher {
 
+    private final Context context;
     private final TextInputLayout inputLayout;
 
-    public PersonNameTextWatcher(TextInputLayout inputLayout) {
+    public PersonNameTextWatcher(Context context, TextInputLayout inputLayout) {
+        this.context = context;
         this.inputLayout = inputLayout;
     }
 
@@ -23,7 +27,7 @@ public class PersonNameTextWatcher implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         String value = editable.toString();
         if (value.isEmpty()){
-            inputLayout.setError("Masukkan nama lengkap");
+            inputLayout.setError(context.getResources().getString(R.string.hint_full_name));
         } else inputLayout.setErrorEnabled(false);
     }
 }

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xdev.expy.R;
 import com.xdev.expy.data.source.local.entity.ProductEntity;
 import com.xdev.expy.databinding.FragmentMonitoredBinding;
 import com.xdev.expy.ui.main.MainActivity;
@@ -71,7 +72,7 @@ public class MonitoredFragment extends Fragment implements ProductAdapter.Produc
                     }
                     break;
                 case ERROR:
-                    showToast(getContext(), "Data gagal dimuat, tarik untuk memuat ulang");
+                    showToast(getContext(), getResources().getString(R.string.toast_error_get_product));
                     shimmer.hide(true);
                     break;
             }
