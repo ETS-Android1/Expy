@@ -17,18 +17,18 @@ public class DateUtils {
         return dateFormat.format(date);
     }
 
-    public static String getFormattedDate(String defaultDate, boolean shortMonth){
+    public static String getFormattedDate(String simpleFormattedDate, boolean shortMonth){
         try {
             int dateStyle = shortMonth ? DateFormat.MEDIUM : DateFormat.LONG;
             DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-            Date date = dateFormat.parse(defaultDate);
+            Date date = dateFormat.parse(simpleFormattedDate);
 
             if (date != null)
                 return DateFormat.getDateInstance(dateStyle, Locale.getDefault()).format(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return defaultDate;
+        return simpleFormattedDate;
     }
 
     public static String addDay(String oldDate, int numberOfDays){

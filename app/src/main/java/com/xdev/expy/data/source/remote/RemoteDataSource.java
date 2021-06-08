@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.xdev.expy.utils.ImageUtils.convertUriToByteArray;
-import static com.xdev.expy.utils.ImageUtils.getCompressedByteArray;
+import static com.xdev.expy.utils.ImageUtils.uriToByteArray;
+import static com.xdev.expy.utils.ImageUtils.compressByteArray;
 
 public class RemoteDataSource {
 
@@ -138,8 +138,8 @@ public class RemoteDataSource {
         MutableLiveData<ApiResponse<String>> result = new MutableLiveData<>();
         result.postValue(ApiResponse.loading(null));
 
-        byte[] image = convertUriToByteArray(context, uriPath);
-        image = getCompressedByteArray(image, true);
+        byte[] image = uriToByteArray(context, uriPath);
+        image = compressByteArray(image, true);
 
         StorageReference ref = storage.getReference().child(storagePath + fileName);
         UploadTask uploadTask = ref.putBytes(image);

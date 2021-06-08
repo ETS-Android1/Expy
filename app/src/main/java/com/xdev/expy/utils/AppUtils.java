@@ -33,18 +33,18 @@ public class AppUtils {
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    private static RequestOptions getGlideOptions(){
-        return RequestOptions.placeholderOf(R.drawable.ic_no_avatar)
-                .error(R.drawable.ic_no_avatar);
-    }
-
     public static void loadImage(Context context, ImageView imageView, Object source) {
         Glide.with(context)
                 .asBitmap()
                 .load(source)
-                .apply(getGlideOptions())
+                .apply(myGlideOptions())
                 .centerCrop()
                 .into(imageView);
+    }
+
+    private static RequestOptions myGlideOptions(){
+        return RequestOptions.placeholderOf(R.drawable.ic_no_avatar)
+                .error(R.drawable.ic_no_avatar);
     }
 
     public static void showToast(Context context, String message){

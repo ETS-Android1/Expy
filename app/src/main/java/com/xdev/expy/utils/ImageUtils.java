@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ImageUtils {
 
-    public static byte[] convertBitmapToByteArray(Bitmap bitmap){
+    public static byte[] bitmapToByteArray(Bitmap bitmap){
         ByteArrayOutputStream stream = null;
 
         try {
@@ -33,7 +33,7 @@ public class ImageUtils {
         return stream.toByteArray();
     }
 
-    public static byte[] convertUriToByteArray(Context context, Uri uri){
+    public static byte[] uriToByteArray(Context context, Uri uri){
         Bitmap bitmap = null;
 
         try {
@@ -43,17 +43,17 @@ public class ImageUtils {
             e.printStackTrace();
         }
 
-        return convertBitmapToByteArray(bitmap);
+        return bitmapToByteArray(bitmap);
     }
 
-    public static byte[] getCompressedByteArray(byte[] image, boolean isResized){
+    public static byte[] compressByteArray(byte[] image, boolean resize){
         ByteArrayOutputStream stream = null;
 
         try {
             // Convert byte[] to bitmap
             Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(image));
 
-            if (isResized){
+            if (resize){
                 // Change bitmap size
                 if (!(bitmap.getWidth() <= 1024)){
                     bitmap = Bitmap.createScaledBitmap(bitmap, 1024,

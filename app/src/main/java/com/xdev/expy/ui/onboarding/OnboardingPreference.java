@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.xdev.expy.data.MainRepository;
-
 public class OnboardingPreference {
 
     private volatile static OnboardingPreference INSTANCE = null;
@@ -24,7 +22,7 @@ public class OnboardingPreference {
 
     public static OnboardingPreference getInstance(Context context) {
         if (INSTANCE == null){
-            synchronized (MainRepository.class) {
+            synchronized (OnboardingPreference.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new OnboardingPreference(context);
                 }
