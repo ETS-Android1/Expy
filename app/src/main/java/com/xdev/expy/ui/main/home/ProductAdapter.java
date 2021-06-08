@@ -71,7 +71,8 @@ public class ProductAdapter extends PagedListAdapter<ProductWithReminders, Produ
 
             binding.tvName.setText(product.getProduct().getName());
             binding.tvExpiryDate.setText(getFormattedDate(expiryDate, true));
-            binding.tvCountdown.setText(itemView.getContext().getResources().getString(R.string.countdown, dte));
+            binding.tvCountdown.setText(itemView.getContext().getResources().getQuantityString(
+                            R.plurals.number_of_days_remaining_countdown, (int) dte, dte));
 
             int background;
             int color;

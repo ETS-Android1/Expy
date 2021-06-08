@@ -79,7 +79,7 @@ public class AuthRepository {
                 sendEmailVerification();
                 _user.postValue(firebaseUser);
             } else {
-                _toastText.postValue(new Event<>("Email sudah terdaftar"));
+                _toastText.postValue(new Event<>(application.getResources().getString(R.string.failure_register_with_email)));
                 Log.w(TAG, "createUserWithEmail: failure", task.getException());
             }
             _isLoading.postValue(false);
@@ -94,7 +94,7 @@ public class AuthRepository {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 _user.postValue(firebaseUser);
             } else {
-                _toastText.postValue(new Event<>("Kata sandi salah"));
+                _toastText.postValue(new Event<>(application.getResources().getString(R.string.failure_login_with_email)));
                 Log.w(TAG, "signInWithEmail: failure", task.getException());
             }
             _isLoading.postValue(false);
@@ -107,10 +107,12 @@ public class AuthRepository {
             _isLoading.postValue(true);
             firebaseUser.sendEmailVerification().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    _toastText.postValue(new Event<>("Cek email untuk memverifikasi akunmu"));
+                    _toastText.postValue(new Event<>(application.getResources().getString(R.string.success_send_email_verification)));
                     Log.d(TAG, "sendEmailVerification: success");
+                } else {
+                    _toastText.postValue(new Event<>(application.getResources().getString(R.string.failure_send_email_verification)));
+                    Log.w(TAG, "sendEmailVerification: failure", task.getException());
                 }
-                else Log.w(TAG, "sendEmailVerification: failure", task.getException());
                 _isLoading.postValue(false);
             });
         }
@@ -120,10 +122,10 @@ public class AuthRepository {
         _isLoading.postValue(true);
         firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
-                _toastText.postValue(new Event<>("Cek email untuk ganti kata sandi"));
+                _toastText.postValue(new Event<>(application.getResources().getString(R.string.success_send_password_reset)));
                 Log.d(TAG, "sendPasswordReset: success");
             } else {
-                _toastText.postValue(new Event<>("Email belum terdaftar"));
+                _toastText.postValue(new Event<>(application.getResources().getString(R.string.failure_send_password_reset)));
                 Log.w(TAG, "sendPasswordReset: failure", task.getException());
             }
             _isLoading.postValue(false);

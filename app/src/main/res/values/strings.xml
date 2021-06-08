@@ -46,7 +46,6 @@
     <string name="title_empty">Belum ada catatan</string>
     <string name="desc_empty">Ayo tambah produk untuk kamu pantau</string>
     <string name="title_update_product">Edit Produk</string>
-    <string name="countdown">%1$d hari</string>
     <string name="title_onboarding_1">Pantau Tanggal Kedaluwarsa</string>
     <string name="title_onboarding_2">Dapatkan Notifikasi</string>
     <string name="title_onboarding_3">Lebih Mudah dengan Widget</string>
@@ -62,21 +61,8 @@
     <string name="today">Hari ini</string>
     <string name="tomorrow">Besok</string>
     <string name="day_after_tomorrow">Lusa</string>
-    <string name="n_more_days">%1$d hari lagi</string>
-    <string name="n_more_weeks" translatable="false">%1$d %2$s</string>
-    <plurals name="n_more_weeks">
-        <item quantity="one">minggu lagi</item>
-        <item quantity="other">minggu lagi</item>
-    </plurals>
-    <string name="n_more_months" translatable="false">%1$d %2$s</string>
-    <plurals name="n_more_months">
-        <item quantity="one">bulan lagi</item>
-        <item quantity="other">bulan lagi</item>
-    </plurals>
-    <string name="notification_title_countdown" translatable="false">%1$s %2$s %3$s</string>
-    <string name="notification_message_countdown" translatable="false">EXP: %1$s</string>
     <string name="toast_error_get_product">Data gagal dimuat, tarik ke bawah untuk memuat ulang</string>
-    <string name="toast_empty_fields">Pastikan semua data lengkap</string>
+    <string name="toast_empty_fields">Pastikan semua kolom sudah diisi</string>
     <string name="no_empty_field">Kolom ini tidak boleh kosong</string>
     <string name="hint_full_name">Masukkan nama lengkap</string>
     <string name="hint_password">Masukkan kata sandi</string>
@@ -85,8 +71,25 @@
     <string name="hint_email">Masukkan email yang valid</string>
     <string name="hint_date_picker">Klik untuk pilih tanggal</string>
     <string name="max_limit_number_of_digits">Jumlah digit melebihi batas maksimum</string>
-    <plurals name="notification_title_countdown">
-        <item quantity="zero">telah kedaluwarsa</item>
-        <item quantity="other">akan kedaluwarsa</item>
+    <string name="failure_register_with_email">Email sudah terdaftar</string>
+    <string name="failure_login_with_email">Kata sandi salah</string>
+    <string name="success_send_email_verification">Cek email untuk memverifikasi akunmu</string>
+    <string name="failure_send_email_verification">Tautan gagal terkirim, coba lagi nanti</string>
+    <string name="success_send_password_reset">Cek email untuk ganti kata sandi</string>
+    <string name="failure_send_password_reset">Email belum terdaftar</string>
+    <string name="notification_title_expiration_reminder">{0,choice,0#%1$s %2$s telah kedaluwarsa|0&lt;%1$s %2$s akan kedaluwarsa}</string>
+    <string name="notification_message_expiration_reminder" translatable="false">EXP: %1$s</string>
+    <plurals name="number_of_days_remaining_countdown">
+        <item quantity="one">%d hari</item>
+        <item quantity="other">%d hari</item>
+    </plurals>
+    <string name="number_of_days_remaining">%1$d hari lagi</string>
+    <plurals name="number_of_weeks_remaining">
+        <item quantity="one">%d minggu lagi</item>
+        <item quantity="other">%d minggu lagi</item>
+    </plurals>
+    <plurals name="number_of_months_remaining">
+        <item quantity="one">%d bulan lagi</item>
+        <item quantity="other">%d bulan lagi</item>
     </plurals>
 </resources>

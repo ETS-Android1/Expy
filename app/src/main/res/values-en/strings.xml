@@ -7,7 +7,7 @@
     <string name="about">About</string>
     <string name="title_about">About Application</string>
     <string name="title_add_product">Add Product</string>
-    <string name="product_name">Product Name</string>
+    <string name="product_name">Product name</string>
     <string name="help">Help</string>
     <string name="expiry_date_bb">Expired date/best before</string>
     <string name="opened_date">Opened date</string>
@@ -35,7 +35,6 @@
     <string name="title_sign_up">Sign Up</string>
     <string name="full_name">Full Name</string>
     <string name="title_update_product">Update Product</string>
-    <string name="countdown">%1$d day</string>
     <string name="title_onboarding_2">Get Notifications</string>
     <string name="title_onboarding_3">Easier with Widget</string>
     <string name="cancel">Cancel</string>
@@ -43,10 +42,9 @@
     <string name="dialog_title_delete_product">Delete Product</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
-    <string name="n_more_days">%1$d days to go</string>
-    <string name="hint_full_name">Enter Full Name</string>
-    <string name="hint_password">Enter Password</string>
-    <string name="invalid_password_confirmation">Password incorrect</string>
+    <string name="hint_full_name">Enter full name</string>
+    <string name="hint_password">Enter password</string>
+    <string name="invalid_password_confirmation">Password is incorrect</string>
     <string name="help_pao">Period After Opening or PAO is a packaging label on cosmetics that shows the safe limit for use after opening. If it says 6M, the safe limit for using the cosmetic product is 6 months after opening.  If your product has been opened, you can check this option and enter the date it was opened and the PAO as stated on the package.</string>
     <string name="has_pao">Has it been opened and has PAO?</string>
     <string name="turn_on_reminders_hint">Reminders will appear periodically before your product expires.</string>
@@ -64,10 +62,30 @@
     <string name="dialog_message_delete_product">Are you sure you want to delete the %1$s record?</string>
     <string name="day_after_tomorrow">2 days to go</string>
     <string name="toast_error_get_product">Data failed to load, pull down to reload</string>
-    <string name="toast_empty_fields">Make sure all data is complete</string>
+    <string name="toast_empty_fields">Make sure all fields are filled</string>
     <string name="no_empty_field">This column cannot be empty</string>
     <string name="hint_create_password">Enter at least 6 characters with a combination of 1 uppercase letter, lowercase letter, number and symbol</string>
     <string name="hint_email">Enter a valid email</string>
     <string name="hint_date_picker">Click to select date</string>
+    <string name="failure_register_with_email">Email is already registered</string>
+    <string name="failure_login_with_email">Password is incorrect</string>
+    <string name="success_send_email_verification">Check your email\'s inbox to verify account</string>
+    <string name="failure_send_email_verification">Link failed to send, please try again later</string>
+    <string name="success_send_password_reset">Check your email\'s inbox to reset password</string>
+    <string name="failure_send_password_reset">Email is not registered</string>
     <string name="max_limit_number_of_digits">The number of digits exceeds the maximum limit</string>
+    <string name="notification_title_expiration_reminder">{0,choice,0#%1$s %2$s has expired|0&lt;%1$s %2$s will expire}</string>
+    <plurals name="number_of_days_remaining_countdown">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <string name="number_of_days_remaining">%1$d day to go</string>
+    <plurals name="number_of_weeks_remaining">
+        <item quantity="one">%d week to go</item>
+        <item quantity="other">%d weeks to go</item>
+    </plurals>
+    <plurals name="number_of_months_remaining">
+        <item quantity="one">%d month to go</item>
+        <item quantity="other">%d months to go</item>
+    </plurals>
 </resources>

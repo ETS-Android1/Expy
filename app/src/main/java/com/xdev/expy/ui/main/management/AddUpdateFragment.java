@@ -32,6 +32,7 @@ import com.xdev.expy.ui.main.MainViewModel;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -280,27 +281,31 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
             Log.d(TAG, reminder.toString());
 
             String day;
-            if (notificationDay == 0) day = getResources().getString(R.string.today);
-            else if (notificationDay == 1) day = getResources().getString(R.string.tomorrow);
-            else if (notificationDay == 2) day = getResources().getString(R.string.day_after_tomorrow);
-            else if (notificationDay == 3) day = getResources().getString(R.string.n_more_days, notificationDay);
-            else if (notificationDay == 7 || notificationDay == 14){
-                day = getResources().getString(R.string.n_more_weeks,
-                        notificationDay / 7,
-                        getResources().getQuantityString(R.plurals.n_more_weeks, notificationDay / 7));
-            }
-            else {
-                day = getResources().getString(R.string.n_more_months,
-                        notificationDay / 30,
-                        getResources().getQuantityString(R.plurals.n_more_months, notificationDay / 30));
+            switch (notificationDay) {
+                case 0:
+                    day = getResources().getString(R.string.today);
+                    break;
+                case 1:
+                    day = getResources().getString(R.string.tomorrow);
+                    break;
+                case 2:
+                    day = getResources().getString(R.string.day_after_tomorrow);
+                    break;
+                case 3:
+                    day = getResources().getString(R.string.number_of_days_remaining, notificationDay);
+                    break;
+                case 7:
+                case 14:
+                    day = getResources().getQuantityString(R.plurals.number_of_weeks_remaining, notificationDay/7, notificationDay/7);
+                    break;
+                default:
+                    day = getResources().getQuantityString(R.plurals.number_of_months_remaining, notificationDay/30, notificationDay/30);
+                    break;
             }
 
-            String title = getResources().getString(R.string.notification_title_countdown,
-                    day,
-                    product.getName(),
-                    getResources().getQuantityString(R.plurals.notification_title_countdown, notificationDay));
-
-            String message = getResources().getString(R.string.notification_message_countdown,
+            String title = MessageFormat.format(getResources().getString(
+                    R.string.notification_title_expiration_reminder, day, product.getName()), notificationDay);
+            String message = getResources().getString(R.string.notification_message_expiration_reminder,
                     getFormattedDate(product.getExpiryDate(), false));
             reminderReceiver.setReminder(context, reminder.getId(), title, message, date);
         }

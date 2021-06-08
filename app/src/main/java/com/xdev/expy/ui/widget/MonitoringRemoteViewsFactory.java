@@ -71,7 +71,8 @@ public class MonitoringRemoteViewsFactory implements RemoteViewsService.RemoteVi
 
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_monitoring_item);
         rv.setTextViewText(R.id.tv_name, product.getName());
-        rv.setTextViewText(R.id.tv_countdown, context.getResources().getString(R.string.countdown, dte));
+        rv.setTextViewText(R.id.tv_countdown, context.getResources().getQuantityString(
+                        R.plurals.number_of_days_remaining_countdown, (int) dte, dte));
         rv.setInt(R.id.layout_countdown, "setBackgroundResource", background);
 
         Intent fillInIntent = new Intent();
