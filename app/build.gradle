@@ -75,7 +75,7 @@ dependencies {
 
     // Circle image view, dots indicator, shimmer
     implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"
-    implementation "com.tbuonomo.andrui:viewpagerdotsindicator:$dotsIndicatorVersion"
+    implementation "com.tbuonomo:dotsindicator:$dotsIndicatorVersion"
     implementation "com.facebook.shimmer:shimmer:$shimmerVersion"
 }
 

@@ -8,7 +8,6 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
         mavenCentral()
     }
 
@@ -25,9 +24,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -59,6 +56,6 @@ ext {
 
     glideVersion = '4.12.0'
     circleImageViewVersion = '3.1.0'
-    dotsIndicatorVersion = '4.1.2'
+    dotsIndicatorVersion = '4.2'
     shimmerVersion = '0.5.0'
 }
