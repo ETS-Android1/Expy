@@ -23,7 +23,8 @@ data class ProductEntity (
     var expiryDate: String = "",
 
     @ColumnInfo(name = "opened")
-    @field:JvmField var opened: Boolean = false,
+    @field:JvmField
+    var isOpened: Boolean = false,
 
     @ColumnInfo(name = "openedDate")
     var openedDate: String = "",
@@ -35,18 +36,19 @@ data class ProductEntity (
     var reminders: List<ReminderEntity> = ArrayList()
 ) : Parcelable {
 
-    constructor(id: String, name: String, expiryDate: String, opened: Boolean, openedDate: String, pao: Int) : this() {
+    @Ignore
+    constructor(id: String, name: String, expiryDate: String, isOpened: Boolean, openedDate: String, pao: Int) : this() {
         this.id = id
         this.name = name
         this.expiryDate = expiryDate
-        this.opened = opened
+        this.isOpened = isOpened
         this.openedDate = openedDate
         this.pao = pao
     }
 
-    fun isOpened(): Boolean = opened
+    fun getIsOpened(): Boolean = isOpened
 
-    fun setOpened(opened: Boolean){
-        this.opened = opened
+    fun setIsOpened(isOpened: Boolean){
+        this.isOpened = isOpened
     }
 }

@@ -80,7 +80,7 @@ public class MainRepository implements MainDataSource {
                     ProductEntity product = new ProductEntity(productResponse.getId(),
                             productResponse.getName(),
                             productResponse.getExpiryDate(),
-                            productResponse.isOpened(),
+                            productResponse.getIsOpened(),
                             productResponse.getOpenedDate(),
                             productResponse.getPao(),
                             new ArrayList<>());

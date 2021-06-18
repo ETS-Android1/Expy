@@ -120,7 +120,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
             binding.edtExpiryDate.setText(getFormattedDate(expiryDate, false));
             binding.edtOpenedDate.setText(getFormattedDate(openedDate, false));
             binding.edtPao.setText(String.valueOf(product.getPao()));
-            binding.switchOpened.setChecked(product.isOpened());
+            binding.switchOpened.setChecked(product.getIsOpened());
             binding.switchReminder.setChecked(!product.getReminders().isEmpty());
         } else {
             binding.toolbarTitle.setText(R.string.title_add_product);
@@ -132,7 +132,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         binding.edtOpenedDate.addTextChangedListener(new OpenedDateTextWatcher(getContext(), binding.tilOpenedDate, binding.switchOpened));
         binding.edtPao.addTextChangedListener(new PaoTextWatcher(getContext(), binding.tilPao, binding.switchOpened));
 
-        setExpiryDateFieldVisibility(product.isOpened());
+        setExpiryDateFieldVisibility(product.getIsOpened());
     }
 
     @Override
@@ -210,7 +210,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         product.setExpiryDate(expiryDate);
         product.setOpenedDate(openedDate);
         product.setPao(Integer.parseInt(pao));
-        product.setOpened(opened);
+        product.setIsOpened(opened);
 
         List<ReminderEntity> reminderList = new ArrayList<>();
         if (reminder) reminderList = setReminder(context, product);

@@ -8,11 +8,11 @@ data class ProductResponse (
     var id: String = "",
     var name: String = "",
     var expiryDate: String = "",
-    @field:JvmField var opened: Boolean = false,
+    @field:JvmField var isOpened: Boolean = false,
     var openedDate: String = "",
     var pao: Int = 0,
     var reminders: List<ReminderResponse> = ArrayList()
 ) : Parcelable {
 
-    fun isOpened(): Boolean = opened
+    fun getIsOpened(): Boolean = isOpened
 }

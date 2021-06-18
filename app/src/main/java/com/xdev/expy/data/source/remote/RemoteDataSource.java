@@ -167,7 +167,7 @@ public class RemoteDataSource {
         document.put("id", product.getId());
         document.put("name", product.getName());
         document.put("expiryDate", product.getExpiryDate());
-        document.put("opened", product.isOpened());
+        document.put("isOpened", product.getIsOpened());
         document.put("openedDate", product.getOpenedDate());
         document.put("pao", product.getPao());
         document.put("reminders", product.getReminders());
