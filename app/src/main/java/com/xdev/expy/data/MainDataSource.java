@@ -27,4 +27,6 @@ public interface MainDataSource {
     CollectionReference getProductsReference();
 
     void setProductsReference(String userId);
+
+    void clearDatabase();
 }

@@ -34,7 +34,7 @@ public abstract class ProductDao {
     abstract void insertReminders(List<ReminderEntity> reminderList);
 
     @Query("DELETE FROM productEntities")
-    abstract void deleteProducts();
+    public abstract void deleteProducts();
 
     @Transaction
     public void insertProductsAndReminders(List<ProductEntity> productList, List<ReminderEntity> reminderList){

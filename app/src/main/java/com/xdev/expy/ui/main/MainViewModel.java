@@ -92,6 +92,7 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void logout(){
+        mainRepository.clearDatabase();
         authRepository.logout();
     }
 }

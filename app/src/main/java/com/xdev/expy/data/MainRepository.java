@@ -127,4 +127,9 @@ public class MainRepository implements MainDataSource {
     public void setProductsReference(String userId) {
         remoteDataSource.setProductsReference(userId);
     }
+
+    @Override
+    public void clearDatabase() {
+        appExecutors.diskIO().execute(localDataSource::clearDatabase);
+    }
 }

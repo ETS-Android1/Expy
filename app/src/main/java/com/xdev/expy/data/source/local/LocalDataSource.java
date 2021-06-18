@@ -35,4 +35,8 @@ public class LocalDataSource {
     public void insertProductsAndReminders(List<ProductEntity> productList, List<ReminderEntity> reminderList) {
         productDao.insertProductsAndReminders(productList, reminderList);
     }
+
+    public void clearDatabase() {
+        productDao.deleteProducts();
+    }
 }
