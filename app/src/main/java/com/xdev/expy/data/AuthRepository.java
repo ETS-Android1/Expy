@@ -63,6 +63,7 @@ public class AuthRepository {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 _user.postValue(firebaseUser);
             } else {
+                _toastText.postValue(new Event<>(application.getResources().getString(R.string.failure_auth_with_google)));
                 Log.w(TAG, "signInWithCredential: failure", task.getException());
             }
             _isLoading.postValue(false);
