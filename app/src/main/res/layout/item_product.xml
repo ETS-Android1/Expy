@@ -69,7 +69,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/loading"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_sm"/>
+                    android:textSize="@dimen/font_sm"
+                    android:textAlignment="center"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

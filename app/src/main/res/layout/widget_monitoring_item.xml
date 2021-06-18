@@ -37,6 +37,7 @@
             android:text="@string/loading"
             android:textColor="@color/white"
             android:textSize="@dimen/font_sm"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textAlignment="center"/>
     </LinearLayout>
 </RelativeLayout>
