@@ -71,20 +71,27 @@
                     android:layout_gravity="center"
                     android:visibility="invisible"/>
 
-                <Button
-                    android:id="@+id/btn_reset_password"
-                    style="@style/Button.Secondary"
+                <LinearLayout
+                    android:id="@+id/layout_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/reset_password" />
-            </FrameLayout>
+                    android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_logout"
-                style="@style/Button.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/logout" />
+                    <Button
+                        android:id="@+id/btn_reset_password"
+                        style="@style/Button.Secondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reset_password" />
+
+                    <Button
+                        android:id="@+id/btn_logout"
+                        style="@style/Button.Secondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/logout" />
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

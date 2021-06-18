@@ -70,11 +70,10 @@ public class ProfileFragment extends MyBottomSheetDialogFragment implements View
         viewModel.isLoading().observe(this, isLoading -> {
             if (isLoading) {
                 binding.progressBar.setVisibility(View.VISIBLE);
-                binding.btnResetPassword.setVisibility(View.INVISIBLE);
-            }
-            else {
+                binding.layoutButton.setVisibility(View.INVISIBLE);
+            } else {
                 binding.progressBar.setVisibility(View.INVISIBLE);
-                binding.btnResetPassword.setVisibility(View.VISIBLE);
+                binding.layoutButton.setVisibility(View.VISIBLE);
             }
         });
 

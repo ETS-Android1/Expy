@@ -163,14 +163,21 @@ public class AuthRepository {
     }
 
     public void logout(){
+        _isLoading.postValue(true);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(application.getResources().getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        GoogleSignIn.getClient(application, gso).signOut();
-        firebaseAuth.signOut();
-
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        _user.postValue(firebaseUser);
+        GoogleSignIn.getClient(application, gso).signOut().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                firebaseAuth.signOut();
+                _user.postValue(null);
+                Log.d(TAG, "logout: success");
+            } else {
+                _toastText.postValue(new Event<>(application.getResources().getString(R.string.failure_logout)));
+                Log.w(TAG, "logout: failure", task.getException());
+            }
+            _isLoading.postValue(false);
+        });
     }
 }
