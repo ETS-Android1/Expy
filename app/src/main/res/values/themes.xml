@@ -22,8 +22,9 @@
     </style>
 
     <!-- Customize styles -->
-    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
