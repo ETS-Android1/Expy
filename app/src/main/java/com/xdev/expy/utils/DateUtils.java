@@ -1,5 +1,7 @@
 package com.xdev.expy.utils;
 
+import androidx.annotation.NonNull;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +13,7 @@ public class DateUtils {
 
     public static final String DATE_FORMAT = "yyyy/MM/dd";
 
+    @NonNull
     public static String getCurrentDate(){
         DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
         Date date = new Date();
@@ -31,6 +34,7 @@ public class DateUtils {
         return simpleFormattedDate;
     }
 
+    @NonNull
     public static String addDay(String oldDate, int numberOfDays){
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
@@ -56,7 +60,7 @@ public class DateUtils {
                 double difference = finalDate.getTime()-currentDate.getTime();
                 return (long) (difference / (24*60*60*1000));
             }
-        }catch (ParseException e){
+        } catch (ParseException e){
             e.printStackTrace();
         }
         return -1;

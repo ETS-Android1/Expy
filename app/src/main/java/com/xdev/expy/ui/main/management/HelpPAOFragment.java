@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.xdev.expy.databinding.FragmentHelpPaoBinding;
 import com.xdev.expy.utils.MyBottomSheetDialogFragment;
 
+import org.jetbrains.annotations.Contract;
+
 public class HelpPAOFragment extends MyBottomSheetDialogFragment {
 
     public static final String TAG = HelpPAOFragment.class.getSimpleName();
@@ -20,6 +22,8 @@ public class HelpPAOFragment extends MyBottomSheetDialogFragment {
 
     public HelpPAOFragment() {}
 
+    @NonNull
+    @Contract(" -> new")
     public static HelpPAOFragment newInstance() {
         return new HelpPAOFragment();
     }

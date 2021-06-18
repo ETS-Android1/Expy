@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.xdev.expy.data.AuthRepository;
-import com.xdev.expy.data.MainRepository;
+import com.xdev.expy.data.ProductRepository;
 import com.xdev.expy.di.Injection;
 import com.xdev.expy.ui.auth.AuthViewModel;
 import com.xdev.expy.ui.main.MainViewModel;
@@ -18,12 +18,12 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private final Application application;
     private final AuthRepository authRepository;
-    private final MainRepository mainRepository;
+    private final ProductRepository productRepository;
 
-    private ViewModelFactory(Application application, AuthRepository authRepository, MainRepository mainRepository){
+    private ViewModelFactory(Application application, AuthRepository authRepository, ProductRepository productRepository){
         this.application = application;
         this.authRepository = authRepository;
-        this.mainRepository = mainRepository;
+        this.productRepository = productRepository;
     }
 
     public static ViewModelFactory getInstance(Application application) {
@@ -47,7 +47,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         if (modelClass.isAssignableFrom(AuthViewModel.class)) {
             return (T) new AuthViewModel(application, authRepository);
         } else if (modelClass.isAssignableFrom(MainViewModel.class)) {
-            return (T) new MainViewModel(application, authRepository, mainRepository);
+            return (T) new MainViewModel(application, authRepository, productRepository);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

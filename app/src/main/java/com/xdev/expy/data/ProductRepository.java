@@ -25,24 +25,24 @@ import java.util.List;
 
 import static com.xdev.expy.utils.AppUtils.isNetworkAvailable;
 
-public class MainRepository implements MainDataSource {
+public class ProductRepository implements ProductDataSource {
 
-    private volatile static MainRepository INSTANCE = null;
+    private volatile static ProductRepository INSTANCE = null;
     private final RemoteDataSource remoteDataSource;
     private final LocalDataSource localDataSource;
     private final AppExecutors appExecutors;
 
-    private MainRepository(@NonNull RemoteDataSource remoteDataSource, @NonNull LocalDataSource localDataSource, AppExecutors appExecutors) {
+    private ProductRepository(@NonNull RemoteDataSource remoteDataSource, @NonNull LocalDataSource localDataSource, AppExecutors appExecutors) {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
         this.appExecutors = appExecutors;
     }
 
-    public static MainRepository getInstance(RemoteDataSource remoteData, LocalDataSource localDataSource, AppExecutors appExecutors) {
+    public static ProductRepository getInstance(RemoteDataSource remoteData, LocalDataSource localDataSource, AppExecutors appExecutors) {
         if (INSTANCE == null){
-            synchronized (MainRepository.class) {
+            synchronized (ProductRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new MainRepository(remoteData, localDataSource, appExecutors);
+                    INSTANCE = new ProductRepository(remoteData, localDataSource, appExecutors);
                 }
             }
         }
@@ -50,7 +50,7 @@ public class MainRepository implements MainDataSource {
     }
 
     @Override
-    public LiveData<Resource<PagedList<ProductWithReminders>>> getProducts(boolean isExpired, boolean reFetch) {
+    public LiveData<Resource<PagedList<ProductWithReminders>>> getProducts(boolean isExpired, boolean fetchNow) {
         return new NetworkBoundResource<PagedList<ProductWithReminders>, List<ProductResponse>>(appExecutors){
             @Override
             protected LiveData<PagedList<ProductWithReminders>> loadFromDB() {
@@ -64,7 +64,7 @@ public class MainRepository implements MainDataSource {
 
             @Override
             protected Boolean shouldFetch(PagedList<ProductWithReminders> data) {
-                return reFetch || isNetworkAvailable();
+                return isNetworkAvailable() && fetchNow;
             }
 
             @Override

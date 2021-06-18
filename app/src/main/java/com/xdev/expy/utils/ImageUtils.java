@@ -6,12 +6,15 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import androidx.annotation.NonNull;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class ImageUtils {
 
+    @NonNull
     public static byte[] bitmapToByteArray(Bitmap bitmap){
         ByteArrayOutputStream stream = null;
 
@@ -33,6 +36,7 @@ public class ImageUtils {
         return stream.toByteArray();
     }
 
+    @NonNull
     public static byte[] uriToByteArray(Context context, Uri uri){
         Bitmap bitmap = null;
 
@@ -46,6 +50,7 @@ public class ImageUtils {
         return bitmapToByteArray(bitmap);
     }
 
+    @NonNull
     public static byte[] compressByteArray(byte[] image, boolean resize){
         ByteArrayOutputStream stream = null;
 

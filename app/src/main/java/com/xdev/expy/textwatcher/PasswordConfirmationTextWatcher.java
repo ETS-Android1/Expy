@@ -5,6 +5,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.xdev.expy.R;
 
@@ -27,7 +29,7 @@ public class PasswordConfirmationTextWatcher implements TextWatcher {
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
     @Override
-    public void afterTextChanged(Editable editable) {
+    public void afterTextChanged(@NonNull Editable editable) {
         String passwordConfirmation = editable.toString();
         String password = edtPassword.getText().toString();
         if (!passwordConfirmation.equals(password)){

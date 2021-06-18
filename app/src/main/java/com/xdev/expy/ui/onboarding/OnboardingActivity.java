@@ -1,5 +1,6 @@
 package com.xdev.expy.ui.onboarding;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -49,7 +50,7 @@ public class OnboardingActivity extends AppCompatActivity {
         finish();
     }
 
-    private void populateViewPager(OnboardingAdapter adapter) {
+    private void populateViewPager(@NonNull OnboardingAdapter adapter) {
         List<Onboarding> onboardingList = new ArrayList<>();
 
         Onboarding onboarding1 = new Onboarding(R.drawable.illustration_onboarding_1,
@@ -69,7 +70,7 @@ public class OnboardingActivity extends AppCompatActivity {
         adapter.submitList(onboardingList);
     }
 
-    private void setAutoScrollViewPager(ViewPager2 viewPager, OnboardingAdapter adapter) {
+    private void setAutoScrollViewPager(@NonNull ViewPager2 viewPager, OnboardingAdapter adapter) {
         handler = new Handler();
         delay = 5000; // Milliseconds
         page = 0;

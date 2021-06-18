@@ -54,7 +54,7 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.Vi
             imgIllustration = binding.imgIllustration;
         }
 
-        void bind(Onboarding onboarding){
+        void bind(@NonNull Onboarding onboarding){
             tvTitle.setText(onboarding.getTitle());
             tvDescription.setText(onboarding.getDescription());
             imgIllustration.setImageResource(onboarding.getImageRes());

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 public class OnboardingPreference {
 
     private volatile static OnboardingPreference INSTANCE = null;
@@ -15,7 +17,7 @@ public class OnboardingPreference {
     private static final String IS_FIRST_TIME_LAUNCH = "is_first_time_launch";
 
     @SuppressLint("CommitPrefEdits")
-    private OnboardingPreference(Context context){
+    private OnboardingPreference(@NonNull Context context){
         sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }

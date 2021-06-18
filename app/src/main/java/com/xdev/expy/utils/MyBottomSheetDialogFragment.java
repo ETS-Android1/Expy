@@ -17,7 +17,7 @@ public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_FRAME, R.style.AppBottomSheetDialogTheme);
+        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme);
     }
 
     @NonNull

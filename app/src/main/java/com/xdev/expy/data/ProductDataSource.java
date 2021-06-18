@@ -12,7 +12,7 @@ import com.xdev.expy.data.source.remote.ApiResponse;
 import com.xdev.expy.data.source.local.entity.ProductEntity;
 import com.xdev.expy.vo.Resource;
 
-public interface MainDataSource {
+public interface ProductDataSource {
 
     LiveData<Resource<PagedList<ProductWithReminders>>> getProducts(boolean isExpired, boolean reFetch);
 

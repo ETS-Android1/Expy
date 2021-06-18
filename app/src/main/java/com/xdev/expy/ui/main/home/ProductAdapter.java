@@ -64,7 +64,7 @@ public class ProductAdapter extends PagedListAdapter<ProductWithReminders, Produ
             this.binding = binding;
         }
 
-        public void bind(ProductWithReminders product) {
+        public void bind(@NonNull ProductWithReminders product) {
             String expiryDate = product.getProduct().getExpiryDate();
             long dte = differenceOfDates(expiryDate, getCurrentDate());
             if (dte < 0) dte = 0;

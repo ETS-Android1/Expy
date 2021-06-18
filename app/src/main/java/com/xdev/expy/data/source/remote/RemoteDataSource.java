@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -75,7 +76,7 @@ public class RemoteDataSource {
         return result;
     }
 
-    public LiveData<ApiResponse<Boolean>> insertProduct(ProductEntity product){
+    public LiveData<ApiResponse<Boolean>> insertProduct(@NonNull ProductEntity product){
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
         result.postValue(ApiResponse.loading(null));
 
@@ -94,7 +95,7 @@ public class RemoteDataSource {
         return result;
     }
 
-    public LiveData<ApiResponse<Boolean>> updateProduct(ProductEntity product){
+    public LiveData<ApiResponse<Boolean>> updateProduct(@NonNull ProductEntity product){
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
         result.postValue(ApiResponse.loading(null));
 
@@ -104,8 +105,7 @@ public class RemoteDataSource {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "updateProduct: " + product.toString());
                         result.postValue(ApiResponse.success(true));
-                    }
-                    else {
+                    } else {
                         Log.w(TAG, "Error updating document", task.getException());
                         result.postValue(ApiResponse.error("Error updating document", false));
                     }
@@ -114,7 +114,7 @@ public class RemoteDataSource {
         return result;
     }
 
-    public LiveData<ApiResponse<Boolean>> deleteProduct(ProductEntity product){
+    public LiveData<ApiResponse<Boolean>> deleteProduct(@NonNull ProductEntity product){
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
         result.postValue(ApiResponse.loading(null));
 
@@ -124,8 +124,7 @@ public class RemoteDataSource {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "deleteProduct: " + product.toString());
                         result.postValue(ApiResponse.success(true));
-                    }
-                    else {
+                    } else {
                         Log.w(TAG, "Error deleting document", task.getException());
                         result.postValue(ApiResponse.error("Error deleting document", false));
                     }
@@ -162,7 +161,8 @@ public class RemoteDataSource {
         productsRef = database.collection("users").document(userId).collection("products");
     }
 
-    private Map<String, Object> objectToHashMap(ProductEntity product){
+    @NonNull
+    private Map<String, Object> objectToHashMap(@NonNull ProductEntity product){
         Map<String, Object> document = new HashMap<>();
         document.put("id", product.getId());
         document.put("name", product.getName());

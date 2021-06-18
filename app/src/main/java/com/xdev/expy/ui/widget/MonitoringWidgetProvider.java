@@ -9,12 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import androidx.annotation.NonNull;
+
 import com.xdev.expy.R;
 import com.xdev.expy.ui.main.MainActivity;
 
 public class MonitoringWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+    static void updateAppWidget(Context context, @NonNull AppWidgetManager appWidgetManager, int appWidgetId) {
         Intent intent = new Intent(context, MonitoringWidgetRemoteViewsService.class);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_monitoring);
         views.setRemoteAdapter(R.id.list_view, intent);
@@ -36,7 +38,7 @@ public class MonitoringWidgetProvider extends AppWidgetProvider {
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, @NonNull int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }

@@ -1,5 +1,6 @@
 package com.xdev.expy.utils;
 
+@SuppressWarnings("unused")
 public class Event<T> {
 
     private final T content;

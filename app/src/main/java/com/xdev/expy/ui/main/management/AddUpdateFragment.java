@@ -69,6 +69,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
 
     public AddUpdateFragment() {}
 
+    @NonNull
     public static AddUpdateFragment newInstance(ProductEntity product) {
         AddUpdateFragment fragment = new AddUpdateFragment();
         Bundle args = new Bundle();
@@ -136,7 +137,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         int id = view.getId();
         if (id == binding.tvHelpPao.getId()) {
             HelpPAOFragment.newInstance().show(getChildFragmentManager(), HelpPAOFragment.TAG);
@@ -152,7 +153,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+    public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean checked) {
         int id = compoundButton.getId();
         if (id == binding.switchOpened.getId()){
             setExpiryDateFieldVisibility(checked);
@@ -204,7 +205,10 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         }
 
         if (opened) expiryDate = addDay(openedDate, Integer.parseInt(pao)*30);
-        else pao = "0";
+        else {
+            openedDate = "";
+            pao = "0";
+        }
 
         product.setName(name);
         product.setExpiryDate(expiryDate);
@@ -225,7 +229,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         mainCallback.backToHome(false);
     }
 
-    private boolean isValidForm(String name, String expiryDate, String openedDate, String pao, boolean isOpened){
+    private boolean isValidForm(@NonNull String name, String expiryDate, String openedDate, String pao, boolean isOpened){
         return !((name.isEmpty()) || ((isOpened && (openedDate.isEmpty() || pao.isEmpty())) || (!isOpened && (expiryDate.isEmpty())))) &&
                 binding.tilName.getError() == null &&
                 binding.tilExpiryDate.getError() == null &&
@@ -233,7 +237,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
                 binding.tilPao.getError() == null;
     }
 
-    private void deleteProduct(Context context, ProductEntity product) {
+    private void deleteProduct(Context context, @NonNull ProductEntity product) {
         new AlertDialog.Builder(context)
                 .setTitle(R.string.dialog_title_delete_product)
                 .setMessage(getResources().getString(R.string.dialog_message_delete_product, product.getName()))
@@ -252,7 +256,8 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         binding.tilPao.setEnabled(isOpened);
     }
 
-    private List<ReminderEntity> setReminder(Context context, ProductEntity product) {
+    @NonNull
+    private List<ReminderEntity> setReminder(Context context, @NonNull ProductEntity product) {
         List<ReminderEntity> reminderList = new ArrayList<>();
         String expiryDate = product.getExpiryDate();
 

@@ -25,6 +25,8 @@ import com.xdev.expy.ui.widget.MonitoringWidgetProvider;
 import com.xdev.expy.utils.ShimmerHelper;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
+import org.jetbrains.annotations.Contract;
+
 import static com.xdev.expy.utils.AppUtils.showToast;
 
 public class MonitoredFragment extends Fragment implements ProductAdapter.ProductAdapterClickListener {
@@ -36,6 +38,8 @@ public class MonitoredFragment extends Fragment implements ProductAdapter.Produc
 
     public MonitoredFragment() {}
 
+    @NonNull
+    @Contract(" -> new")
     public static MonitoredFragment newInstance() {
         return new MonitoredFragment();
     }
@@ -79,7 +83,7 @@ public class MonitoredFragment extends Fragment implements ProductAdapter.Produc
         });
 
         binding.fabAdd.setOnClickListener(v -> mainCallback.addUpdateProduct(new ProductEntity()));
-        binding.swipeRefresh.setOnRefreshListener(() -> viewModel.fetch(true));
+        binding.swipeRefresh.setOnRefreshListener(() -> viewModel.fetchNow(true));
     }
 
     private void updateWidget(Activity activity) {

@@ -3,6 +3,8 @@ package com.xdev.expy.vo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.Objects;
 
 import static com.xdev.expy.vo.Status.ERROR;
@@ -26,14 +28,20 @@ public class Resource<T> {
         this.message = message;
     }
 
+    @NonNull
+    @Contract(value = "_ -> new", pure = true)
     public static <T> Resource<T> success(@Nullable T data) {
         return new Resource<>(SUCCESS, data, null);
     }
 
+    @NonNull
+    @Contract(value = "_, _ -> new", pure = true)
     public static <T> Resource<T> error(String msg, @Nullable T data) {
         return new Resource<>(ERROR, data, msg);
     }
 
+    @NonNull
+    @Contract(value = "_ -> new", pure = true)
     public static <T> Resource<T> loading(@Nullable T data) {
         return new Resource<>(LOADING, data, null);
     }

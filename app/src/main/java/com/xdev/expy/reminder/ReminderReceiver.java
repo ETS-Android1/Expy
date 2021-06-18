@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,7 +23,7 @@ public class ReminderReceiver extends BroadcastReceiver {
     private static final String EXTRA_MESSAGE = "extra_message";
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, @NonNull Intent intent) {
         String channelId = "channel_reminder";
         String channelName= "Reminder";
         int notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0);
@@ -30,7 +32,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         showNotification(context, channelId, channelName, notificationId, title, message);
     }
 
-    public void setReminder(Context context, int notificationId, String title, String message, Date date) {
+    public void setReminder(@NonNull Context context, int notificationId, String title, String message, Date date) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ReminderReceiver.class);
         intent.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
@@ -54,7 +56,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         }
     }
 
-    public void cancelReminder(Context context, int notificationId){
+    public void cancelReminder(@NonNull Context context, int notificationId){
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ReminderReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,

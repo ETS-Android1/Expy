@@ -20,6 +20,8 @@ import com.xdev.expy.textwatcher.PasswordConfirmationTextWatcher;
 import com.xdev.expy.textwatcher.PersonNameTextWatcher;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
+import org.jetbrains.annotations.Contract;
+
 import static com.xdev.expy.utils.AppUtils.showToast;
 
 public class SignUpFragment extends Fragment {
@@ -31,6 +33,8 @@ public class SignUpFragment extends Fragment {
 
     public SignUpFragment() {}
 
+    @NonNull
+    @Contract(" -> new")
     public static SignUpFragment newInstance() {
         return new SignUpFragment();
     }
@@ -53,8 +57,7 @@ public class SignUpFragment extends Fragment {
             if (isLoading) {
                 binding.progressBar.setVisibility(View.VISIBLE);
                 binding.btnRegister.setVisibility(View.INVISIBLE);
-            }
-            else {
+            } else {
                 binding.progressBar.setVisibility(View.INVISIBLE);
                 binding.btnRegister.setVisibility(View.VISIBLE);
             }
@@ -89,7 +92,7 @@ public class SignUpFragment extends Fragment {
         viewModel.registerWithEmail(name, email, password);
     }
 
-    private boolean isValidForm(String name, String email, String password, String passwordConfirmation){
+    private boolean isValidForm(@NonNull String name, String email, String password, String passwordConfirmation){
         return !(name.isEmpty() || email.isEmpty() ||
                 password.isEmpty() || passwordConfirmation.isEmpty()) &&
                 binding.tilEmail.getError() == null &&

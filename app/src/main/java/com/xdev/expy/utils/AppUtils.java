@@ -6,6 +6,8 @@ import android.net.NetworkInfo;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.xdev.expy.R;
@@ -18,7 +20,7 @@ public class AppUtils {
         Runtime runtime = Runtime.getRuntime();
         try {
             Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int     exitValue = ipProcess.waitFor();
+            int exitValue = ipProcess.waitFor();
             return (exitValue == 0);
         } catch (IOException | InterruptedException e){
             e.printStackTrace();
@@ -26,7 +28,7 @@ public class AppUtils {
         return false;
     }
 
-    public static boolean isNetworkAvailable(Context context) {
+    public static boolean isNetworkAvailable(@NonNull Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -42,6 +44,7 @@ public class AppUtils {
                 .into(imageView);
     }
 
+    @NonNull
     private static RequestOptions myGlideOptions(){
         return RequestOptions.placeholderOf(R.drawable.ic_no_avatar)
                 .error(R.drawable.ic_no_avatar);

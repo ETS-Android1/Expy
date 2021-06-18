@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.xdev.expy.databinding.FragmentAboutBinding;
 import com.xdev.expy.utils.MyBottomSheetDialogFragment;
 
+import org.jetbrains.annotations.Contract;
+
 public class AboutFragment extends MyBottomSheetDialogFragment {
 
     public static final String TAG = AboutFragment.class.getSimpleName();
@@ -20,6 +22,8 @@ public class AboutFragment extends MyBottomSheetDialogFragment {
 
     public AboutFragment() {}
 
+    @NonNull
+    @Contract(" -> new")
     public static AboutFragment newInstance() {
         return new AboutFragment();
     }

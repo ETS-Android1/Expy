@@ -1,5 +1,6 @@
 package com.xdev.expy.ui.main;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -62,13 +63,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } else {
                 loadImage(this, binding.civProfile, user.getPhotoUrl());
                 viewModel.setProductsReference(user.getUid());
-                registration = viewModel.getProductsReference().addSnapshotListener((value, error) -> {
-                    if (error != null) Log.w(TAG, "Listen failed", error);
-                    else if (value != null){
-                        viewModel.fetch(true);
-                        Log.d(TAG, "Changes detected");
-                    }
-                });
+                if (registration == null) {
+                    registration = viewModel.getProductsReference().addSnapshotListener((value, error) -> {
+                        if (error != null) Log.w(TAG, "Listen failed", error);
+                        else if (value != null){
+                            Log.d(TAG, "Changes detected");
+                            viewModel.fetchNow(true);
+                        }
+                    });
+                }
             }
         });
         viewModel.getToastText().observe(this, toastText -> {
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         int id = view.getId();
         if (id == binding.btnAbout.getId()){
             showAbout();
@@ -98,11 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showProfile() {
-        String userProfile = "";
-        if (currentUser.getPhotoUrl() != null) userProfile = currentUser.getPhotoUrl().toString();
         ProfileFragment.newInstance(currentUser.getDisplayName(),
                 currentUser.getEmail(),
-                userProfile
+                currentUser.getPhotoUrl() != null ? currentUser.getPhotoUrl().toString() : ""
         ).show(getSupportFragmentManager(), ProfileFragment.TAG);
     }
 

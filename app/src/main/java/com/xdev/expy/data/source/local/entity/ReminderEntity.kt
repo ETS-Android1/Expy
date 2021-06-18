@@ -22,7 +22,8 @@ data class ReminderEntity (
     var id: Int = 0,
 
     @ColumnInfo(name = "productId")
-    @Exclude var productId: String = "",
+    @get:Exclude
+    var productId: String = "",
 
     @ColumnInfo(name = "timestamp")
     var timestamp: Timestamp = Timestamp(0, 0)

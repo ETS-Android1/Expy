@@ -3,6 +3,8 @@ package com.xdev.expy.data.source.remote;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.jetbrains.annotations.Contract;
+
 import static com.xdev.expy.data.source.remote.StatusResponse.EMPTY;
 import static com.xdev.expy.data.source.remote.StatusResponse.ERROR;
 import static com.xdev.expy.data.source.remote.StatusResponse.LOADING;
@@ -25,18 +27,26 @@ public class ApiResponse<T> {
         this.message = message;
     }
 
+    @NonNull
+    @Contract(value = "_ -> new", pure = true)
     public static <T> ApiResponse<T> loading(String msg) {
         return new ApiResponse<>(LOADING, null, msg);
     }
 
+    @NonNull
+    @Contract(value = "_ -> new", pure = true)
     public static <T> ApiResponse<T> success(@Nullable T body) {
         return new ApiResponse<>(SUCCESS, body, null);
     }
 
+    @NonNull
+    @Contract(value = "_, _ -> new", pure = true)
     public static <T> ApiResponse<T> empty(String msg, @Nullable T body) {
         return new ApiResponse<>(EMPTY, body, msg);
     }
 
+    @NonNull
+    @Contract(value = "_, _ -> new", pure = true)
     public static <T> ApiResponse<T> error(String msg, @Nullable T body) {
         return new ApiResponse<>(ERROR, body, msg);
     }

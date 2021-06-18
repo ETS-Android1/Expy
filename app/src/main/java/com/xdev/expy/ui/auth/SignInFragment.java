@@ -31,6 +31,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import org.jetbrains.annotations.Contract;
+
 import static com.xdev.expy.utils.AppUtils.showToast;
 
 public class SignInFragment extends Fragment implements View.OnClickListener {
@@ -45,6 +47,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     public SignInFragment() {}
 
+    @NonNull
+    @Contract(" -> new")
     public static SignInFragment newInstance() {
         return new SignInFragment();
     }
@@ -87,8 +91,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             if (isLoading) {
                 binding.progressBar.setVisibility(View.VISIBLE);
                 binding.layoutButton.setVisibility(View.INVISIBLE);
-            }
-            else {
+            } else {
                 binding.progressBar.setVisibility(View.INVISIBLE);
                 binding.layoutButton.setVisibility(View.VISIBLE);
             }
@@ -117,7 +120,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         int id = view.getId();
         if (id == binding.btnLogin.getId()){
             if (binding.edtEmail.getText() != null && binding.edtPassword.getText() != null){
@@ -148,13 +151,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         someActivityResultLauncher.launch(intentGoogle);
     }
 
-    private void authWithGoogle(GoogleSignInAccount account){
+    private void authWithGoogle(@NonNull GoogleSignInAccount account){
         Log.d(TAG, "authWithGoogle: " + account.getId());
         AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         viewModel.authWithGoogle(authCredential);
     }
 
-    private boolean isValidForm(String email, String password){
+    private boolean isValidForm(@NonNull String email, String password){
         return !(email.isEmpty() || password.isEmpty()) &&
                 binding.tilEmail.getError() == null &&
                 binding.tilPassword.getError() == null;

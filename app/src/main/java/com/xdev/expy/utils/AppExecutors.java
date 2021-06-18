@@ -9,6 +9,7 @@ import androidx.annotation.VisibleForTesting;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+@SuppressWarnings("unused")
 public class AppExecutors {
 
     private static final int THREAD_COUNT = 3;

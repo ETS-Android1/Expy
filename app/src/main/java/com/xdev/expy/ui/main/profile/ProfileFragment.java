@@ -34,6 +34,7 @@ public class ProfileFragment extends MyBottomSheetDialogFragment implements View
 
     public ProfileFragment() {}
 
+    @NonNull
     public static ProfileFragment newInstance(String userName, String userEmail, String userProfile) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -86,7 +87,7 @@ public class ProfileFragment extends MyBottomSheetDialogFragment implements View
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(@NonNull View view) {
         int id = view.getId();
         if (id == binding.btnResetPassword.getId()){
             viewModel.sendPasswordReset(userEmail);

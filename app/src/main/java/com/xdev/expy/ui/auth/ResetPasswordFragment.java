@@ -17,6 +17,8 @@ import com.xdev.expy.databinding.FragmentResetPasswordBinding;
 import com.xdev.expy.textwatcher.EmailTextWatcher;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
+import org.jetbrains.annotations.Contract;
+
 import static com.xdev.expy.utils.AppUtils.showToast;
 
 public class ResetPasswordFragment extends Fragment {
@@ -28,6 +30,8 @@ public class ResetPasswordFragment extends Fragment {
 
     public ResetPasswordFragment() {}
 
+    @NonNull
+    @Contract(" -> new")
     public static ResetPasswordFragment newInstance() {
         return new ResetPasswordFragment();
     }

@@ -13,7 +13,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.xdev.expy.data.source.local.entity.ProductWithReminders;
 import com.xdev.expy.data.source.local.entity.ProductEntity;
 import com.xdev.expy.data.AuthRepository;
-import com.xdev.expy.data.MainRepository;
+import com.xdev.expy.data.ProductRepository;
 import com.xdev.expy.utils.Event;
 import com.google.firebase.auth.FirebaseUser;
 import com.xdev.expy.vo.Resource;
@@ -21,70 +21,61 @@ import com.xdev.expy.vo.Resource;
 public class MainViewModel extends AndroidViewModel {
 
     private final AuthRepository authRepository;
-    private final MainRepository mainRepository;
+    private final ProductRepository productRepository;
 
-    private LiveData<Resource<PagedList<ProductWithReminders>>> monitoredProductList;
-    private LiveData<Resource<PagedList<ProductWithReminders>>> expiredProductList;
-    private MutableLiveData<FirebaseUser> user;
-    private MutableLiveData<Boolean> isLoading;
-    private MutableLiveData<Event<String>> toastText;
-
-    private final MutableLiveData<Boolean> fetchNow = new MutableLiveData<>();
-    public void fetch(boolean fetchNow) {
-        this.fetchNow.setValue(fetchNow);
-    }
-
-    public MainViewModel(@NonNull Application application, AuthRepository authRepository, MainRepository mainRepository){
+    public MainViewModel(@NonNull Application application, AuthRepository authRepository, ProductRepository productRepository){
         super(application);
         this.authRepository = authRepository;
-        this.mainRepository = mainRepository;
+        this.productRepository = productRepository;
+        fetchNow(true);
     }
 
-    public LiveData<Resource<PagedList<ProductWithReminders>>> getMonitoredProducts(){
-        if (monitoredProductList == null) monitoredProductList = Transformations.switchMap(fetchNow,
-                input -> mainRepository.getProducts(false, input));
-        return monitoredProductList;
+    private final MutableLiveData<Boolean> _fetchNow = new MutableLiveData<>();
+
+    public void fetchNow(boolean state) {
+        _fetchNow.setValue(state);
     }
 
-    public LiveData<Resource<PagedList<ProductWithReminders>>> getExpiredProducts(){
-        if (expiredProductList == null) expiredProductList = Transformations.switchMap(fetchNow,
-                input -> mainRepository.getProducts(true, input));
-        return expiredProductList;
+    public LiveData<Resource<PagedList<ProductWithReminders>>> getMonitoredProducts() {
+        return Transformations.switchMap(_fetchNow, input ->
+                productRepository.getProducts(false, input));
     }
 
-    public LiveData<FirebaseUser> getUser(){
-        if (user == null) user = authRepository.getUser();
-        return user;
+    public LiveData<Resource<PagedList<ProductWithReminders>>> getExpiredProducts() {
+        return Transformations.switchMap(_fetchNow, input ->
+                productRepository.getProducts(true, input));
     }
 
-    public LiveData<Boolean> isLoading(){
-        if (isLoading == null) isLoading = authRepository.isLoading();
-        return isLoading;
+    public LiveData<FirebaseUser> getUser() {
+        return authRepository.getUser();
+    }
+
+    public LiveData<Boolean> isLoading() {
+        return authRepository.isLoading();
     }
 
     public LiveData<Event<String>> getToastText() {
-        if (toastText == null) toastText = authRepository.getToastText();
-        return toastText;
+        return authRepository.getToastText();
     }
 
     public void insertProduct(ProductEntity product){
-        mainRepository.insertProduct(product);
+        productRepository.insertProduct(product);
     }
 
     public void updateProduct(ProductEntity product){
-        mainRepository.updateProduct(product);
+        productRepository.updateProduct(product);
     }
 
     public void deleteProduct(ProductEntity product){
-        mainRepository.deleteProduct(product);
+        productRepository.deleteProduct(product);
     }
 
     public CollectionReference getProductsReference(){
-        return mainRepository.getProductsReference();
+        return productRepository.getProductsReference();
     }
 
     public void setProductsReference(String userId){
-        mainRepository.setProductsReference(userId);
+        productRepository.setProductsReference(userId);
     }
 
     public void sendPasswordReset(String email){
@@ -92,7 +83,7 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void logout(){
-        mainRepository.clearDatabase();
+        productRepository.clearDatabase();
         authRepository.logout();
     }
 }

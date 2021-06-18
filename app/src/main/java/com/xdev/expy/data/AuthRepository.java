@@ -4,6 +4,7 @@ import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.xdev.expy.R;
@@ -16,19 +17,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class AuthRepository {
+
     private final String TAG = getClass().getSimpleName();
 
     private final Application application;
     private final FirebaseAuth firebaseAuth;
 
-    private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>();
-    public MutableLiveData<Boolean> isLoading(){
-        return _isLoading;
+    private final MutableLiveData<FirebaseUser> _user = new MutableLiveData<>();
+    public LiveData<FirebaseUser> getUser() {
+        return _user;
     }
 
-    private final MutableLiveData<FirebaseUser> _user = new MutableLiveData<>();
-    public MutableLiveData<FirebaseUser> getUser() {
-        return _user;
+    private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>();
+    public LiveData<Boolean> isLoading(){
+        return _isLoading;
     }
 
     private final MutableLiveData<Event<String>> _toastText = new MutableLiveData<>();

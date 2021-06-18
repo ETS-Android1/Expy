@@ -22,6 +22,8 @@ import com.xdev.expy.ui.main.MainViewModel;
 import com.xdev.expy.utils.ShimmerHelper;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
+import org.jetbrains.annotations.Contract;
+
 import static com.xdev.expy.utils.AppUtils.showToast;
 
 public class ExpiredFragment extends Fragment implements ProductAdapter.ProductAdapterClickListener {
@@ -31,6 +33,8 @@ public class ExpiredFragment extends Fragment implements ProductAdapter.ProductA
 
     public ExpiredFragment() {}
 
+    @NonNull
+    @Contract(" -> new")
     public static ExpiredFragment newInstance() {
         return new ExpiredFragment();
     }
@@ -72,7 +76,7 @@ public class ExpiredFragment extends Fragment implements ProductAdapter.ProductA
             }
         });
 
-        binding.swipeRefresh.setOnRefreshListener(() -> viewModel.fetch(true));
+        binding.swipeRefresh.setOnRefreshListener(() -> viewModel.fetchNow(true));
     }
 
     @Override
