@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import com.xdev.expy.R;
 import com.xdev.expy.ui.main.MainActivity;
 
+// Reference: https://www.sitepoint.com/killer-way-to-show-a-list-of-items-in-android-collection-widget/
 public class MonitoringWidgetProvider extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, @NonNull AppWidgetManager appWidgetManager, int appWidgetId) {
@@ -29,6 +30,7 @@ public class MonitoringWidgetProvider extends AppWidgetProvider {
 
         // Click events on ListView items
         Intent clickIntentTemplate = new Intent(context, MainActivity.class);
+        clickIntentTemplate.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent clickPendingIntentTemplate = TaskStackBuilder.create(context)
                 .addNextIntentWithParentStack(clickIntentTemplate)
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

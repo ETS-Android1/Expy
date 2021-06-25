@@ -76,7 +76,7 @@ public class MonitoringRemoteViewsFactory implements RemoteViewsService.RemoteVi
         rv.setInt(R.id.layout_countdown, "setBackgroundResource", background);
 
         Intent fillInIntent = new Intent();
-        fillInIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // Write putExtra here if necessary
         rv.setOnClickFillInIntent(R.id.widget_item_container, fillInIntent);
 
         return rv;
