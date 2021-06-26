@@ -152,14 +152,6 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    @Override
-    public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean checked) {
-        int id = compoundButton.getId();
-        if (id == binding.switchOpened.getId()){
-            setExpiryDateFieldVisibility(checked);
-        }
-    }
-
     public void showDatePicker(String tag, Context context, String initialDate) {
         Calendar calendar = Calendar.getInstance();
         if (initialDate != null && !initialDate.isEmpty()) {
@@ -196,28 +188,32 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         String expiryDate = this.expiryDate;
         String openedDate = this.openedDate;
         String pao = binding.edtPao.getText().toString();
-        boolean opened = binding.switchOpened.isChecked();
-        boolean reminder = binding.switchReminder.isChecked();
+        boolean isOpened = binding.switchOpened.isChecked();
+        boolean isReminderTurnedOn = binding.switchReminder.isChecked();
 
-        if (!isValidForm(name, expiryDate, openedDate, pao, opened)) {
+        if (!isValidForm(name, expiryDate, openedDate, pao, isOpened)) {
             showToast(getContext(), getResources().getString(R.string.toast_empty_fields));
             return;
         }
 
-        if (opened) expiryDate = addDay(openedDate, Integer.parseInt(pao)*30);
+        if (isOpened) expiryDate = addDay(openedDate, Integer.parseInt(pao)*30);
         else {
             openedDate = "";
             pao = "0";
+        }
+
+        if (isUpdate) {
+            if (!isReminderTurnedOn) cancelAllReminders(context, product);
         }
 
         product.setName(name);
         product.setExpiryDate(expiryDate);
         product.setOpenedDate(openedDate);
         product.setPao(Integer.parseInt(pao));
-        product.setIsOpened(opened);
+        product.setIsOpened(isOpened);
 
         List<ReminderEntity> reminderList = new ArrayList<>();
-        if (reminder) reminderList = setReminder(context, product);
+        if (isReminderTurnedOn) reminderList = setReminders(context, product);
         product.setReminders(reminderList);
 
         if (isUpdate) viewModel.updateProduct(product);
@@ -243,11 +239,23 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
                 .setMessage(getResources().getString(R.string.dialog_message_delete_product, product.getName()))
                 .setNeutralButton(R.string.cancel, null)
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-                        for (ReminderEntity reminder : product.getReminders())
-                            reminderReceiver.cancelReminder(context, reminder.getId());
+                        cancelAllReminders(context, product);
                         viewModel.deleteProduct(product);
                         mainCallback.backToHome(false);
                 }).create().show();
+    }
+
+    private void cancelAllReminders(Context context, @NonNull ProductEntity product) {
+        for (ReminderEntity reminder : product.getReminders())
+            reminderReceiver.cancelReminder(context, reminder.getId());
+    }
+
+    @Override
+    public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean checked) {
+        int id = compoundButton.getId();
+        if (id == binding.switchOpened.getId()){
+            setExpiryDateFieldVisibility(checked);
+        }
     }
 
     private void setExpiryDateFieldVisibility(boolean isOpened){
@@ -257,7 +265,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     }
 
     @NonNull
-    private List<ReminderEntity> setReminder(Context context, @NonNull ProductEntity product) {
+    private List<ReminderEntity> setReminders(Context context, @NonNull ProductEntity product) {
         List<ReminderEntity> reminderList = new ArrayList<>();
         String expiryDate = product.getExpiryDate();
 
