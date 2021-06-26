@@ -118,10 +118,25 @@
                 android:checked="true"/>
 
             <TextView
+                android:id="@+id/tv_reminder"
                 style="@style/HintTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/turn_on_reminders_hint" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_finished"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/stop_monitoring"
+                android:checked="false"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                style="@style/HintTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stop_monitoring_hint" />
 
             <Button
                 android:id="@+id/btn_save"

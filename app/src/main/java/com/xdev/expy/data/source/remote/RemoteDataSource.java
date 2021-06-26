@@ -171,6 +171,7 @@ public class RemoteDataSource {
         document.put("openedDate", product.getOpenedDate());
         document.put("pao", product.getPao());
         document.put("reminders", product.getReminders());
+        document.put("isFinished", product.getIsFinished());
         return document;
     }
 }

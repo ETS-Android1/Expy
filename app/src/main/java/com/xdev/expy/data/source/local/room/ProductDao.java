@@ -24,7 +24,7 @@ public abstract class ProductDao {
     @Query("SELECT * FROM productEntities WHERE expiryDate <= :currentDate ORDER BY expiryDate DESC")
     public abstract DataSource.Factory<Integer, ProductWithReminders> getExpiredProducts(String currentDate);
 
-    @Query("SELECT * FROM productEntities WHERE expiryDate >= :currentDate ORDER BY expiryDate ASC LIMIT 5")
+    @Query("SELECT * FROM productEntities WHERE expiryDate >= :currentDate AND isFinished = 0 ORDER BY expiryDate ASC LIMIT 5")
     public abstract List<ProductEntity> getSoonToExpireProducts(String currentDate);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

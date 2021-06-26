@@ -87,4 +87,6 @@
     <plurals name="number_of_months_remaining">
         <item quantity="other">%d bulan lagi</item>
     </plurals>
+    <string name="stop_monitoring">Produk sudah habis</string>
+    <string name="stop_monitoring_hint">Beritahu kami jika produkmu sudah habis sebelum kedaluwarsa dan kamu enggak perlu memantaunya lagi.</string>
 </resources>

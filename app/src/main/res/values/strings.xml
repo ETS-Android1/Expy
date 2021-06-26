@@ -95,4 +95,6 @@
         <item quantity="one">%d month to go</item>
         <item quantity="other">%d months to go</item>
     </plurals>
+    <string name="stop_monitoring">Stop monitoring</string>
+    <string name="stop_monitoring_hint">If you\'ve used up this product before the expiration date, you don\'t need to monitor it anymore.</string>
 </resources>

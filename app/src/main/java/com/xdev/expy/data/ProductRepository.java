@@ -83,7 +83,8 @@ public class ProductRepository implements ProductDataSource {
                             productResponse.getIsOpened(),
                             productResponse.getOpenedDate(),
                             productResponse.getPao(),
-                            new ArrayList<>());
+                            new ArrayList<>(),
+                            productResponse.getIsFinished());
                     productList.add(product);
 
                     for (ReminderResponse reminderResponse : productResponse.getReminders()) {

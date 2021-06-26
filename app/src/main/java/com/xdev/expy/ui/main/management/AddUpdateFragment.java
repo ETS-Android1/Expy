@@ -110,6 +110,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         binding.btnSave.setOnClickListener(this);
         binding.btnDelete.setOnClickListener(this);
         binding.switchOpened.setOnCheckedChangeListener(this);
+        binding.switchFinished.setOnCheckedChangeListener(this);
 
         isUpdate = !product.getId().isEmpty() ;
         if (isUpdate){
@@ -123,6 +124,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
             binding.edtPao.setText(String.valueOf(product.getPao()));
             binding.switchOpened.setChecked(product.getIsOpened());
             binding.switchReminder.setChecked(!product.getReminders().isEmpty());
+            binding.switchFinished.setChecked(product.getIsFinished());
         } else {
             binding.toolbarTitle.setText(R.string.title_add_product);
             binding.btnDelete.setVisibility(View.GONE);
@@ -190,6 +192,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         String pao = binding.edtPao.getText().toString();
         boolean isOpened = binding.switchOpened.isChecked();
         boolean isReminderTurnedOn = binding.switchReminder.isChecked();
+        boolean isFinished = binding.switchFinished.isChecked();
 
         if (!isValidForm(name, expiryDate, openedDate, pao, isOpened)) {
             showToast(getContext(), getResources().getString(R.string.toast_empty_fields));
@@ -214,9 +217,10 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         product.setOpenedDate(openedDate);
         product.setPao(Integer.parseInt(pao));
         product.setIsOpened(isOpened);
+        product.setIsFinished(isFinished);
 
         List<ReminderEntity> reminderList = new ArrayList<>();
-        if (isReminderTurnedOn) reminderList = setReminders(context, product);
+        if (isReminderTurnedOn && !isFinished) reminderList = setReminders(context, product);
         product.setReminders(reminderList);
 
         if (isUpdate) viewModel.updateProduct(product);
@@ -238,9 +242,9 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
                 .setMessage(getResources().getString(R.string.dialog_message_delete_product, product.getName()))
                 .setNeutralButton(R.string.cancel, null)
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-                        cancelAllReminders(context, product);
-                        viewModel.deleteProduct(product);
-                        mainCallback.backToHome(false);
+                    cancelAllReminders(context, product);
+                    viewModel.deleteProduct(product);
+                    mainCallback.backToHome(false);
                 }).create().show();
     }
 
@@ -254,6 +258,8 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         int id = compoundButton.getId();
         if (id == binding.switchOpened.getId()){
             setExpiryDateFieldVisibility(checked);
+        } else if (id == binding.switchFinished.getId()){
+            setReminderSwitchEnability(checked);
         }
     }
 
@@ -261,6 +267,15 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         binding.tilExpiryDate.setEnabled(!isOpened);
         binding.tilOpenedDate.setEnabled(isOpened);
         binding.tilPao.setEnabled(isOpened);
+        binding.edtExpiryDate.setEnabled(!isOpened);
+        binding.edtOpenedDate.setEnabled(isOpened);
+        binding.edtPao.setEnabled(isOpened);
+    }
+
+    private void setReminderSwitchEnability(boolean isFinished) {
+        if (isFinished) binding.switchReminder.setChecked(false);
+        binding.switchReminder.setEnabled(!isFinished);
+        binding.tvReminder.setEnabled(!isFinished);
     }
 
     @NonNull

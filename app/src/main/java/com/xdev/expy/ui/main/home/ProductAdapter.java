@@ -1,6 +1,7 @@
 package com.xdev.expy.ui.main.home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -57,46 +58,73 @@ public class ProductAdapter extends PagedListAdapter<ProductWithReminders, Produ
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private final Context context;
         private final ItemProductBinding binding;
 
         public ViewHolder(@NonNull ItemProductBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            this.context = itemView.getContext();
         }
 
-        public void bind(@NonNull ProductWithReminders product) {
-            String expiryDate = product.getProduct().getExpiryDate();
-            long dte = differenceOfDates(expiryDate, getCurrentDate());
+        public void bind(@NonNull ProductWithReminders productWithReminders) {
+            ProductEntity product = productWithReminders.getProduct();
+            product.setReminders(productWithReminders.getReminders());
+
+            int dte = (int) differenceOfDates(product.getExpiryDate(), getCurrentDate());
             if (dte < 0) dte = 0;
 
-            binding.tvName.setText(product.getProduct().getName());
-            binding.tvExpiryDate.setText(getFormattedDate(expiryDate, true));
-            binding.tvCountdown.setText(itemView.getContext().getResources().getQuantityString(
-                            R.plurals.number_of_days_remaining_countdown, (int) dte, dte));
+            setText(product, dte);
+            setColoring(product, dte);
+            setClickListener(product);
+        }
 
-            int background;
-            int color;
-            if (dte <= 3) {
-                background = R.drawable.bg_countdown_red;
-                color = R.color.red;
-            } else if (dte <= 7) {
-                background = R.drawable.bg_countdown_orange;
-                color = R.color.orange;
-            } else if (dte <= 30) {
-                background = R.drawable.bg_countdown_yellow;
-                color = R.color.yellow;
-            } else {
-                background = R.drawable.bg_countdown_green;
-                color = R.color.green_primary;
+        private void setText(ProductEntity product, int dte) {
+            binding.tvName.setText(product.getName());
+            binding.tvExpiryDate.setText(getFormattedDate(product.getExpiryDate(), true));
+            binding.tvCountdown.setText(context.getResources().getQuantityString(
+                    R.plurals.number_of_days_remaining_countdown, dte, dte));
+        }
+
+        private void setColoring(ProductEntity product, int dte) {
+            if (!product.getIsFinished() || (product.getIsFinished() && dte <= 0) ) {
+                int countdownBg;
+                int countdownColor;
+                if (dte <= 3) {
+                    countdownBg = R.drawable.bg_countdown_red;
+                    countdownColor = R.color.red;
+                } else if (dte <= 7) {
+                    countdownBg = R.drawable.bg_countdown_orange;
+                    countdownColor = R.color.orange;
+                } else if (dte <= 30) {
+                    countdownBg = R.drawable.bg_countdown_yellow;
+                    countdownColor = R.color.yellow;
+                } else {
+                    countdownBg = R.drawable.bg_countdown_green;
+                    countdownColor = R.color.green_primary;
+                }
+                int black = ContextCompat.getColor(context, R.color.black);
+                int darkGray = ContextCompat.getColor(context, R.color.gray_dark);
+                int white = ContextCompat.getColor(context, R.color.white);
+                binding.tvName.setTextColor(black);
+                binding.tvExpiryDate.setTextColor(darkGray);
+                binding.imgIcon.setColorFilter(ContextCompat.getColor(context, countdownColor));
+                binding.layoutCountdown.setBackgroundResource(countdownBg);
+                binding.tvCountdown.setTextColor(white);
+            } else if (product.isFinished && dte > 0){
+                int gray = ContextCompat.getColor(context, R.color.gray);
+                int lightGray = ContextCompat.getColor(context, R.color.gray_light);
+                int countdownBg = R.drawable.bg_countdown_gray;
+                binding.tvName.setTextColor(gray);
+                binding.tvExpiryDate.setTextColor(gray);
+                binding.imgIcon.setColorFilter(gray);
+                binding.layoutCountdown.setBackgroundResource(countdownBg);
+                binding.tvCountdown.setTextColor(lightGray);
             }
-            binding.layoutCountdown.setBackgroundResource(background);
-            binding.imgIcon.setColorFilter(ContextCompat.getColor(itemView.getContext(), color));
+        }
 
-            itemView.setOnClickListener(view -> {
-                ProductEntity productIntent = product.getProduct();
-                productIntent.setReminders(product.getReminders());
-                listener.onProductClicked(productIntent);
-            });
+        private void setClickListener(ProductEntity product) {
+            itemView.setOnClickListener(view -> listener.onProductClicked(product));
         }
     }
 
