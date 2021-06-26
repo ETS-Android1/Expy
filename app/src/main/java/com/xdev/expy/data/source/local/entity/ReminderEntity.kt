@@ -16,7 +16,7 @@ import kotlinx.parcelize.Parcelize
 )
 @Parcelize
 data class ReminderEntity (
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
     var id: Int = 0,

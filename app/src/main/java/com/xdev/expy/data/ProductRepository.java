@@ -87,9 +87,9 @@ public class ProductRepository implements ProductDataSource {
                     productList.add(product);
 
                     for (ReminderResponse reminderResponse : productResponse.getReminders()) {
-                        ReminderEntity reminder = new ReminderEntity();
-                        reminder.setProductId(productResponse.getId());
-                        reminder.setTimestamp(reminderResponse.getTimestamp());
+                        ReminderEntity reminder = new ReminderEntity(reminderResponse.getId(),
+                                productResponse.getId(),
+                                reminderResponse.getTimestamp());
                         reminderList.add(reminder);
                     }
                 }
