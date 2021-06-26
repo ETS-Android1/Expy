@@ -97,4 +97,5 @@
     </plurals>
     <string name="stop_monitoring">Stop monitoring</string>
     <string name="stop_monitoring_hint">If you\'ve used up this product before the expiration date, you don\'t need to monitor it anymore.</string>
+    <string name="toast_data_failed_to_load">Data failed to load, please try again</string>
 </resources>

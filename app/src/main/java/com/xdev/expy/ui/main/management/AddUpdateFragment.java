@@ -280,7 +280,11 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
 
     @NonNull
     private List<ReminderEntity> setReminders(Context context, @NonNull ProductEntity product) {
-        if (product.getId().isEmpty()) throw new RuntimeException("Product id is empty");
+        if (product.getId().isEmpty()) {
+            Log.e(TAG, "Product id is empty");
+            mainCallback.backToHome(false);
+            showToast(context, getResources().getString(R.string.toast_data_failed_to_load));
+        }
 
         List<ReminderEntity> reminderList = new ArrayList<>();
         String expiryDate = product.getExpiryDate();
