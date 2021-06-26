@@ -204,6 +204,9 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
 
         if (isUpdate) {
             if (!isReminderTurnedOn) cancelAllReminders(context, product);
+        } else {
+            String id = viewModel.getProductsReference().document().getId();
+            product.setId(id);
         }
 
         product.setName(name);
@@ -217,11 +220,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         product.setReminders(reminderList);
 
         if (isUpdate) viewModel.updateProduct(product);
-        else {
-            String id = viewModel.getProductsReference().document().getId();
-            product.setId(id);
-            viewModel.insertProduct(product);
-        }
+        else viewModel.insertProduct(product);
         mainCallback.backToHome(false);
     }
 
@@ -266,6 +265,8 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
 
     @NonNull
     private List<ReminderEntity> setReminders(Context context, @NonNull ProductEntity product) {
+        if (product.getId().isEmpty()) throw new RuntimeException("Product id is empty");
+
         List<ReminderEntity> reminderList = new ArrayList<>();
         String expiryDate = product.getExpiryDate();
 
