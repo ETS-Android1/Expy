@@ -2,13 +2,11 @@ package com.xdev.expy.utils;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.xdev.expy.R;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -23,23 +21,6 @@ public class MyBottomSheetDialogFragment extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        BottomSheetDialog dialog = new BottomSheetDialog(requireContext(), getTheme());
-
-        // Change background opacity as you scroll the dialog
-        dialog.setOnShowListener(dialogInterface -> dialog.getBehavior()
-                .addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-                    @Override
-                    public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                        if (newState == BottomSheetBehavior.STATE_HIDDEN) dialog.dismiss();
-                    }
-
-                    @Override
-                    public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                        if (!Float.isNaN(slideOffset))
-                            dialog.getWindow().setDimAmount(0.5f - ((slideOffset * -1)/2));
-                    }
-                }));
-
-        return dialog;
+        return new BottomSheetDialog(requireContext(), getTheme());
     }
 }
