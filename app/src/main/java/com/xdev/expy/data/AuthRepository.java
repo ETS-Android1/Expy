@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import static com.xdev.expy.utils.AppUtils.getRandomAvatar;
+
 public class AuthRepository {
 
     private final String TAG = getClass().getSimpleName();
@@ -63,6 +65,13 @@ public class AuthRepository {
             if (task.isSuccessful()){
                 Log.d(TAG, "signInWithCredential: success");
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+                boolean isNewAccount = true;
+                if (task.getResult() != null && task.getResult().getAdditionalUserInfo() != null){
+                    isNewAccount = task.getResult().getAdditionalUserInfo().isNewUser();
+                }
+                if (isNewAccount) updateProfile(getRandomAvatar());
+
                 _user.postValue(firebaseUser);
             } else {
                 _toastText.postValue(new Event<>(application.getResources().getString(R.string.failure_auth_with_google)));
@@ -79,6 +88,7 @@ public class AuthRepository {
                 Log.d(TAG, "createUserWithEmail: success");
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 updateName(name);
+                updateProfile(getRandomAvatar());
                 sendEmailVerification();
                 _user.postValue(firebaseUser);
             } else {
@@ -143,22 +153,28 @@ public class AuthRepository {
                     .setDisplayName(newName)
                     .build();
             firebaseUser.updateProfile(profileUpdate).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) Log.d(TAG, "updateName: success");
+                if (task.isSuccessful()) {
+                    _user.postValue(firebaseUser);
+                    Log.d(TAG, "updateName: success");
+                }
                 else Log.w(TAG, "updateName: failure", task.getException());
                 _isLoading.postValue(false);
             });
         }
     }
 
-    public void updateProfile(Uri newProfile){
+    public void updateProfile(String newProfile){
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null){
             _isLoading.postValue(true);
             UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                    .setPhotoUri(newProfile)
+                    .setPhotoUri(Uri.parse(newProfile))
                     .build();
             firebaseUser.updateProfile(profileUpdate).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) Log.d(TAG, "updateProfile: success");
+                if (task.isSuccessful()) {
+                    _user.postValue(firebaseUser);
+                    Log.d(TAG, "updateProfile: success");
+                }
                 else Log.w(TAG, "updateProfile: failure", task.getException());
                 _isLoading.postValue(false);
             });

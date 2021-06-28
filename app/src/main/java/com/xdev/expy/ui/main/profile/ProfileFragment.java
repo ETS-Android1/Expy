@@ -1,5 +1,6 @@
 package com.xdev.expy.ui.main.profile;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,7 @@ import com.xdev.expy.ui.main.MainViewModel;
 import com.xdev.expy.customview.MyBottomSheetDialogFragment;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
-import static com.xdev.expy.utils.AppUtils.loadImage;
+import static com.xdev.expy.utils.AppUtils.getAvatarFromResource;
 
 public class ProfileFragment extends MyBottomSheetDialogFragment implements View.OnClickListener{
 
@@ -78,7 +79,7 @@ public class ProfileFragment extends MyBottomSheetDialogFragment implements View
             }
         });
 
-        loadImage(getContext(), binding.civProfile, userProfile);
+        binding.civProfile.setImageResource(getAvatarFromResource(Uri.parse(userProfile)));
         binding.tvName.setText(userName);
         binding.tvEmail.setText(userEmail);
 

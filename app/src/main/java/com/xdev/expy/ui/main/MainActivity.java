@@ -25,7 +25,7 @@ import com.xdev.expy.ui.main.management.AddUpdateFragment;
 import com.xdev.expy.ui.main.profile.ProfileFragment;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
-import static com.xdev.expy.utils.AppUtils.loadImage;
+import static com.xdev.expy.utils.AppUtils.getAvatarFromResource;
 import static com.xdev.expy.utils.AppUtils.showToast;
 import static com.xdev.expy.utils.DateUtils.getCurrentDate;
 import static com.xdev.expy.utils.DateUtils.getFormattedDate;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (user == null) {
                 launchAuth();
             } else {
-                loadImage(this, binding.civProfile, user.getPhotoUrl());
+                binding.civProfile.setImageResource(getAvatarFromResource(user.getPhotoUrl()));
                 viewModel.setProductsReference(user.getUid());
                 if (registration == null) {
                     registration = viewModel.getProductsReference().addSnapshotListener((value, error) -> {
