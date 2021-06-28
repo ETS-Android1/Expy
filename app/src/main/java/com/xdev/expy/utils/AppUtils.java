@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Random;
 
+import static com.xdev.expy.utils.Constants.NO_AVATAR;
 import static com.xdev.expy.utils.Constants.NUMBER_OF_DEFAULT_AVATARS;
 
 public class AppUtils {
@@ -33,7 +34,7 @@ public class AppUtils {
             case "default_7": return R.drawable.ic_avatar_default_07;
             case "default_8": return R.drawable.ic_avatar_default_08;
             case "default_9": return R.drawable.ic_avatar_default_09;
-            default: return R.drawable.ic_no_avatar;
+            default: return NO_AVATAR;
         }
     }
 

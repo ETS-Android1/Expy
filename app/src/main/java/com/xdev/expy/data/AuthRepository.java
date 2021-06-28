@@ -16,7 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import static com.xdev.expy.utils.AppUtils.getAvatarFromResource;
 import static com.xdev.expy.utils.AppUtils.getRandomAvatar;
+import static com.xdev.expy.utils.Constants.NO_AVATAR;
 
 public class AuthRepository {
 
@@ -70,7 +72,17 @@ public class AuthRepository {
                 if (task.getResult() != null && task.getResult().getAdditionalUserInfo() != null){
                     isNewAccount = task.getResult().getAdditionalUserInfo().isNewUser();
                 }
-                if (isNewAccount) updateProfile(getRandomAvatar());
+
+                if (isNewAccount) {
+                    // Give avatar to new Google user
+                    updateProfile(getRandomAvatar());
+                } else {
+                    // Give avatar to Google-first logged-in old user
+                    if (firebaseUser != null &&
+                            getAvatarFromResource(firebaseUser.getPhotoUrl()) == NO_AVATAR) {
+                        updateProfile(getRandomAvatar());
+                    }
+                }
 
                 _user.postValue(firebaseUser);
             } else {
