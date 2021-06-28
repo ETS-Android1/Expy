@@ -66,6 +66,7 @@ public class ExpiredFragment extends Fragment implements ProductAdapter.ProductA
                 case SUCCESS:
                     if (result.data != null) {
                         adapter.submitList(result.data);
+                        adapter.notifyDataSetChanged();
                         shimmer.hide(result.data.isEmpty());
                     }
                     break;

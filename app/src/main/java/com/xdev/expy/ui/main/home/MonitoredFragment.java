@@ -71,6 +71,7 @@ public class MonitoredFragment extends Fragment implements ProductAdapter.Produc
                 case SUCCESS:
                     if (result.data != null) {
                         adapter.submitList(result.data);
+                        adapter.notifyDataSetChanged();
                         shimmer.hide(result.data.isEmpty());
                         updateWidget(getActivity());
                     }
