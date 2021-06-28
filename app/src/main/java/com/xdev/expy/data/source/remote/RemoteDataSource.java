@@ -54,8 +54,8 @@ public class RemoteDataSource {
     public LiveData<ApiResponse<List<ProductResponse>>> getProducts() {
         MutableLiveData<ApiResponse<List<ProductResponse>>> result = new MutableLiveData<>();
 
-        List<ProductResponse> productList = new ArrayList<>();
         productsRef.get().addOnCompleteListener(task -> {
+            List<ProductResponse> productList = new ArrayList<>();
             if (task.isSuccessful()){
                 if (task.getResult() != null){
                     for (DocumentSnapshot document : task.getResult()){

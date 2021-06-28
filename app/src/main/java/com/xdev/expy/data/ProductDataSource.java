@@ -22,8 +22,6 @@ public interface ProductDataSource {
 
     LiveData<ApiResponse<Boolean>> deleteProduct(ProductEntity product);
 
-    LiveData<ApiResponse<String>> uploadImage(Context context, Uri uriPath, String storagePath, String fileName);
-
     CollectionReference getProductsReference();
 
     void setProductsReference(String userId);

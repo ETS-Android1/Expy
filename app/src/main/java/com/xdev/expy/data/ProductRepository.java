@@ -1,8 +1,5 @@
 package com.xdev.expy.data;
 
-import android.content.Context;
-import android.net.Uri;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.paging.LivePagedListBuilder;
@@ -112,11 +109,6 @@ public class ProductRepository implements ProductDataSource {
     @Override
     public LiveData<ApiResponse<Boolean>> deleteProduct(ProductEntity product) {
         return remoteDataSource.deleteProduct(product);
-    }
-
-    @Override
-    public LiveData<ApiResponse<String>> uploadImage(Context context, Uri uriPath, String storagePath, String fileName) {
-        return remoteDataSource.uploadImage(context, uriPath, storagePath, fileName);
     }
 
     @Override
