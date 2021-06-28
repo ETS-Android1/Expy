@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.xdev.expy.ui.splash.SplashActivity"
-    android:gravity="center">
+    android:gravity="center"
+    android:padding="@dimen/layout_margin">
 
     <ImageView
         android:layout_width="wrap_content"

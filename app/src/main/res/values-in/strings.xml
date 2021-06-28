@@ -90,4 +90,5 @@
     <string name="stop_monitoring">Produk sudah habis</string>
     <string name="stop_monitoring_hint">Beritahu kami jika produkmu sudah habis sebelum kedaluwarsa dan kamu enggak perlu memantaunya lagi.</string>
     <string name="toast_data_failed_to_load">Data gagal dimuat, silakan coba lagi</string>
+    <string name="meet_the_team">Bertemu tim kami</string>
 </resources>

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.xdev.expy.databinding.FragmentProfileBinding;
 import com.xdev.expy.ui.main.MainViewModel;
-import com.xdev.expy.utils.MyBottomSheetDialogFragment;
+import com.xdev.expy.customview.MyBottomSheetDialogFragment;
 import com.xdev.expy.viewmodel.ViewModelFactory;
 
 import static com.xdev.expy.utils.AppUtils.loadImage;

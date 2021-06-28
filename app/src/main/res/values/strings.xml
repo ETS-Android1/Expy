@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Expy</string>
     <string name="ugm" translatable="false">Universitas Gadjah Mada</string>
     <string name="arief" translatable="false">Arief Zuhri</string>
@@ -86,7 +86,7 @@
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
     </plurals>
-    <string name="number_of_days_remaining">%1$d day to go</string>
+    <string name="number_of_days_remaining" tools:ignore="PluralsCandidate">%1$d day to go</string>
     <plurals name="number_of_weeks_remaining">
         <item quantity="one">%d week to go</item>
         <item quantity="other">%d weeks to go</item>
@@ -98,4 +98,5 @@
     <string name="stop_monitoring">Stop monitoring</string>
     <string name="stop_monitoring_hint">If you\'ve used up this product before the expiration date, you don\'t need to monitor it anymore.</string>
     <string name="toast_data_failed_to_load">Data failed to load, please try again</string>
+    <string name="meet_the_team">Meet the team</string>
 </resources>

@@ -79,14 +79,14 @@ public class ProductAdapter extends PagedListAdapter<ProductWithReminders, Produ
             setClickListener(product);
         }
 
-        private void setText(ProductEntity product, int dte) {
+        private void setText(@NonNull ProductEntity product, int dte) {
             binding.tvName.setText(product.getName());
             binding.tvExpiryDate.setText(getFormattedDate(product.getExpiryDate(), true));
             binding.tvCountdown.setText(context.getResources().getQuantityString(
                     R.plurals.number_of_days_remaining_countdown, dte, dte));
         }
 
-        private void setColoring(ProductEntity product, int dte) {
+        private void setColoring(@NonNull ProductEntity product, int dte) {
             if (!product.getIsFinished() || (product.getIsFinished() && dte <= 0) ) {
                 int countdownBg;
                 int countdownColor;
@@ -111,7 +111,7 @@ public class ProductAdapter extends PagedListAdapter<ProductWithReminders, Produ
                 binding.imgIcon.setColorFilter(ContextCompat.getColor(context, countdownColor));
                 binding.layoutCountdown.setBackgroundResource(countdownBg);
                 binding.tvCountdown.setTextColor(white);
-            } else if (product.isFinished && dte > 0){
+            } else if (product.getIsFinished() && dte > 0){
                 int gray = ContextCompat.getColor(context, R.color.gray);
                 int lightGray = ContextCompat.getColor(context, R.color.gray_light);
                 int countdownBg = R.drawable.bg_countdown_gray;
