@@ -2,8 +2,6 @@ package com.xdev.expy.ui.onboarding;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,11 +11,11 @@ import com.xdev.expy.databinding.ItemOnboardingBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.ViewHolder>{
+public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.ViewHolder> {
 
     private final List<Onboarding> onboardingList = new ArrayList<>();
 
-    public void submitList(List<Onboarding> onboardingList){
+    public void submitList(List<Onboarding> onboardingList) {
         this.onboardingList.clear();
         this.onboardingList.addAll(onboardingList);
         notifyDataSetChanged();
@@ -41,24 +39,19 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.Vi
         return onboardingList.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView tvTitle;
-        private final TextView tvDescription;
-        private final ImageView imgIllustration;
+        private final ItemOnboardingBinding binding;
 
         ViewHolder(@NonNull ItemOnboardingBinding binding) {
             super(binding.getRoot());
-            tvTitle = binding.tvTitle;
-            tvDescription = binding.tvDescription;
-            imgIllustration = binding.imgIllustration;
+            this.binding = binding;
         }
 
-        void bind(@NonNull Onboarding onboarding){
-            tvTitle.setText(onboarding.getTitle());
-            tvDescription.setText(onboarding.getDescription());
-            imgIllustration.setImageResource(onboarding.getImageRes());
+        void bind(@NonNull Onboarding onboarding) {
+            binding.tvTitle.setText(onboarding.getTitle());
+            binding.tvDescription.setText(onboarding.getDescription());
+            binding.imgIllustration.setImageResource(onboarding.getImageRes());
         }
-
     }
 }

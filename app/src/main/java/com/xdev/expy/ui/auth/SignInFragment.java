@@ -45,7 +45,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     private FragmentSignInBinding binding;
     private GoogleSignInClient googleSignInClient;
 
-    public SignInFragment() {}
+    public SignInFragment() {
+    }
 
     @NonNull
     @Contract(" -> new")
@@ -59,14 +60,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(), result -> {
                     // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-                    if (result.getResultCode() == Activity.RESULT_OK){
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                         try {
                             // Google Sign In was successful, authenticate with Firebase
                             GoogleSignInAccount account = task.getResult(ApiException.class);
                             if (account != null) authWithGoogle(account);
-                        } catch (ApiException e){
+                        } catch (ApiException e) {
                             // Google Sign In failed or user press back button
                             Log.w(TAG, "Google sign in failed", e);
                         }
@@ -97,7 +98,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        if (getContext() != null){
+        if (getContext() != null) {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getResources().getString(R.string.default_web_client_id))
                     .requestEmail()
@@ -122,22 +123,22 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(@NonNull View view) {
         int id = view.getId();
-        if (id == binding.btnLogin.getId()){
-            if (binding.edtEmail.getText() != null && binding.edtPassword.getText() != null){
+        if (id == binding.btnLogin.getId()) {
+            if (binding.edtEmail.getText() != null && binding.edtPassword.getText() != null) {
                 loginWithEmail(binding.edtEmail.getText().toString(),
                         binding.edtPassword.getText().toString());
             }
-        } else if (id == binding.btnGoogle.getId()){
+        } else if (id == binding.btnGoogle.getId()) {
             loginWithGoogle();
-        } else if (id == binding.tvResetPassword.getId()){
+        } else if (id == binding.tvResetPassword.getId()) {
             callback.moveTo(ResetPasswordFragment.newInstance());
-        } else if (id == binding.tvRegister.getId()){
+        } else if (id == binding.tvRegister.getId()) {
             callback.moveTo(SignUpFragment.newInstance());
         }
     }
 
-    private void loginWithEmail(String email, String password){
-        if (!isValidForm(email, password)){
+    private void loginWithEmail(String email, String password) {
+        if (!isValidForm(email, password)) {
             showToast(getContext(), getResources().getString(R.string.toast_empty_fields));
             return;
         }
@@ -151,13 +152,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         someActivityResultLauncher.launch(intentGoogle);
     }
 
-    private void authWithGoogle(@NonNull GoogleSignInAccount account){
+    private void authWithGoogle(@NonNull GoogleSignInAccount account) {
         Log.d(TAG, "authWithGoogle: " + account.getId());
         AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         viewModel.authWithGoogle(authCredential);
     }
 
-    private boolean isValidForm(@NonNull String email, String password){
+    private boolean isValidForm(@NonNull String email, String password) {
         return !(email.isEmpty() || password.isEmpty()) &&
                 binding.tilEmail.getError() == null &&
                 binding.tilPassword.getError() == null;

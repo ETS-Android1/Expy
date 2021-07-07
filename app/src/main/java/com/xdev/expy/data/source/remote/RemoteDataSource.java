@@ -34,14 +34,14 @@ public class RemoteDataSource {
     private final FirebaseStorage storage;
     private CollectionReference productsRef;
 
-    private RemoteDataSource(){
+    private RemoteDataSource() {
         storage = FirebaseStorage.getInstance();
         database = FirebaseFirestore.getInstance();
         productsRef = database.collection("users");
     }
 
     public static RemoteDataSource getInstance() {
-        if (INSTANCE == null){
+        if (INSTANCE == null) {
             synchronized (RemoteDataSource.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new RemoteDataSource();
@@ -56,9 +56,9 @@ public class RemoteDataSource {
 
         productsRef.get().addOnCompleteListener(task -> {
             List<ProductResponse> productList = new ArrayList<>();
-            if (task.isSuccessful()){
-                if (task.getResult() != null){
-                    for (DocumentSnapshot document : task.getResult()){
+            if (task.isSuccessful()) {
+                if (task.getResult() != null) {
+                    for (DocumentSnapshot document : task.getResult()) {
                         ProductResponse product = document.toObject(ProductResponse.class);
                         if (product != null) {
                             productList.add(product);
@@ -67,7 +67,7 @@ public class RemoteDataSource {
                     }
                     result.postValue(ApiResponse.success(productList));
                 }
-            }  else {
+            } else {
                 Log.w(TAG, "Error querying document", task.getException());
                 result.postValue(ApiResponse.error("Error querying document", productList));
             }
@@ -76,7 +76,7 @@ public class RemoteDataSource {
         return result;
     }
 
-    public LiveData<ApiResponse<Boolean>> insertProduct(@NonNull ProductEntity product){
+    public LiveData<ApiResponse<Boolean>> insertProduct(@NonNull ProductEntity product) {
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
         result.postValue(ApiResponse.loading(null));
 
@@ -95,7 +95,7 @@ public class RemoteDataSource {
         return result;
     }
 
-    public LiveData<ApiResponse<Boolean>> updateProduct(@NonNull ProductEntity product){
+    public LiveData<ApiResponse<Boolean>> updateProduct(@NonNull ProductEntity product) {
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
         result.postValue(ApiResponse.loading(null));
 
@@ -114,7 +114,7 @@ public class RemoteDataSource {
         return result;
     }
 
-    public LiveData<ApiResponse<Boolean>> deleteProduct(@NonNull ProductEntity product){
+    public LiveData<ApiResponse<Boolean>> deleteProduct(@NonNull ProductEntity product) {
         MutableLiveData<ApiResponse<Boolean>> result = new MutableLiveData<>();
         result.postValue(ApiResponse.loading(null));
 
@@ -133,7 +133,7 @@ public class RemoteDataSource {
         return result;
     }
 
-    public LiveData<ApiResponse<String>> uploadImage(Context context, Uri uriPath, String storagePath, String fileName){
+    public LiveData<ApiResponse<String>> uploadImage(Context context, Uri uriPath, String storagePath, String fileName) {
         MutableLiveData<ApiResponse<String>> result = new MutableLiveData<>();
         result.postValue(ApiResponse.loading(null));
 
@@ -153,16 +153,16 @@ public class RemoteDataSource {
         return result;
     }
 
-    public CollectionReference getProductsReference(){
+    public CollectionReference getProductsReference() {
         return productsRef;
     }
 
-    public void setProductsReference(String userId){
+    public void setProductsReference(String userId) {
         productsRef = database.collection("users").document(userId).collection("products");
     }
 
     @NonNull
-    private Map<String, Object> objectToHashMap(@NonNull ProductEntity product){
+    private Map<String, Object> objectToHashMap(@NonNull ProductEntity product) {
         Map<String, Object> document = new HashMap<>();
         document.put("id", product.getId());
         document.put("name", product.getName());

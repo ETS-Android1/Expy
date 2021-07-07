@@ -20,7 +20,8 @@ public class HelpPAOFragment extends MyBottomSheetDialogFragment {
 
     private FragmentHelpPaoBinding binding;
 
-    public HelpPAOFragment() {}
+    public HelpPAOFragment() {
+    }
 
     @NonNull
     @Contract(" -> new")

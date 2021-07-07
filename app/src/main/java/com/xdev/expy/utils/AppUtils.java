@@ -38,6 +38,7 @@ public class AppUtils {
         }
     }
 
+    @NonNull
     public static String getRandomAvatar() {
         return String.format(Locale.getDefault(),
                 "default_%d", new Random().nextInt(NUMBER_OF_DEFAULT_AVATARS));
@@ -63,22 +64,21 @@ public class AppUtils {
     }
 
     public static void loadImage(Context context, ImageView imageView, Object source) {
-        if (source == null) source = "";
         Glide.with(context)
                 .asBitmap()
-                .load(source)
+                .load(source != null ? source : "")
                 .apply(myGlideOptions())
                 .centerCrop()
                 .into(imageView);
     }
 
     @NonNull
-    private static RequestOptions myGlideOptions(){
+    private static RequestOptions myGlideOptions() {
         return RequestOptions.placeholderOf(R.drawable.ic_no_avatar)
                 .error(R.drawable.ic_no_avatar);
     }
 
-    public static void showToast(Context context, String message){
+    public static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 }

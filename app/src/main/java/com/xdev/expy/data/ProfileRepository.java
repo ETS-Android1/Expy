@@ -19,7 +19,7 @@ public class ProfileRepository implements ProfileDataSource {
     }
 
     public static ProfileRepository getInstance(RemoteDataSource remoteData) {
-        if (INSTANCE == null){
+        if (INSTANCE == null) {
             synchronized (ProfileRepository.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new ProfileRepository(remoteData);

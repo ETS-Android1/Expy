@@ -25,7 +25,7 @@ public class ReminderReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, @NonNull Intent intent) {
         String channelId = "channel_reminder";
-        String channelName= "Reminder";
+        String channelName = "Reminder";
         int notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0);
         String title = intent.getStringExtra(EXTRA_TITLE);
         String message = intent.getStringExtra(EXTRA_MESSAGE);
@@ -44,11 +44,11 @@ public class ReminderReceiver extends BroadcastReceiver {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        if (alarmManager != null){
+        if (alarmManager != null) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
             Log.d(TAG, "Reminder set up: " + notificationId + " on " +
                     calendar.get(Calendar.YEAR) + "/" +
-                    (calendar.get(Calendar.MONTH)+1) + "/" +
+                    (calendar.get(Calendar.MONTH) + 1) + "/" +
                     calendar.get(Calendar.DAY_OF_MONTH) + " " +
                     calendar.get(Calendar.HOUR_OF_DAY) + ":" +
                     calendar.get(Calendar.MINUTE) + ":" +
@@ -56,7 +56,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         }
     }
 
-    public void cancelReminder(@NonNull Context context, int notificationId){
+    public void cancelReminder(@NonNull Context context, int notificationId) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ReminderReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,

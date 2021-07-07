@@ -28,7 +28,8 @@ public class ResetPasswordFragment extends Fragment {
     private AuthViewModel viewModel;
     private FragmentResetPasswordBinding binding;
 
-    public ResetPasswordFragment() {}
+    public ResetPasswordFragment() {
+    }
 
     @NonNull
     @Contract(" -> new")
@@ -67,7 +68,7 @@ public class ResetPasswordFragment extends Fragment {
         binding.edtEmail.addTextChangedListener(new EmailTextWatcher(getContext(), binding.tilEmail));
     }
 
-    private void sendResetPassword(String email){
+    private void sendResetPassword(String email) {
         if (!isValidForm(email)) {
             showToast(getContext(), getResources().getString(R.string.toast_empty_fields));
             return;
@@ -76,7 +77,7 @@ public class ResetPasswordFragment extends Fragment {
         viewModel.sendPasswordReset(email);
     }
 
-    private boolean isValidForm(String email){
+    private boolean isValidForm(String email) {
         return !(email.isEmpty()) && binding.tilEmail.getError() == null;
     }
 }

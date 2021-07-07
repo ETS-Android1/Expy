@@ -20,15 +20,17 @@ public class ProductNameTextWatcher implements TextWatcher {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
     public void afterTextChanged(@NonNull Editable editable) {
         String value = editable.toString();
-        if (value.isEmpty()){
+        if (value.isEmpty()) {
             inputLayout.setError(context.getResources().getString(R.string.no_empty_field));
         } else inputLayout.setErrorEnabled(false);
     }

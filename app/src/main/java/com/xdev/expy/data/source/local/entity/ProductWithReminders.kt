@@ -3,7 +3,7 @@ package com.xdev.expy.data.source.local.entity
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class ProductWithReminders (
+data class ProductWithReminders(
 
     @Embedded
     var product: ProductEntity,

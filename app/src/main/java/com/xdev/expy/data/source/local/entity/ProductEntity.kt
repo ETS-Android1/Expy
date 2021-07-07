@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "productEntities")
 @Parcelize
-data class ProductEntity (
+data class ProductEntity(
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
@@ -61,13 +61,13 @@ data class ProductEntity (
 
     fun getIsOpened(): Boolean = isOpened
 
-    fun setIsOpened(isOpened: Boolean){
+    fun setIsOpened(isOpened: Boolean) {
         this.isOpened = isOpened
     }
 
     fun getIsFinished(): Boolean = isFinished
 
-    fun setIsFinished(isFinished: Boolean){
+    fun setIsFinished(isFinished: Boolean) {
         this.isFinished = isFinished
     }
 }

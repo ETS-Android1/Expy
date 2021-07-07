@@ -16,6 +16,10 @@ import androidx.core.content.ContextCompat;
 import com.xdev.expy.R;
 import com.xdev.expy.ui.main.MainActivity;
 
+/* Known reminder issues:
+ * - Notifications don't appear on the next day
+ * - Notifications need to be re-setup after re-login
+ * - Notifications must be removed after logging out */
 public class ReminderHelper {
 
     static void showNotification(Context context, String channelId, String channelName, int notificationId, String title, String message) {

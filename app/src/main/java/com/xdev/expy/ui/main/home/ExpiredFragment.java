@@ -31,7 +31,8 @@ public class ExpiredFragment extends Fragment implements ProductAdapter.ProductA
     private FragmentExpiredBinding binding;
     private MainCallback mainCallback;
 
-    public ExpiredFragment() {}
+    public ExpiredFragment() {
+    }
 
     @NonNull
     @Contract(" -> new")
@@ -88,6 +89,6 @@ public class ExpiredFragment extends Fragment implements ProductAdapter.ProductA
 
     @Override
     public void onProductClicked(ProductEntity product) {
-        mainCallback.addUpdateProduct(product);
+        mainCallback.openProductEditor(product);
     }
 }

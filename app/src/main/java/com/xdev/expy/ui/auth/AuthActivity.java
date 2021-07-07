@@ -37,7 +37,7 @@ public class AuthActivity extends AppCompatActivity implements AuthCallback {
         populateFragment(SignInFragment.newInstance());
     }
 
-    private void launchMain(){
+    private void launchMain() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -52,7 +52,7 @@ public class AuthActivity extends AppCompatActivity implements AuthCallback {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
             finish();
         } else {

@@ -20,15 +20,17 @@ public class PersonNameTextWatcher implements TextWatcher {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
     public void afterTextChanged(@NonNull Editable editable) {
         String value = editable.toString();
-        if (value.isEmpty()){
+        if (value.isEmpty()) {
             inputLayout.setError(context.getResources().getString(R.string.hint_full_name));
         } else inputLayout.setErrorEnabled(false);
     }

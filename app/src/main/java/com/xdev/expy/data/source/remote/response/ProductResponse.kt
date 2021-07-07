@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ProductResponse (
+data class ProductResponse(
     var id: String = "",
     var name: String = "",
     var expiryDate: String = "",

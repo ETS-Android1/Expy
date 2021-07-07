@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xdev.expy.ui.main.management.HelpPAOFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.xdev.expy.ui.main.management.HelpPAOFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,7 +18,7 @@
             style="@style/ToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_help_pao"/>
+            android:text="@string/title_help_pao" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -36,27 +35,27 @@
 
             <ImageView
                 style="@style/ImageView"
-                android:src="@drawable/ic_pao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/pao_example" />
+                android:contentDescription="@string/pao_example"
+                android:src="@drawable/ic_pao" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="@string/pao_example"
                 android:textAlignment="center"
-                android:textSize="@dimen/font_nm"
                 android:textColor="@color/green_primary"
-                android:layout_marginTop="4dp"/>
+                android:textSize="@dimen/font_nm" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
                 android:text="@string/help_pao"
                 android:textAlignment="center"
-                android:textSize="@dimen/font_nm"
-                android:layout_marginTop="32dp"/>
+                android:textSize="@dimen/font_nm" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -36,7 +36,8 @@ public class MonitoredFragment extends Fragment implements ProductAdapter.Produc
     private FragmentMonitoredBinding binding;
     private MainCallback mainCallback;
 
-    public MonitoredFragment() {}
+    public MonitoredFragment() {
+    }
 
     @NonNull
     @Contract(" -> new")
@@ -83,7 +84,7 @@ public class MonitoredFragment extends Fragment implements ProductAdapter.Produc
             }
         });
 
-        binding.fabAdd.setOnClickListener(v -> mainCallback.addUpdateProduct(new ProductEntity()));
+        binding.fabAdd.setOnClickListener(v -> mainCallback.openProductEditor(new ProductEntity()));
         binding.swipeRefresh.setOnRefreshListener(() -> viewModel.fetchNow(true));
     }
 
@@ -104,6 +105,6 @@ public class MonitoredFragment extends Fragment implements ProductAdapter.Produc
 
     @Override
     public void onProductClicked(ProductEntity product) {
-        mainCallback.addUpdateProduct(product);
+        mainCallback.openProductEditor(product);
     }
 }

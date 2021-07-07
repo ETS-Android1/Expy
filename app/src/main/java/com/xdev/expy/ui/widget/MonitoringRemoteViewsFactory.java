@@ -32,19 +32,19 @@ public class MonitoringRemoteViewsFactory implements RemoteViewsService.RemoteVi
     }
 
     @Override
-    public void onCreate() {}
+    public void onCreate() {
+    }
 
     @Override
     public void onDataSetChanged() {
         final long identityToken = Binder.clearCallingIdentity();
-
         productList = productDao.getSoonToExpireProducts(getCurrentDate());
-
         Binder.restoreCallingIdentity(identityToken);
     }
 
     @Override
-    public void onDestroy() {}
+    public void onDestroy() {
+    }
 
     @Override
     public int getCount() {
@@ -72,7 +72,7 @@ public class MonitoringRemoteViewsFactory implements RemoteViewsService.RemoteVi
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_monitoring_item);
         rv.setTextViewText(R.id.tv_name, product.getName());
         rv.setTextViewText(R.id.tv_countdown, context.getResources().getQuantityString(
-                        R.plurals.number_of_days_remaining_countdown, (int) dte, dte));
+                R.plurals.number_of_days_remaining_countdown, (int) dte, dte));
         rv.setInt(R.id.layout_countdown, "setBackgroundResource", background);
 
         Intent fillInIntent = new Intent();

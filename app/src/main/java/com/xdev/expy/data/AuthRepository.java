@@ -28,29 +28,32 @@ public class AuthRepository {
     private final FirebaseAuth firebaseAuth;
 
     private final MutableLiveData<FirebaseUser> _user = new MutableLiveData<>();
+
     public LiveData<FirebaseUser> getUser() {
         return _user;
     }
 
     private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>();
-    public LiveData<Boolean> isLoading(){
+
+    public LiveData<Boolean> isLoading() {
         return _isLoading;
     }
 
     private final MutableLiveData<Event<String>> _toastText = new MutableLiveData<>();
-    public MutableLiveData<Event<String>> getToastText(){
+
+    public MutableLiveData<Event<String>> getToastText() {
         return _toastText;
     }
 
     private volatile static AuthRepository INSTANCE = null;
 
-    private AuthRepository (Application application){
+    private AuthRepository(Application application) {
         this.application = application;
         firebaseAuth = FirebaseAuth.getInstance();
         _user.postValue(firebaseAuth.getCurrentUser());
     }
 
-    public static AuthRepository getInstance(Application application){
+    public static AuthRepository getInstance(Application application) {
         if (INSTANCE == null) {
             synchronized (AuthRepository.class) {
                 if (INSTANCE == null) {
@@ -61,15 +64,15 @@ public class AuthRepository {
         return INSTANCE;
     }
 
-    public void authWithGoogle(AuthCredential authCredential){
+    public void authWithGoogle(AuthCredential authCredential) {
         _isLoading.postValue(true);
         firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
                 Log.d(TAG, "signInWithCredential: success");
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
                 boolean isNewAccount = true;
-                if (task.getResult() != null && task.getResult().getAdditionalUserInfo() != null){
+                if (task.getResult() != null && task.getResult().getAdditionalUserInfo() != null) {
                     isNewAccount = task.getResult().getAdditionalUserInfo().isNewUser();
                 }
 
@@ -93,10 +96,10 @@ public class AuthRepository {
         });
     }
 
-    public void registerWithEmail(String name, String email, String password){
+    public void registerWithEmail(String name, String email, String password) {
         _isLoading.postValue(true);
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
                 Log.d(TAG, "createUserWithEmail: success");
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 updateName(name);
@@ -111,10 +114,10 @@ public class AuthRepository {
         });
     }
 
-    public void loginWithEmail(String email, String password){
+    public void loginWithEmail(String email, String password) {
         _isLoading.postValue(true);
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
                 Log.d(TAG, "signInWithEmail: success");
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 _user.postValue(firebaseUser);
@@ -126,9 +129,9 @@ public class AuthRepository {
         });
     }
 
-    private void sendEmailVerification(){
+    private void sendEmailVerification() {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser != null){
+        if (firebaseUser != null) {
             _isLoading.postValue(true);
             firebaseUser.sendEmailVerification().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -143,10 +146,10 @@ public class AuthRepository {
         }
     }
 
-    public void sendPasswordReset(String email){
+    public void sendPasswordReset(String email) {
         _isLoading.postValue(true);
         firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
+            if (task.isSuccessful()) {
                 _toastText.postValue(new Event<>(application.getResources().getString(R.string.success_send_password_reset)));
                 Log.d(TAG, "sendPasswordReset: success");
             } else {
@@ -157,9 +160,9 @@ public class AuthRepository {
         });
     }
 
-    public void updateName(String newName){
+    public void updateName(String newName) {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser != null){
+        if (firebaseUser != null) {
             _isLoading.postValue(true);
             UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
                     .setDisplayName(newName)
@@ -168,16 +171,15 @@ public class AuthRepository {
                 if (task.isSuccessful()) {
                     _user.postValue(firebaseUser);
                     Log.d(TAG, "updateName: success");
-                }
-                else Log.w(TAG, "updateName: failure", task.getException());
+                } else Log.w(TAG, "updateName: failure", task.getException());
                 _isLoading.postValue(false);
             });
         }
     }
 
-    public void updateProfile(String newProfile){
+    public void updateProfile(String newProfile) {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser != null){
+        if (firebaseUser != null) {
             _isLoading.postValue(true);
             UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
                     .setPhotoUri(Uri.parse(newProfile))
@@ -186,14 +188,13 @@ public class AuthRepository {
                 if (task.isSuccessful()) {
                     _user.postValue(firebaseUser);
                     Log.d(TAG, "updateProfile: success");
-                }
-                else Log.w(TAG, "updateProfile: failure", task.getException());
+                } else Log.w(TAG, "updateProfile: failure", task.getException());
                 _isLoading.postValue(false);
             });
         }
     }
 
-    public void logout(){
+    public void logout() {
         _isLoading.postValue(true);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(application.getResources().getString(R.string.default_web_client_id))

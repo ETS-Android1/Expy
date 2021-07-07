@@ -15,16 +15,16 @@ public class AuthViewModel extends AndroidViewModel {
 
     private final AuthRepository authRepository;
 
-    public AuthViewModel(@NonNull Application application, AuthRepository authRepository){
+    public AuthViewModel(@NonNull Application application, AuthRepository authRepository) {
         super(application);
         this.authRepository = authRepository;
     }
 
-    public LiveData<FirebaseUser> getUser(){
+    public LiveData<FirebaseUser> getUser() {
         return authRepository.getUser();
     }
 
-    public LiveData<Boolean> isLoading(){
+    public LiveData<Boolean> isLoading() {
         return authRepository.isLoading();
     }
 
@@ -32,19 +32,19 @@ public class AuthViewModel extends AndroidViewModel {
         return authRepository.getToastText();
     }
 
-    public void authWithGoogle(AuthCredential authCredential){
+    public void authWithGoogle(AuthCredential authCredential) {
         authRepository.authWithGoogle(authCredential);
     }
 
-    public void registerWithEmail(String name, String email, String password){
+    public void registerWithEmail(String name, String email, String password) {
         authRepository.registerWithEmail(name, email, password);
     }
 
-    public void loginWithEmail(String email, String password){
+    public void loginWithEmail(String email, String password) {
         authRepository.loginWithEmail(email, password);
     }
 
-    public void sendPasswordReset(String email){
+    public void sendPasswordReset(String email) {
         authRepository.sendPasswordReset(email);
     }
 }

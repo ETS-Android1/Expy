@@ -87,7 +87,7 @@ public class ProductAdapter extends PagedListAdapter<ProductWithReminders, Produ
         }
 
         private void setColoring(@NonNull ProductEntity product, int dte) {
-            if (!product.getIsFinished() || (product.getIsFinished() && dte <= 0) ) {
+            if (!product.getIsFinished() || (product.getIsFinished() && dte <= 0)) {
                 int countdownBg;
                 int countdownColor;
                 if (dte <= 3) {
@@ -111,7 +111,7 @@ public class ProductAdapter extends PagedListAdapter<ProductWithReminders, Produ
                 binding.imgIcon.setColorFilter(ContextCompat.getColor(context, countdownColor));
                 binding.layoutCountdown.setBackgroundResource(countdownBg);
                 binding.tvCountdown.setTextColor(white);
-            } else if (product.getIsFinished() && dte > 0){
+            } else if (product.getIsFinished() && dte > 0) {
                 int gray = ContextCompat.getColor(context, R.color.gray);
                 int lightGray = ContextCompat.getColor(context, R.color.gray_light);
                 int countdownBg = R.drawable.bg_countdown_gray;

@@ -31,7 +31,8 @@ public class SignUpFragment extends Fragment {
     private AuthViewModel viewModel;
     private FragmentSignUpBinding binding;
 
-    public SignUpFragment() {}
+    public SignUpFragment() {
+    }
 
     @NonNull
     @Contract(" -> new")
@@ -67,7 +68,7 @@ public class SignUpFragment extends Fragment {
             if (binding.edtName.getText() != null &&
                     binding.edtEmail.getText() != null &&
                     binding.edtPassword.getText() != null &&
-                    binding.edtPasswordConfirmation.getText() != null){
+                    binding.edtPasswordConfirmation.getText() != null) {
                 registerWithEmail(binding.edtName.getText().toString(),
                         binding.edtEmail.getText().toString(),
                         binding.edtPassword.getText().toString(),
@@ -81,7 +82,7 @@ public class SignUpFragment extends Fragment {
         binding.edtPasswordConfirmation.addTextChangedListener(new PasswordConfirmationTextWatcher(getContext(), binding.tilPasswordConfirmation, binding.edtPassword));
     }
 
-    private void registerWithEmail(final String name, String email, String password, String passwordConfirmation){
+    private void registerWithEmail(final String name, String email, String password, String passwordConfirmation) {
         if (!isValidForm(name, email, password, passwordConfirmation)) {
             showToast(getContext(), getResources().getString(R.string.toast_empty_fields));
             return;
@@ -92,7 +93,7 @@ public class SignUpFragment extends Fragment {
         viewModel.registerWithEmail(name, email, password);
     }
 
-    private boolean isValidForm(@NonNull String name, String email, String password, String passwordConfirmation){
+    private boolean isValidForm(@NonNull String name, String email, String password, String passwordConfirmation) {
         return !(name.isEmpty() || email.isEmpty() ||
                 password.isEmpty() || passwordConfirmation.isEmpty()) &&
                 binding.tilEmail.getError() == null &&

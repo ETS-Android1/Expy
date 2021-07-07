@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xdev.expy.ui.main.management.AddUpdateFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.xdev.expy.ui.main.management.AddUpdateFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,7 +18,7 @@
             style="@style/ToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_add_product"/>
+            android:text="@string/title_add_product" />
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
@@ -52,18 +51,18 @@
                 android:id="@+id/switch_opened"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/has_pao"
-                android:checked="false"/>
+                android:checked="false"
+                android:text="@string/has_pao" />
 
             <TextView
                 android:id="@+id/tv_help_pao"
                 style="@style/ClickableTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/help"
+                android:layout_marginBottom="8dp"
                 android:drawablePadding="4dp"
-                app:drawableStartCompat="@drawable/ic_help"
-                android:layout_marginBottom="8dp"/>
+                android:text="@string/help"
+                app:drawableStartCompat="@drawable/ic_help" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_expiry_date"
@@ -114,8 +113,8 @@
                 android:id="@+id/switch_reminder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/turn_on_reminders"
-                android:checked="true"/>
+                android:checked="true"
+                android:text="@string/turn_on_reminders" />
 
             <TextView
                 android:id="@+id/tv_reminder"
@@ -128,9 +127,9 @@
                 android:id="@+id/switch_finished"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/stop_monitoring"
+                android:layout_marginTop="16dp"
                 android:checked="false"
-                android:layout_marginTop="16dp"/>
+                android:text="@string/stop_monitoring" />
 
             <TextView
                 style="@style/HintTextView"
@@ -143,15 +142,15 @@
                 style="@style/Button.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/save"
-                android:layout_marginTop="32dp"/>
+                android:layout_marginTop="32dp"
+                android:text="@string/save" />
 
             <Button
                 android:id="@+id/btn_delete"
                 style="@style/Button.Danger"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/delete"/>
+                android:text="@string/delete" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

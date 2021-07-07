@@ -20,7 +20,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private final AuthRepository authRepository;
     private final ProductRepository productRepository;
 
-    private ViewModelFactory(Application application, AuthRepository authRepository, ProductRepository productRepository){
+    private ViewModelFactory(Application application, AuthRepository authRepository, ProductRepository productRepository) {
         this.application = application;
         this.authRepository = authRepository;
         this.productRepository = productRepository;

@@ -67,7 +67,8 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     private String expiryDate = "";
     private String openedDate = "";
 
-    public AddUpdateFragment() {}
+    public AddUpdateFragment() {
+    }
 
     @NonNull
     public static AddUpdateFragment newInstance(ProductEntity product) {
@@ -95,7 +96,6 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((MainActivity) requireActivity()).setContainerBackground(true);
 
         binding.toolbar.setNavigationOnClickListener(v -> mainCallback.backToHome(true));
 
@@ -112,8 +112,8 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         binding.switchOpened.setOnCheckedChangeListener(this);
         binding.switchFinished.setOnCheckedChangeListener(this);
 
-        isUpdate = !product.getId().isEmpty() ;
-        if (isUpdate){
+        isUpdate = !product.getId().isEmpty();
+        if (isUpdate) {
             binding.toolbarTitle.setText(R.string.title_update_product);
             binding.btnDelete.setVisibility(View.VISIBLE);
             expiryDate = product.getExpiryDate();
@@ -165,7 +165,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         int initialDay = calendar.get(Calendar.DATE);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, (view, year, monthOfYear, dayOfMonth) -> {
-            if(view.isShown()){
+            if (view.isShown()) {
                 Calendar selectedDate = Calendar.getInstance();
                 selectedDate.set(year, monthOfYear, dayOfMonth);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
@@ -177,7 +177,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
                     binding.edtOpenedDate.setText(getFormattedDate(openedDate, false));
                 }
             }
-        }, initialYear, initialMonth , initialDay);
+        }, initialYear, initialMonth, initialDay);
         datePickerDialog.getDatePicker().setMinDate(stringToDate(DATE_FORMAT, "2000/01/01").getTime());
         datePickerDialog.getDatePicker().setMaxDate(stringToDate(DATE_FORMAT, "9999/12/31").getTime());
         datePickerDialog.show();
@@ -199,7 +199,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
             return;
         }
 
-        if (isOpened) expiryDate = addDay(openedDate, Integer.parseInt(pao)*30);
+        if (isOpened) expiryDate = addDay(openedDate, Integer.parseInt(pao) * 30);
         else {
             openedDate = "";
             pao = "0";
@@ -228,7 +228,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         mainCallback.backToHome(false);
     }
 
-    private boolean isValidForm(@NonNull String name, String expiryDate, String openedDate, String pao, boolean isOpened){
+    private boolean isValidForm(@NonNull String name, String expiryDate, String openedDate, String pao, boolean isOpened) {
         return !((name.isEmpty()) || ((isOpened && (openedDate.isEmpty() || pao.isEmpty())) || (!isOpened && (expiryDate.isEmpty())))) &&
                 binding.tilName.getError() == null &&
                 binding.tilExpiryDate.getError() == null &&
@@ -256,14 +256,14 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onCheckedChanged(@NonNull CompoundButton compoundButton, boolean checked) {
         int id = compoundButton.getId();
-        if (id == binding.switchOpened.getId()){
+        if (id == binding.switchOpened.getId()) {
             setExpiryDateFieldVisibility(checked);
-        } else if (id == binding.switchFinished.getId()){
+        } else if (id == binding.switchFinished.getId()) {
             setReminderSwitchEnability(checked);
         }
     }
 
-    private void setExpiryDateFieldVisibility(boolean isOpened){
+    private void setExpiryDateFieldVisibility(boolean isOpened) {
         binding.tilExpiryDate.setEnabled(!isOpened);
         binding.tilOpenedDate.setEnabled(isOpened);
         binding.tilPao.setEnabled(isOpened);
@@ -305,7 +305,7 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
         if (dte >= 180) notificationDayList.add(180);
         Log.d(TAG, "Notification days = " + notificationDayList.toString());
 
-        for (int notificationDay : notificationDayList){
+        for (int notificationDay : notificationDayList) {
             ReminderEntity reminder = new ReminderEntity();
             Date date = stringToDate(NOTIFICATION_DATE_FORMAT, addDay(expiryDate, -notificationDay) + " 12:00:00");
             reminder.setId((Math.abs(product.getId().hashCode()) + notificationDay) % Integer.MAX_VALUE);
@@ -329,10 +329,10 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
                     break;
                 case 7:
                 case 14:
-                    day = getResources().getQuantityString(R.plurals.number_of_weeks_remaining, notificationDay/7, notificationDay/7);
+                    day = getResources().getQuantityString(R.plurals.number_of_weeks_remaining, notificationDay / 7, notificationDay / 7);
                     break;
                 default:
-                    day = getResources().getQuantityString(R.plurals.number_of_months_remaining, notificationDay/30, notificationDay/30);
+                    day = getResources().getQuantityString(R.plurals.number_of_months_remaining, notificationDay / 30, notificationDay / 30);
                     break;
             }
 
@@ -360,11 +360,12 @@ public class AddUpdateFragment extends Fragment implements View.OnClickListener,
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mainCallback = (MainActivity) context;
+        mainCallback.adjustViews(true);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        ((MainActivity) requireActivity()).setContainerBackground(false);
+        mainCallback.adjustViews(false);
     }
 }

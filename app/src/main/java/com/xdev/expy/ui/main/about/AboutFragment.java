@@ -20,7 +20,8 @@ public class AboutFragment extends MyBottomSheetDialogFragment {
 
     private FragmentAboutBinding binding;
 
-    public AboutFragment() {}
+    public AboutFragment() {
+    }
 
     @NonNull
     @Contract(" -> new")

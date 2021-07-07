@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (registration == null) {
                     registration = viewModel.getProductsReference().addSnapshotListener((value, error) -> {
                         if (error != null) Log.w(TAG, "Listen failed", error);
-                        else if (value != null){
+                        else if (value != null) {
                             Log.d(TAG, "Changes detected");
                             viewModel.fetchNow(true);
                         }
@@ -89,9 +89,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(@NonNull View view) {
         int id = view.getId();
-        if (id == binding.btnAbout.getId()){
+        if (id == binding.btnAbout.getId()) {
             showAbout();
-        } else if (id == binding.civProfile.getId()){
+        } else if (id == binding.civProfile.getId()) {
             showProfile();
         }
     }
@@ -108,12 +108,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void addUpdateProduct(ProductEntity product) {
+    public void openProductEditor(ProductEntity product) {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_top, R.anim.enter_from_top, R.anim.exit_to_bottom)
                 .replace(binding.container.getId(), AddUpdateFragment.newInstance(product), AddUpdateFragment.TAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void adjustViews(boolean isAddUpdateFragmentVisible) {
+        if (isAddUpdateFragmentVisible) {
+            binding.container.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+        } else {
+            binding.container.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     @Override
@@ -140,19 +149,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .create().show();
     }
 
-    public void setContainerBackground(boolean isAddUpdateFragmentVisible){
-        if (isAddUpdateFragmentVisible) {
-            binding.container.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-        } else {
-            binding.container.setBackgroundColor(Color.TRANSPARENT);
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (registration != null) {
-            registration.remove();
-        }
+        if (registration != null) registration.remove();
     }
 }
+

@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xdev.expy.ui.main.MainActivity"
-    android:background="@color/green_primary">
+    android:background="@color/green_primary"
+    tools:context="com.xdev.expy.ui.main.MainActivity">
 
     <ImageView
         android:id="@+id/img_bg_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/bg_app_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/app_name" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_date"
@@ -36,12 +35,12 @@
         android:id="@+id/btn_about"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:orientation="horizontal"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_button_about"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/bg_button_about"
         android:gravity="center"
-        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/civ_profile"
         app:layout_constraintEnd_toStartOf="@+id/civ_profile"
         app:layout_constraintTop_toTopOf="@+id/civ_profile">
@@ -49,10 +48,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/about"
-            android:textSize="@dimen/font_sm"
-            android:textColor="@color/green_primary"
             android:drawablePadding="4dp"
+            android:text="@string/about"
+            android:textColor="@color/green_primary"
+            android:textSize="@dimen/font_sm"
             app:drawableStartCompat="@drawable/ic_info" />
     </LinearLayout>
 
@@ -85,19 +84,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_bg_home"
-        android:background="@android:color/transparent"
         app:tabBackground="@android:color/transparent"
+        app:tabGravity="fill"
         app:tabIndicatorColor="@color/green_primary"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable"
         app:tabRippleColor="@android:color/transparent"
         app:tabSelectedTextColor="@color/green_primary"
-        app:tabTextColor="@color/black"
-        app:tabIndicatorFullWidth="false"
         app:tabTextAppearance="@style/TabLayoutTextAppearance"
-        app:tabGravity="fill"
-        app:tabMode="scrollable"/>
+        app:tabTextColor="@color/black" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
@@ -111,5 +110,5 @@
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

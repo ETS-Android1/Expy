@@ -23,7 +23,7 @@ public class MainViewModel extends AndroidViewModel {
     private final AuthRepository authRepository;
     private final ProductRepository productRepository;
 
-    public MainViewModel(@NonNull Application application, AuthRepository authRepository, ProductRepository productRepository){
+    public MainViewModel(@NonNull Application application, AuthRepository authRepository, ProductRepository productRepository) {
         super(application);
         this.authRepository = authRepository;
         this.productRepository = productRepository;
@@ -58,31 +58,31 @@ public class MainViewModel extends AndroidViewModel {
         return authRepository.getToastText();
     }
 
-    public void insertProduct(ProductEntity product){
+    public void insertProduct(ProductEntity product) {
         productRepository.insertProduct(product);
     }
 
-    public void updateProduct(ProductEntity product){
+    public void updateProduct(ProductEntity product) {
         productRepository.updateProduct(product);
     }
 
-    public void deleteProduct(ProductEntity product){
+    public void deleteProduct(ProductEntity product) {
         productRepository.deleteProduct(product);
     }
 
-    public CollectionReference getProductsReference(){
+    public CollectionReference getProductsReference() {
         return productRepository.getProductsReference();
     }
 
-    public void setProductsReference(String userId){
+    public void setProductsReference(String userId) {
         productRepository.setProductsReference(userId);
     }
 
-    public void sendPasswordReset(String email){
+    public void sendPasswordReset(String email) {
         authRepository.sendPasswordReset(email);
     }
 
-    public void logout(){
+    public void logout() {
         productRepository.clearDatabase();
         authRepository.logout();
     }

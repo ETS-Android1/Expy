@@ -12,8 +12,8 @@ import com.xdev.expy.data.source.local.entity.ReminderEntity;
 import com.xdev.expy.utils.Converters;
 
 @Database(entities = {ProductEntity.class, ReminderEntity.class},
-    version = 1,
-    exportSchema = false)
+        version = 1,
+        exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class ProductDatabase extends RoomDatabase {
 

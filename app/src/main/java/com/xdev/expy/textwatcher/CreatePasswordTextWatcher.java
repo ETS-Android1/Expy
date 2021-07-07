@@ -27,20 +27,22 @@ public class CreatePasswordTextWatcher implements TextWatcher {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
     public void afterTextChanged(@NonNull Editable editable) {
         String password = editable.toString();
-        if (password.isEmpty() || !Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$").matcher(password).matches()){
+        if (password.isEmpty() || !Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$").matcher(password).matches()) {
             tilPassword.setError(context.getResources().getString(R.string.hint_create_password));
         } else tilPassword.setErrorEnabled(false);
 
         String passwordConfirmation = edtPasswordConfirmation.getText().toString();
-        if (!passwordConfirmation.equals(password)){
+        if (!passwordConfirmation.equals(password)) {
             tilPasswordConfirmation.setError(context.getResources().getString(R.string.invalid_password_confirmation));
         } else tilPasswordConfirmation.setErrorEnabled(false);
     }

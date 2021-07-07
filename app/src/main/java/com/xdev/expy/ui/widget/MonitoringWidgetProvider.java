@@ -51,7 +51,7 @@ public class MonitoringWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         final String action = intent.getAction();
-        if (action != null){
+        if (action != null) {
             if (action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
                 AppWidgetManager manager = AppWidgetManager.getInstance(context);
                 ComponentName cn = new ComponentName(context, MonitoringWidgetProvider.class);

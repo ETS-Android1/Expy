@@ -22,18 +22,20 @@ public class PaoTextWatcher implements TextWatcher {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
     public void afterTextChanged(Editable editable) {
         if (switchOpened.isChecked()) {
             String value = editable.toString();
-            if (value.isEmpty()){
+            if (value.isEmpty()) {
                 inputLayout.setError(context.getResources().getString(R.string.no_empty_field));
-            } else if (value.length() > String.valueOf(Integer.MAX_VALUE).length()-1) {
+            } else if (value.length() > String.valueOf(Integer.MAX_VALUE).length() - 1) {
                 inputLayout.setError(context.getResources().getString(R.string.max_limit_number_of_digits));
             } else inputLayout.setErrorEnabled(false);
         } else inputLayout.setErrorEnabled(false);

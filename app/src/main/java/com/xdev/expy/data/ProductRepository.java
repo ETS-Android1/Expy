@@ -36,7 +36,7 @@ public class ProductRepository implements ProductDataSource {
     }
 
     public static ProductRepository getInstance(RemoteDataSource remoteData, LocalDataSource localDataSource, AppExecutors appExecutors) {
-        if (INSTANCE == null){
+        if (INSTANCE == null) {
             synchronized (ProductRepository.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new ProductRepository(remoteData, localDataSource, appExecutors);
@@ -48,7 +48,7 @@ public class ProductRepository implements ProductDataSource {
 
     @Override
     public LiveData<Resource<PagedList<ProductWithReminders>>> getProducts(boolean isExpired, boolean fetchNow) {
-        return new NetworkBoundResource<PagedList<ProductWithReminders>, List<ProductResponse>>(appExecutors){
+        return new NetworkBoundResource<PagedList<ProductWithReminders>, List<ProductResponse>>(appExecutors) {
             @Override
             protected LiveData<PagedList<ProductWithReminders>> loadFromDB() {
                 PagedList.Config config = new PagedList.Config.Builder()

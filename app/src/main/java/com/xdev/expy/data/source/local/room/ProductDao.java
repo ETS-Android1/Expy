@@ -37,7 +37,7 @@ public abstract class ProductDao {
     public abstract void deleteProducts();
 
     @Transaction
-    public void insertProductsAndReminders(List<ProductEntity> productList, List<ReminderEntity> reminderList){
+    public void insertProductsAndReminders(List<ProductEntity> productList, List<ReminderEntity> reminderList) {
         deleteProducts();
         insertProducts(productList);
         insertReminders(reminderList);

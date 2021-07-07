@@ -12,11 +12,11 @@ import com.xdev.expy.utils.AppExecutors;
 
 public class Injection {
 
-    public static AuthRepository provideRepository(Application application){
+    public static AuthRepository provideRepository(Application application) {
         return AuthRepository.getInstance(application);
     }
 
-    public static ProductRepository provideRepository(Context context){
+    public static ProductRepository provideRepository(Context context) {
         ProductDatabase database = ProductDatabase.getInstance(context);
         RemoteDataSource remoteDataSource = RemoteDataSource.getInstance();
         LocalDataSource localDataSource = LocalDataSource.getInstance(database.productDao());

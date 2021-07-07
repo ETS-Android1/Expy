@@ -17,13 +17,13 @@ public class OnboardingPreference {
     private static final String IS_FIRST_TIME_LAUNCH = "is_first_time_launch";
 
     @SuppressLint("CommitPrefEdits")
-    private OnboardingPreference(@NonNull Context context){
+    private OnboardingPreference(@NonNull Context context) {
         sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
 
     public static OnboardingPreference getInstance(Context context) {
-        if (INSTANCE == null){
+        if (INSTANCE == null) {
             synchronized (OnboardingPreference.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new OnboardingPreference(context);
@@ -33,12 +33,12 @@ public class OnboardingPreference {
         return INSTANCE;
     }
 
-    public void setIsFirstTimeLaunch(boolean isFirstTimeLaunch){
+    public void setIsFirstTimeLaunch(boolean isFirstTimeLaunch) {
         editor.putBoolean(IS_FIRST_TIME_LAUNCH, isFirstTimeLaunch);
         editor.apply();
     }
 
-    public boolean isFirstTimeLaunch(){
+    public boolean isFirstTimeLaunch() {
         return sharedPreferences.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
 }

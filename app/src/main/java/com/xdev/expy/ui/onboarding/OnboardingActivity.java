@@ -19,14 +19,17 @@ import java.util.List;
 
 public class OnboardingActivity extends AppCompatActivity {
 
+    private ActivityOnboardingBinding binding;
+    private ViewPager2.OnPageChangeCallback onPageChangeCallback;
+
     private Handler handler;
-    private int delay, page;
     private Runnable runnable;
+    private int delay, page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityOnboardingBinding binding = ActivityOnboardingBinding.inflate(getLayoutInflater());
+        binding = ActivityOnboardingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         OnboardingAdapter adapter = new OnboardingAdapter();
@@ -35,10 +38,7 @@ public class OnboardingActivity extends AppCompatActivity {
 
         populateViewPager(adapter);
         setAutoScrollViewPager(binding.viewPager, adapter);
-
-        // Disable overscroll animation
-        View child = binding.viewPager.getChildAt(0);
-        if (child instanceof RecyclerView) child.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        disableViewPagerOverscrollAnimation(binding.viewPager);
 
         binding.btnStart.setOnClickListener(view -> launchMain());
     }
@@ -76,29 +76,42 @@ public class OnboardingActivity extends AppCompatActivity {
         page = 0;
         runnable = new Runnable() {
             public void run() {
-                if (adapter.getItemCount() == page) {
-                    page = 0;
-                } else {
-                    page++;
-                }
+                if (adapter.getItemCount() == page) page = 0;
+                else page++;
                 viewPager.setCurrentItem(page, true);
                 handler.postDelayed(this, delay);
             }
         };
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override public void onPageSelected(int position) { page = position; }
-        });
+
+        onPageChangeCallback = new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                page = position;
+            }
+        };
+        viewPager.registerOnPageChangeCallback(onPageChangeCallback);
+    }
+
+    private void disableViewPagerOverscrollAnimation(ViewPager2 viewPager) {
+        View child = viewPager.getChildAt(0);
+        if (child instanceof RecyclerView) child.setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        handler.postDelayed(runnable, delay);
+        handler.postDelayed(runnable, 0);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding.viewPager.unregisterOnPageChangeCallback(onPageChangeCallback);
     }
 }

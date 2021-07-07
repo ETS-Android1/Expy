@@ -18,7 +18,7 @@ import com.xdev.expy.viewmodel.ViewModelFactory;
 
 import static com.xdev.expy.utils.AppUtils.getAvatarFromResource;
 
-public class ProfileFragment extends MyBottomSheetDialogFragment implements View.OnClickListener{
+public class ProfileFragment extends MyBottomSheetDialogFragment implements View.OnClickListener {
 
     public static final String TAG = ProfileFragment.class.getSimpleName();
 
@@ -33,7 +33,8 @@ public class ProfileFragment extends MyBottomSheetDialogFragment implements View
     private String userEmail;
     private String userProfile;
 
-    public ProfileFragment() {}
+    public ProfileFragment() {
+    }
 
     @NonNull
     public static ProfileFragment newInstance(String userName, String userEmail, String userProfile) {
@@ -90,9 +91,9 @@ public class ProfileFragment extends MyBottomSheetDialogFragment implements View
     @Override
     public void onClick(@NonNull View view) {
         int id = view.getId();
-        if (id == binding.btnResetPassword.getId()){
+        if (id == binding.btnResetPassword.getId()) {
             viewModel.sendPasswordReset(userEmail);
-        } else if (id == binding.btnLogout.getId()){
+        } else if (id == binding.btnLogout.getId()) {
             viewModel.logout();
         }
     }

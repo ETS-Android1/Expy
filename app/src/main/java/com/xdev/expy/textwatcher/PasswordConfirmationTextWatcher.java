@@ -23,16 +23,18 @@ public class PasswordConfirmationTextWatcher implements TextWatcher {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    }
 
     @Override
     public void afterTextChanged(@NonNull Editable editable) {
         String passwordConfirmation = editable.toString();
         String password = edtPassword.getText().toString();
-        if (!passwordConfirmation.equals(password)){
+        if (!passwordConfirmation.equals(password)) {
             inputLayout.setError(context.getResources().getString(R.string.invalid_password_confirmation));
         } else inputLayout.setErrorEnabled(false);
     }

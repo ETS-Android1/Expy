@@ -7,15 +7,18 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.Exclude
 import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "reminderEntities",
-    foreignKeys = [ForeignKey(entity = ProductEntity::class,
+@Entity(
+    tableName = "reminderEntities",
+    foreignKeys = [ForeignKey(
+        entity = ProductEntity::class,
         parentColumns = ["id"],
         childColumns = ["productId"],
-        onDelete = ForeignKey.CASCADE)],
+        onDelete = ForeignKey.CASCADE
+    )],
     indices = [Index(value = ["productId"])]
 )
 @Parcelize
-data class ReminderEntity (
+data class ReminderEntity(
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")

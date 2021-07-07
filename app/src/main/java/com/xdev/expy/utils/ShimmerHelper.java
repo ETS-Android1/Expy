@@ -15,21 +15,21 @@ public class ShimmerHelper {
     private final LinearLayout layoutEmpty;
     private final SwipeRefreshLayout swipeRefresh;
 
-    public ShimmerHelper(ShimmerFrameLayout shimmer, RecyclerView recyclerView, LinearLayout layoutEmpty, SwipeRefreshLayout swipeRefresh){
+    public ShimmerHelper(ShimmerFrameLayout shimmer, RecyclerView recyclerView, LinearLayout layoutEmpty, SwipeRefreshLayout swipeRefresh) {
         this.shimmer = shimmer;
         this.recyclerView = recyclerView;
         this.layoutEmpty = layoutEmpty;
         this.swipeRefresh = swipeRefresh;
     }
 
-    public void show(){
+    public void show() {
         shimmer.startShimmer();
         shimmer.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
         layoutEmpty.setVisibility(View.INVISIBLE);
     }
 
-    public void hide(boolean isEmpty){
+    public void hide(boolean isEmpty) {
         shimmer.stopShimmer();
         shimmer.setVisibility(View.GONE);
         if (isEmpty) {
