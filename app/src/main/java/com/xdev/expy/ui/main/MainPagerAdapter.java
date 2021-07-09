@@ -12,6 +12,8 @@ import com.xdev.expy.ui.main.home.MonitoredFragment;
 
 public class MainPagerAdapter extends FragmentStateAdapter {
 
+    private static final int TRANSACTION_SCREENS_NUMBER = 2;
+    
     public MainPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -22,13 +24,13 @@ public class MainPagerAdapter extends FragmentStateAdapter {
         switch (position){
             case 0: return MonitoredFragment.newInstance();
             case 1: return ExpiredFragment.newInstance();
-            default: return new Fragment();
+            default: throw new IllegalStateException("Invalid adapter position");
         }
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return TRANSACTION_SCREENS_NUMBER;
     }
 
     @StringRes
