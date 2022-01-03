@@ -31,6 +31,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/font_nm"
             android:textStyle="bold" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -47,5 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null" />
+
     </LinearLayout>
+
 </RelativeLayout>

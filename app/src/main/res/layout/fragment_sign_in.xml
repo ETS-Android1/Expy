@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xdev.expy.ui.auth.SignInFragment">
+    tools:context="com.xdev.expy.auth.SignInFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,6 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -65,6 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <FrameLayout
@@ -108,7 +110,9 @@
                         android:layout_height="wrap_content"
                         android:text="@string/google_sign_in"
                         app:icon="@drawable/ic_google" />
+
                 </LinearLayout>
+
             </FrameLayout>
 
             <TextView
@@ -143,7 +147,11 @@
                     android:text="@string/register"
                     android:textSize="@dimen/font_nm"
                     android:textStyle="bold" />
+
             </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

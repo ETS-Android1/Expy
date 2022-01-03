@@ -23,4 +23,5 @@
     <include layout="@layout/shimmer_item_product" />
 
     <include layout="@layout/shimmer_item_product" />
+
 </LinearLayout>

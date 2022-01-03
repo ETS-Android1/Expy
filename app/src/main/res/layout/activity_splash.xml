@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="@dimen/layout_margin"
-    tools:context="com.xdev.expy.ui.splash.SplashActivity">
+    tools:context="com.xdev.expy.splash.SplashActivity">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_logo" />
+
 </LinearLayout>

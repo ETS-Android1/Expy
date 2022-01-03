@@ -35,4 +35,5 @@
         android:text="@string/loading"
         android:textAlignment="center"
         android:textSize="@dimen/font_nm" />
+
 </LinearLayout>

@@ -5,7 +5,7 @@
     style="@style/ScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xdev.expy.ui.onboarding.OnboardingActivity">
+    tools:context="com.xdev.expy.onboarding.OnboardingActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,5 +38,7 @@
             android:layout_marginTop="64dp"
             android:layout_marginBottom="24dp"
             android:text="@string/start_now" />
+
     </RelativeLayout>
+
 </androidx.core.widget.NestedScrollView>

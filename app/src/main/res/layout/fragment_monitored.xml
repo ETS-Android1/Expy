@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xdev.expy.ui.main.home.MonitoredFragment">
+    tools:context="com.xdev.expy.main.home.MonitoredFragment">
 
     <include
         android:id="@+id/layout_empty"
@@ -17,6 +17,7 @@
         android:paddingHorizontal="@dimen/layout_margin">
 
         <include layout="@layout/shimmer_layout_product" />
+
     </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -36,7 +37,9 @@
                 android:layout_height="match_parent"
                 android:paddingHorizontal="@dimen/layout_margin"
                 android:paddingBottom="96dp" />
+
         </androidx.core.widget.NestedScrollView>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,4 +52,5 @@
         android:layout_margin="24dp"
         android:contentDescription="@string/add_product"
         android:src="@drawable/ic_add" />
+
 </RelativeLayout>

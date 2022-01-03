@@ -69,9 +69,13 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/font_sm" />
+
             </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View style="@style/Divider" />
+
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

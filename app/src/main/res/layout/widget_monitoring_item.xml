@@ -38,5 +38,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/font_sm"
             android:textStyle="bold" />
+
     </LinearLayout>
+
 </RelativeLayout>
