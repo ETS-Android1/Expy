@@ -7,7 +7,7 @@
 
 **Expy allows you to keep track of the expiration dates of the products you're using to ensure the effective use of the products.** The main features of this Android application are recording the expiration date of foods or other products, getting periodic alert notifications, and accessing quick monitoring from a widget. Other features include one-step login using Google, storing and synchronizing your records across devices, support for two languages (Indonesian and English), and a random profile picture.
 
-Expy was developed with the team as a capstone project for the Mobile Application Programming 2 course. The development process went through 4 stages, namely analysis, planning, implementation, and testing.
+Expy was developed with the team as a capstone project for the Mobile Application Programming 2 course. The development process went through 4 stages, namely planning, design, implementation, and testing.
 
 ## Download
 Check out the [release page](https://github.com/ariefzuhri/Expy/releases) and download the latest apk.
